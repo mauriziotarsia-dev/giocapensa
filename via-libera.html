@@ -434,6 +434,32 @@ dialog::backdrop{background:rgba(0,0,0,.55)}
   </div>
 </dialog>
 
+<script id="opzioni">
+/* Settings shared by the home screen and all six games, kept in localStorage under one key.
+   Games read them at every use, so a change on the home screen reaches a game as soon as it is opened. */
+window.OPZ = (function () {
+  'use strict';
+  var KEY = 'giocapensa.opzioni';
+  var DEF = { musica: true, suoni: true, voce: true, lingua: 'it', aiuto: 'attesa' };
+  var val = {}, k;
+  for (k in DEF) val[k] = DEF[k];
+  try {
+    var raw = JSON.parse(localStorage.getItem(KEY) || 'null');
+    if (raw && typeof raw === 'object') {
+      ['musica', 'suoni', 'voce'].forEach(function (n) { if (typeof raw[n] === 'boolean') val[n] = raw[n]; });
+      if (raw.lingua === 'it' || raw.lingua === 'en') val.lingua = raw.lingua;
+      if (['subito', 'attesa', 'mai'].indexOf(raw.aiuto) >= 0) val.aiuto = raw.aiuto;
+    } else if (localStorage.getItem('giocapensa.musica') === '0') val.musica = false;      // the old music-only switch
+  } catch (e) {}
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(val)); } catch (e) {} }
+  return {
+    get: function (n) { return val[n]; },
+    set: function (n, v) { if (!(n in DEF)) return; val[n] = v; save(); try { window.dispatchEvent(new CustomEvent('opz', { detail: { nome: n, valore: v } })); } catch (e) {} },
+    all: function () { var o = {}, q; for (q in val) o[q] = val[q]; return o; }
+  };
+})();
+
+</script>
 <script id="logic">
 /* Pure game logic: level parsing and shortest-path solver (no DOM). */
 (function (root) {
@@ -774,7 +800,7 @@ window.VL_LEVELS = ["ooooooooooBoooAABooooooooooooooooooo:g:2",
      ===================================================================== */
   var AC = window.AudioContext || window.webkitAudioContext, actx = null, master = null, noiseBuf = null;
   function ensureAudio() {
-    if (!store.sound || !AC) return null;
+    if (!store.sound || (window.OPZ && !OPZ.get('suoni')) || !AC) return null;
     try {
       if (!actx) {
         actx = new AC(); master = actx.createGain(); master.gain.value = 0.95;
@@ -1206,14 +1232,16 @@ window.VL_LEVELS = ["ooooooooooBoooAABooooooooooooooooooo:g:2",
     clearInterval(gate.timer); gate.timer = setInterval(gateTick, 250); gateTick();
   }
   function gateProgress() {
-    if (store.hintMode === 'subito') return 1;
-    if (store.hintMode === 'mai') return 0;
+    if (hintMode() === 'subito') return 1;
+    if (hintMode() === 'mai') return 0;
     return Math.max(Math.min(1, gateSeconds() / gate.need.s), Math.min(1, (moveCount() - gate.base) / gate.need.moves));
   }
-  function hintReady() { return store.hintMode !== 'mai' && gateProgress() >= 1; }
+  function soundOn() { return !window.OPZ || OPZ.get('suoni'); }
+  function hintMode() { return window.OPZ ? OPZ.get('aiuto') : store.hintMode; }
+  function hintReady() { return hintMode() !== 'mai' && gateProgress() >= 1; }
   function gateTick() {
-    var p = gateProgress(), btn = $('btnHint'), ring = $('hintRing'), show = !won && store.hintMode === 'attesa' && p < 1;
-    btn.hidden = store.hintMode === 'mai'; btn.disabled = won || !hintReady();
+    var p = gateProgress(), btn = $('btnHint'), ring = $('hintRing'), show = !won && hintMode() === 'attesa' && p < 1;
+    btn.hidden = hintMode() === 'mai'; btn.disabled = won || !hintReady();
     btn.classList.toggle('waiting', show);
     if (show) ring.querySelector('.fill').setAttribute('stroke-dashoffset', (188.5 * (1 - p)).toFixed(1));
     else { clearInterval(gate.timer); gate.timer = 0; }
@@ -1321,9 +1349,9 @@ window.VL_LEVELS = ["ooooooooooBoooAABooooooooooooooooooo:g:2",
     SKIN_ORDER.forEach(function (k) { h += '<button class="skin" type="button" data-act="skin" data-skin-name="' + k + '" aria-pressed="' + (s.skin === k) + '">' + skinPreview(k) + SKINS[k].label + '</button>'; });
     h += '</div></section>';
     h += '<section class="blk"><h3>Aiuti</h3><div class="chips">';
-    [['subito', 'Subito'], ['attesa', 'Dopo un po\''], ['mai', 'Mai']].forEach(function (m) { h += '<button class="chip" type="button" data-act="hintmode" data-mode="' + m[0] + '" aria-pressed="' + (store.hintMode === m[0]) + '">' + m[1] + '</button>'; });
+    [['subito', 'Subito'], ['attesa', 'Dopo un po\''], ['mai', 'Mai']].forEach(function (m) { h += '<button class="chip" type="button" data-act="hintmode" data-mode="' + m[0] + '" aria-pressed="' + (hintMode() === m[0]) + '">' + m[1] + '</button>'; });
     h += '</div><p>Con «Dopo un po\'» il pulsante Aiuto si sblocca dopo ' + HINT_FIRST.s + ' secondi sul livello o dopo ' + HINT_FIRST.moves + ' mosse, e dopo ogni aiuto usato l\'attesa ricomincia. L\'anello attorno al pulsante mostra quanto manca, senza bisogno di saper leggere.</p></section>';
-    h += '<section class="blk"><button class="switchrow" type="button" role="switch" data-act="sound" aria-checked="' + store.sound + '">Suoni<span class="switch"></span></button><p>Su iPhone i suoni seguono la modalità silenzioso: quando è attiva non si sentono.</p></section>';
+    h += '<section class="blk"><button class="switchrow" type="button" role="switch" data-act="sound" aria-checked="' + (store.sound && soundOn()) + '">Suoni<span class="switch"></span></button><p>Su iPhone i suoni seguono la modalità silenzioso: quando è attiva non si sentono.</p></section>';
     if (!(navigator.standalone || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches))) h += '<section class="blk"><h3>Sulla schermata Home</h3><p style="margin-top:0">Apri questa pagina in Safari, tocca Condividi e scegli «Aggiungi alla schermata Home»: da lì il gioco si apre con un tocco, come un\'app.</p></section>';
     h += '<section class="blk"><h3>Come si gioca</h3><ul><li>Il pezzo cremisi (l\'auto a strisce, la carrozza reale o il motoscafo, secondo lo stile) deve uscire dal varco a destra.</li><li>Ogni pezzo si muove solo avanti e indietro, lungo la propria corsia.</li><li>Ogni spostamento conta una mossa, di quante caselle vuoi.</li></ul></section>';
     $('menuBody').innerHTML = h;
@@ -1343,8 +1371,8 @@ window.VL_LEVELS = ["ooooooooooBoooAABooooooooooooooooooo:g:2",
     else if (act === 'load' && store.saves[id]) { snapshot(); activate(id, 'Partita «' + store.saves[id].name + '» caricata.'); closeDlg(menu); }
     else if (act === 'delete' && store.saves[id]) { pendingDelete = id; $('confirmTitle').textContent = 'Eliminare «' + store.saves[id].name + '»?'; $('confirmText').textContent = 'I livelli risolti e i record di questa partita vengono cancellati.'; openDlg(confirmDlg); }
     else if (act === 'skin') { var k = b.getAttribute('data-skin-name'); if (SKINS[k] && k !== S().skin) { S().skin = k; touched = true; commitSave(true); paintBoard(); setStatus(''); renderMenu(); sfx('move'); } }
-    else if (act === 'sound') { store.sound = !store.sound; saveLocal(); renderMenu(); if (store.sound) { wakeAudio(); sfx('move'); } }
-    else if (act === 'hintmode') { var m = b.getAttribute('data-mode'); if (HINT_MODES.indexOf(m) >= 0 && m !== store.hintMode) { store.hintMode = m; saveLocal(); gateReset(gate.need); renderMenu(); } }
+    else if (act === 'sound') { var v = !(store.sound && soundOn()); store.sound = v; if (window.OPZ) OPZ.set('suoni', v); saveLocal(); renderMenu(); if (v) { wakeAudio(); sfx('move'); } }
+    else if (act === 'hintmode') { var m = b.getAttribute('data-mode'); if (HINT_MODES.indexOf(m) >= 0 && m !== hintMode()) { store.hintMode = m; if (window.OPZ) OPZ.set('aiuto', m); saveLocal(); gateReset(gate.need); renderMenu(); } }
   });
 
   var nameMode = '';

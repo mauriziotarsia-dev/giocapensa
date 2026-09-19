@@ -1,5 +1,5 @@
 /* Offline cache for the six games. VERSION is filled in by src/build.py from the content of the pages. */
-const VERSION = 'giochi-4b5e2ed52d';
+const VERSION = 'giochi-0a7aead6a5';
 const SHELL = ['./', 'index.html', 'via-libera.html', 'palline.html', 'labirinti.html', 'acqua.html', 'incastri.html', 'adesivi.html', 'manifest.json', 'icon-180.png', 'icon-192.png', 'icon-512.png'];
 self.addEventListener('install', (e) => { e.waitUntil(caches.open(VERSION).then((c) => Promise.all(SHELL.map((u) => c.add(u).catch(() => null)))).then(() => self.skipWaiting())); });
 self.addEventListener('activate', (e) => { e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== VERSION).map((k) => caches.delete(k)))).then(() => self.clients.claim())); });

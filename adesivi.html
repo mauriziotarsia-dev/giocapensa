@@ -224,6 +224,32 @@ a.round{color:inherit; text-decoration:none}
   <div class="actions"><button class="btn" id="btnSame" type="button">Ancora questi</button><button class="btn primary" id="btnNext" type="button">Avanti</button></div>
 </section>
 
+<script id="opzioni">
+/* Settings shared by the home screen and all six games, kept in localStorage under one key.
+   Games read them at every use, so a change on the home screen reaches a game as soon as it is opened. */
+window.OPZ = (function () {
+  'use strict';
+  var KEY = 'giocapensa.opzioni';
+  var DEF = { musica: true, suoni: true, voce: true, lingua: 'it', aiuto: 'attesa' };
+  var val = {}, k;
+  for (k in DEF) val[k] = DEF[k];
+  try {
+    var raw = JSON.parse(localStorage.getItem(KEY) || 'null');
+    if (raw && typeof raw === 'object') {
+      ['musica', 'suoni', 'voce'].forEach(function (n) { if (typeof raw[n] === 'boolean') val[n] = raw[n]; });
+      if (raw.lingua === 'it' || raw.lingua === 'en') val.lingua = raw.lingua;
+      if (['subito', 'attesa', 'mai'].indexOf(raw.aiuto) >= 0) val.aiuto = raw.aiuto;
+    } else if (localStorage.getItem('giocapensa.musica') === '0') val.musica = false;      // the old music-only switch
+  } catch (e) {}
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(val)); } catch (e) {} }
+  return {
+    get: function (n) { return val[n]; },
+    set: function (n, v) { if (!(n in DEF)) return; val[n] = v; save(); try { window.dispatchEvent(new CustomEvent('opz', { detail: { nome: n, valore: v } })); } catch (e) {} },
+    all: function () { var o = {}, q; for (q in val) o[q] = val[q]; return o; }
+  };
+})();
+
+</script>
 <script id="sound">
 /* Shared sound engine. Every effect is synthesised on the spot with Web Audio (no audio files): small "instruments"
    (marimba, bell, pop, thud, whoosh, boing, bubbles, pad) played through a soft compressor and a little room reverb.
@@ -301,7 +327,7 @@ window.SFX = (function () {
       hiss(t + 0.5, 0.9, 0.03, 'highpass', 5000, 9000, 1, 0.6);
     }
   };
-  function play(name, o) { var c = ensure(); if (!c || !FX[name]) return; try { FX[name](c.currentTime + 0.012, o || {}); } catch (e) {} }
+  function play(name, o) { if (window.OPZ && !OPZ.get('suoni')) return; var c = ensure(); if (!c || !FX[name]) return; try { FX[name](c.currentTime + 0.012, o || {}); } catch (e) {} }
   return { play: play, penta: penta, major: major, names: Object.keys(FX), _use: function (c) { forced = c; ctx = null; } };
 })();
 
@@ -604,7 +630,7 @@ window.SFX = (function () {
       (function step(t) { var q = Math.min(1, Math.max(0, (t - t0) / 190)), e = 1 - Math.pow(1 - q, 3); el.setAttribute('transform', 'translate(' + (x0 + (to.x - x0) * e - b.w / 2).toFixed(1) + ',' + (y0 + (to.y - y0) * e - b.h / 2).toFixed(1) + ') scale(' + sc + ')'); if (q < 1) requestAnimationFrame(step); })(t0);
     }
     sparkle(to.x, to.y); save(); count(); sfx('place', items.length - 1); buzz(12);
-    if (game.mode === 'numeri' && !d.from && wanted(d.id)) speak(WORDS[howMany(d.id)] || '');         // count along, aloud, the stickers of this kind: uno, due, tre…
+    if (game.mode === 'numeri' && !d.from && wanted(d.id)) speak(numWord(howMany(d.id)));         // count along, aloud, the stickers of this kind: uno, due, tre…
   }
 
   tray.addEventListener('pointerdown', function (ev) {
@@ -652,23 +678,30 @@ window.SFX = (function () {
   /* ---------- the number game: for each requested sticker a big numeral; that many of each, then the green button ---------- */
   var WORDS = ['zero', 'uno', 'due', 'tre', 'quattro', 'cinque', 'sei', 'sette', 'otto', 'nove', 'dieci', 'undici', 'dodici', 'tredici', 'quattordici', 'quindici', 'sedici'];
   var NUMC = ['#EE5E4D', '#EE5E4D', '#F2872E', '#D9A516', '#4FAE57', '#3F86E0', '#2E9AA1', '#EE5E4D', '#F2872E', '#4FAE57', '#3F86E0'];
+  var WORDS_EN = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen'];
+  var NOUN_EN = { dinosauro: ['one dinosaur', 'dinosaurs'], razzo: ['one rocket', 'rockets'], aereo: ['one plane', 'planes'], trenino: ['one train', 'trains'], macchinina: ['one car', 'cars'], palla: ['one ball', 'balls'],
+    orsetto: ['one teddy bear', 'teddy bears'], gatto: ['one cat', 'cats'], cane: ['one dog', 'dogs'], uccellino: ['one bird', 'birds'], stella: ['one star', 'stars'], sole: ['one sun', 'suns'], luna: ['one moon', 'moons'],
+    nuvola: ['one cloud', 'clouds'], palloncino: ['one balloon', 'balloons'], pianta: ['one plant', 'plants'], lampada: ['one lamp', 'lamps'], quadro: ['one picture', 'pictures'] };
+  function eng() { return window.OPZ && OPZ.get('lingua') === 'en'; }
+  function numWord(n) { return (eng() ? WORDS_EN : WORDS)[n] || String(n); }
+  function nounOf(id, many) { return (eng() ? NOUN_EN : NOUN)[id][many ? 1 : 0]; }
   var NOUN = { dinosauro: ['un dinosauro', 'dinosauri'], razzo: ['un razzo', 'razzi'], aereo: ['un aereo', 'aerei'], trenino: ['un trenino', 'trenini'], macchinina: ['una macchinina', 'macchinine'], palla: ['un pallone', 'palloni'],
     orsetto: ['un orsetto', 'orsetti'], gatto: ['un gatto', 'gatti'], cane: ['un cane', 'cani'], uccellino: ['un uccellino', 'uccellini'], stella: ['una stella', 'stelle'], sole: ['un sole', 'soli'], luna: ['una luna', 'lune'],
     nuvola: ['una nuvola', 'nuvole'], palloncino: ['un palloncino', 'palloncini'], pianta: ['una pianta', 'piante'], lampada: ['una lampada', 'lampade'], quadro: ['un quadro', 'quadri'] }, ASK = Object.keys(NOUN);
   var calm = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   function speak(text) {
-    if (!game.voice || !text) return;
+    if (!game.voice || (window.OPZ && !OPZ.get('voce')) || !text) return;
     try {
       var ss = window.speechSynthesis; if (!ss) return; ss.cancel();
-      var u = new SpeechSynthesisUtterance(text), vs = (ss.getVoices() || []).filter(function (v) { return /^it/i.test(v.lang); });
-      u.lang = 'it-IT'; u.rate = 0.9; u.pitch = 1.1; if (vs.length) u.voice = vs[0]; ss.speak(u);
+      var want = eng() ? /^en/i : /^it/i, u = new SpeechSynthesisUtterance(text), vs = (ss.getVoices() || []).filter(function (v) { return want.test(v.lang); });
+      u.lang = eng() ? 'en-GB' : 'it-IT'; u.rate = 0.9; u.pitch = 1.1; if (vs.length) u.voice = vs[0]; ss.speak(u);
     } catch (err) {}
   }
   function fem(id) { return /^una /.test(NOUN[id][0]); }
   function wanted(id) { return (game.req || []).some(function (r) { return r.id === id && !r.ok; }); }        // asked for, and not settled yet
   function settled(id) { return game.mode === 'numeri' && (game.req || []).some(function (r) { return r.id === id && r.ok; }); }
   function howMany(id) { return items.filter(function (it) { return it.id === id; }).length; }
-  function words(r, digits) { return r.n === 1 ? (digits ? '1 ' + NOUN[r.id][0].replace(/^\S+\s/, '') : NOUN[r.id][0]) : (digits ? r.n : WORDS[r.n]) + ' ' + NOUN[r.id][1]; }
+  function words(r, digits) { return r.n === 1 ? (digits ? '1 ' + NOUN[r.id][0].replace(/^\S+\s/, '') : nounOf(r.id, false)) : (digits ? r.n : numWord(r.n)) + ' ' + nounOf(r.id, true); }
   function listOf(digits, arr) { var a = (arr || game.req).map(function (r) { return words(r, digits); }); return a.length < 2 ? a[0] || '' : a.slice(0, -1).join(', ') + ' e ' + a[a.length - 1]; }
   function cardOf(i) { return $('cards').children[i]; }
   function markTiles() { Array.prototype.forEach.call(tray.querySelectorAll('.tile[data-id]'), function (t) { t.classList.toggle('off', settled(t.getAttribute('data-id'))); }); }   // a settled kind cannot be added any more
@@ -706,14 +739,14 @@ window.SFX = (function () {
     if (locked || game.mode !== 'numeri') return;
     var open = game.req.filter(function (r) { return !r.ok; }), tried = open.filter(function (r) { return howMany(r.id) > 0; });
     if (!tried.length) {
-      $('say').textContent = 'Metti prima ' + listOf(true, open) + ', poi premi il tasto verde.'; speak('Non ce ne sono ancora');
+      $('say').textContent = 'Metti prima ' + listOf(true, open) + ', poi premi il tasto verde.'; speak(eng() ? 'None yet' : 'Non ce ne sono ancora');
       var c0 = cardOf(game.req.indexOf(open[0])); c0.classList.remove('bad'); void c0.offsetWidth; c0.classList.add('bad'); setTimeout(function () { c0.classList.remove('bad'); }, 600); return;
     }
     locked = true; $('btnOk').disabled = true; fx.innerHTML = ''; var gap = calm ? 60 : (game.voice ? 720 : 480), steps = [], right = [], wrongs = [];
     tried.forEach(function (r) {
       var ri = game.req.indexOf(r), mine = items.filter(function (it) { return it.id === r.id; });
       steps.push(function () { var c = cardOf(ri); c.classList.remove('bad', 'pop'); c.classList.add('now'); return gap * 0.45; });
-      mine.forEach(function (it, k) { steps.push(function () { hop(it); bubble(it, k + 1); speak(WORDS[k + 1]); sfx('count', k + 1); return gap; }); });
+      mine.forEach(function (it, k) { steps.push(function () { hop(it); bubble(it, k + 1); speak(numWord(k + 1)); sfx('count', k + 1); return gap; }); });
       steps.push(function () {
         var c = cardOf(ri), ok = mine.length === r.n; c.classList.remove('now');
         if (ok) { r.ok = true; right.push(r); c.classList.add('good'); markTiles(); sfx('done'); mine.forEach(function (it) { sparkle(it.x, it.y); }); }
@@ -728,20 +761,21 @@ window.SFX = (function () {
   }
   function win() {
     game.level++; game.done = true; saveGame(); confetti(); buzz([12, 60, 18]); sfx('win');
-    setTimeout(function () { speak('Bravo! ' + listOf(false) + '!'); }, 500);
+    setTimeout(function () { speak((eng() ? 'Well done! ' : 'Bravo! ') + listOf(false) + '!'); }, 500);
     $('resText').textContent = 'Giusto: ' + listOf(true) + '.'; $('say').textContent = '';
     setTimeout(function () { var r = $('result'); r.hidden = false; void r.offsetWidth; r.classList.add('show'); }, calm ? 100 : 900);        // everything stays as it is: the level is over
   }
   function goOn(right, wrongs) {                                 // not finished yet: say what is settled, what to fix, what is still to do
     var notes = [], voice = '', open = game.req.filter(function (r) { return !r.ok; });
-    if (right.length) { notes.push('Giusto: ' + listOf(true, right) + '.'); voice = 'Giusto! ' + listOf(false, right) + '.'; }
+    if (right.length) { notes.push('Giusto: ' + listOf(true, right) + '.'); voice = (eng() ? 'Yes! ' : 'Giusto! ') + listOf(false, right) + '.'; }
     wrongs.forEach(function (w) {                                 // «Lune: sono 2, ne servono 3.» — singular and feminine where they belong
       var r = w.r, f = w.n, noun = r.n === 1 ? NOUN[r.id][0].replace(/^\S+\s/, '') : NOUN[r.id][1], name = noun.charAt(0).toUpperCase() + noun.slice(1), g = fem(r.id);
       notes.push(name + ': ' + (f === 1 ? 'ce n\'è 1' : 'sono ' + f) + ', ' + (r.n === 1 ? 'ne serve 1.' : 'ne servono ' + r.n + '.') + (f > r.n ? ' Togline: trascinali nel cassetto.' : ''));
-      if (wrongs[0] === w) voice += (voice ? ' ' : '') + name + ': ' + (f === 1 && g ? 'una' : WORDS[f]) + '. ' + (r.n === 1 ? 'Ne serve ' + (g ? 'una' : 'uno') : 'Ne servono ' + WORDS[r.n]) + '.';
+      if (wrongs[0] === w) voice += (voice ? ' ' : '') + (eng() ? nounOf(r.id, r.n !== 1) + ': ' + numWord(f) + '. You need ' + numWord(r.n) + '.'
+        : name + ': ' + (f === 1 && g ? 'una' : WORDS[f]) + '. ' + (r.n === 1 ? 'Ne serve ' + (g ? 'una' : 'uno') : 'Ne servono ' + WORDS[r.n]) + '.');
     });
     var rest = open.filter(function (r) { return !wrongs.some(function (w) { return w.r === r; }); });
-    if (rest.length) { notes.push((wrongs.length ? 'Poi ' : 'Adesso ') + listOf(true, rest) + '.'); if (!wrongs.length) voice += ' Adesso ' + listOf(false, rest) + '.'; }
+    if (rest.length) { notes.push((wrongs.length ? 'Poi ' : 'Adesso ') + listOf(true, rest) + '.'); if (!wrongs.length) voice += (eng() ? ' Now ' : ' Adesso ') + listOf(false, rest) + '.'; }
     $('say').textContent = notes.join(' '); speak(voice);
     setTimeout(function () { fx.innerHTML = ''; locked = false; $('btnOk').disabled = false; Array.prototype.forEach.call($('cards').children, function (c) { c.classList.remove('bad'); }); }, calm ? 300 : 2300);
   }
@@ -756,7 +790,8 @@ window.SFX = (function () {
   $('btnNext').addEventListener('click', function () { round(false); });
   $('btnSame').addEventListener('click', function () { round(true); });
   $('btnDice').addEventListener('click', function () { if (!locked) round(false); });
-  $('btnVoice').addEventListener('click', function () { game.voice = !game.voice; saveGame(); this.setAttribute('aria-pressed', game.voice ? 'true' : 'false'); if (game.voice) speak(listOf(false)); else { try { window.speechSynthesis.cancel(); } catch (err) {} } });
+  function voiceOn() { return game.voice && (!window.OPZ || OPZ.get('voce')); }
+  $('btnVoice').addEventListener('click', function () { var v = !voiceOn(); game.voice = v; if (window.OPZ) OPZ.set('voce', v); saveGame(); this.setAttribute('aria-pressed', v ? 'true' : 'false'); if (v) speak(listOf(false)); else { try { window.speechSynthesis.cancel(); } catch (err) {} } });
   $('btnMode').addEventListener('click', function () { if (locked) return; setMode(game.mode === 'numeri' ? 'libero' : 'numeri'); });
 
 
@@ -794,7 +829,7 @@ window.SFX = (function () {
   $('btnTrayNext').addEventListener('click', function () { goPage(page + 1); sfx('page'); });
   window.addEventListener('resize', layoutTray);
   build(); setNight(night, true);
-  $('btnVoice').setAttribute('aria-pressed', game.voice ? 'true' : 'false'); setMode(game.mode);
+  $('btnVoice').setAttribute('aria-pressed', voiceOn() ? 'true' : 'false'); setMode(game.mode);
   if (game.req) game.req = game.req.filter(function (r) { return r && NOUN[r.id] && r.n >= 1 && r.n <= 10; }); if (!game.req || !game.req.length) { game.req = null; newRound(); }
   if (game.mode === 'numeri' && game.done) round(false); else showRound(false);                        // a finished round never comes back: a new one instead
 })();
