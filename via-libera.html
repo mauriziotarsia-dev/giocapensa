@@ -105,7 +105,7 @@ button:focus-visible,.veh:focus-visible,input:focus-visible{outline:3px solid va
   --grid:max(168px, min(calc(100vw - 50px - 2 * var(--frame)), 468px, calc(100vh - 300px)));
   --grid:max(168px, min(calc(100vw - 50px - 2 * var(--frame)), 468px, calc(100dvh - 300px)));
   display:flex; justify-content:center; padding:2px 0;
-}
+; touch-action:none}
 .tray{
   position:relative; padding:var(--frame); background:var(--tray); border-radius:calc(var(--frame) * 1.9);
   box-shadow:inset 0 0 0 1.5px var(--tray-lip), 0 14px 26px -16px rgba(0,0,0,.6);
@@ -457,6 +457,25 @@ window.OPZ = (function () {
     set: function (n, v) { if (!(n in DEF)) return; val[n] = v; save(); try { window.dispatchEvent(new CustomEvent('opz', { detail: { nome: n, valore: v } })); } catch (e) {} },
     all: function () { var o = {}, q; for (q in val) o[q] = val[q]; return o; }
   };
+})();
+
+</script>
+<script id="tocco">
+/* On iPhone two quick taps zoom the page in, and the app ends up cut off at the edges.
+   The playing areas are driven by pointer events, not by clicks, so a second quick tap there
+   can be stopped without losing anything. Buttons and texts outside keep working as usual. */
+(function () {
+  'use strict';
+  var AREA = '.stage, .scene, .tray, .traywrap, .board', last = 0;
+  function inArea(el) { return !!(el && el.closest && el.closest(AREA)); }
+  document.addEventListener('touchend', function (e) {
+    var t = Date.now(), quick = t - last < 450; last = t;
+    if (quick && inArea(e.target) && e.cancelable) e.preventDefault();
+  }, { passive: false });
+  ['gesturestart', 'gesturechange'].forEach(function (ev) {                    // and no pinch zoom over the board
+    document.addEventListener(ev, function (e) { if (inArea(e.target) && e.cancelable) e.preventDefault(); }, { passive: false });
+  });
+  document.addEventListener('dblclick', function (e) { if (inArea(e.target) && e.cancelable) e.preventDefault(); }, { passive: false });
 })();
 
 </script>

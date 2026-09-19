@@ -73,7 +73,7 @@ body.free .say{display:none}
 @keyframes conf{0%{opacity:1; transform:translate(0,0) rotate(0)}100%{opacity:1; transform:translate(var(--x),var(--y)) rotate(var(--r))}}
 .round:active{transform:scale(.92)}
 
-.stage{flex:1; min-height:0; display:grid; place-items:center}
+.stage{flex:1; min-height:0; display:grid; place-items:center; touch-action:none}
 .scene{display:block; width:100%; height:auto; max-height:100%; aspect-ratio:1000/1320; border-radius:20px; box-shadow:0 0 0 3px var(--ink), 0 12px 24px -16px rgba(0,0,0,.45); overflow:hidden; touch-action:none}
 .set{cursor:grab}
 /* every moving part pivots on its own box, so the same drawing animates at any size */
@@ -247,6 +247,25 @@ window.OPZ = (function () {
     set: function (n, v) { if (!(n in DEF)) return; val[n] = v; save(); try { window.dispatchEvent(new CustomEvent('opz', { detail: { nome: n, valore: v } })); } catch (e) {} },
     all: function () { var o = {}, q; for (q in val) o[q] = val[q]; return o; }
   };
+})();
+
+</script>
+<script id="tocco">
+/* On iPhone two quick taps zoom the page in, and the app ends up cut off at the edges.
+   The playing areas are driven by pointer events, not by clicks, so a second quick tap there
+   can be stopped without losing anything. Buttons and texts outside keep working as usual. */
+(function () {
+  'use strict';
+  var AREA = '.stage, .scene, .tray, .traywrap, .board', last = 0;
+  function inArea(el) { return !!(el && el.closest && el.closest(AREA)); }
+  document.addEventListener('touchend', function (e) {
+    var t = Date.now(), quick = t - last < 450; last = t;
+    if (quick && inArea(e.target) && e.cancelable) e.preventDefault();
+  }, { passive: false });
+  ['gesturestart', 'gesturechange'].forEach(function (ev) {                    // and no pinch zoom over the board
+    document.addEventListener(ev, function (e) { if (inArea(e.target) && e.cancelable) e.preventDefault(); }, { passive: false });
+  });
+  document.addEventListener('dblclick', function (e) { if (inArea(e.target) && e.cancelable) e.preventDefault(); }, { passive: false });
 })();
 
 </script>

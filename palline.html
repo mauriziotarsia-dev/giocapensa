@@ -38,7 +38,7 @@ button:focus-visible{outline:3px solid var(--joy); outline-offset:2px}
 .stats{display:flex; justify-content:center; gap:22px; color:var(--ink-2); font-size:.9375rem; flex:none}
 .stats b{color:var(--ink); font-weight:900; font-variant-numeric:tabular-nums; margin-left:4px}
 
-.stage{flex:1; min-height:0; display:grid; place-items:center}
+.stage{flex:1; min-height:0; display:grid; place-items:center; touch-action:none}
 .scene{display:block; width:100%; height:100%; max-height:100%; border-radius:22px; box-shadow:0 0 0 3px var(--ink), 0 12px 24px -16px rgba(0,0,0,.45); background:#FFEEDC; overflow:hidden; touch-action:none}
 
 /* everything that moves pivots on its own box */
@@ -185,6 +185,25 @@ window.OPZ = (function () {
     set: function (n, v) { if (!(n in DEF)) return; val[n] = v; save(); try { window.dispatchEvent(new CustomEvent('opz', { detail: { nome: n, valore: v } })); } catch (e) {} },
     all: function () { var o = {}, q; for (q in val) o[q] = val[q]; return o; }
   };
+})();
+
+</script>
+<script id="tocco">
+/* On iPhone two quick taps zoom the page in, and the app ends up cut off at the edges.
+   The playing areas are driven by pointer events, not by clicks, so a second quick tap there
+   can be stopped without losing anything. Buttons and texts outside keep working as usual. */
+(function () {
+  'use strict';
+  var AREA = '.stage, .scene, .tray, .traywrap, .board', last = 0;
+  function inArea(el) { return !!(el && el.closest && el.closest(AREA)); }
+  document.addEventListener('touchend', function (e) {
+    var t = Date.now(), quick = t - last < 450; last = t;
+    if (quick && inArea(e.target) && e.cancelable) e.preventDefault();
+  }, { passive: false });
+  ['gesturestart', 'gesturechange'].forEach(function (ev) {                    // and no pinch zoom over the board
+    document.addEventListener(ev, function (e) { if (inArea(e.target) && e.cancelable) e.preventDefault(); }, { passive: false });
+  });
+  document.addEventListener('dblclick', function (e) { if (inArea(e.target) && e.cancelable) e.preventDefault(); }, { passive: false });
 })();
 
 </script>

@@ -154,6 +154,25 @@ window.OPZ = (function () {
 })();
 
 </script>
+<script id="tocco">
+/* On iPhone two quick taps zoom the page in, and the app ends up cut off at the edges.
+   The playing areas are driven by pointer events, not by clicks, so a second quick tap there
+   can be stopped without losing anything. Buttons and texts outside keep working as usual. */
+(function () {
+  'use strict';
+  var AREA = '.stage, .scene, .tray, .traywrap, .board', last = 0;
+  function inArea(el) { return !!(el && el.closest && el.closest(AREA)); }
+  document.addEventListener('touchend', function (e) {
+    var t = Date.now(), quick = t - last < 450; last = t;
+    if (quick && inArea(e.target) && e.cancelable) e.preventDefault();
+  }, { passive: false });
+  ['gesturestart', 'gesturechange'].forEach(function (ev) {                    // and no pinch zoom over the board
+    document.addEventListener(ev, function (e) { if (inArea(e.target) && e.cancelable) e.preventDefault(); }, { passive: false });
+  });
+  document.addEventListener('dblclick', function (e) { if (inArea(e.target) && e.cancelable) e.preventDefault(); }, { passive: false });
+})();
+
+</script>
 <script id="sound">
 /* Shared sound engine. Every effect is synthesised on the spot with Web Audio (no audio files): small "instruments"
    (marimba, bell, pop, thud, whoosh, boing, bubbles, pad) played through a soft compressor and a little room reverb.
