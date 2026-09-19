@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Giocapensa</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Giocapensa">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#FDF3E3">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;800;900&display=swap">
+<style>
+:root{ color-scheme:light; --page:#FDF3E3; --ink:#4A3B52; --ink-2:#7A6B80; --font:"Overpass","Helvetica Neue",Helvetica,Arial,sans-serif }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ color-scheme:dark; --page:#241E28; --ink:#F2E8DC; --ink-2:#B3A6B8 } }
+:root[data-theme="dark"]{ color-scheme:dark; --page:#241E28; --ink:#F2E8DC; --ink-2:#B3A6B8 }
+*{box-sizing:border-box}
+html,body{margin:0; min-height:100%; overscroll-behavior:none}
+body{background:var(--page); color:var(--ink); font-family:var(--font); -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; -webkit-tap-highlight-color:transparent; touch-action:manipulation}
+.app{max-width:560px; min-height:100vh; min-height:100dvh; margin:0 auto; padding:max(14px,env(safe-area-inset-top)) 14px max(16px,env(safe-area-inset-bottom)); display:flex; flex-direction:column; gap:14px}
+.top{display:flex; align-items:center; gap:10px; padding:0 4px}
+.mascot{width:92px; height:84px; flex:none; overflow:visible}
+h1{margin:0; font-weight:900; font-size:2.375rem; letter-spacing:-.02em; line-height:1}
+h1 span{color:var(--c); display:inline-block; animation:letter 2.6s ease-in-out infinite; animation-delay:calc(var(--k, 0) * 90ms)}
+@keyframes letter{0%,70%,100%{transform:none}80%{transform:translateY(-5px)}}
+.ttl p{margin:4px 0 0; color:var(--ink-2); font-size:.875rem}
+.tailw{transform-box:fill-box; transform-origin:100% 60%; animation:sway 1.6s ease-in-out infinite}
+.bulb{transform-box:fill-box; transform-origin:50% 100%; animation:bulb 2.4s ease-in-out infinite}
+@keyframes bulb{0%,100%{transform:scale(.9); opacity:.75}50%{transform:scale(1.08); opacity:1}}
+.note{margin:0; text-align:center; color:var(--ink-2); font-size:.8125rem}
+.grid{flex:1; display:grid; grid-template-columns:1fr 1fr; grid-auto-rows:1fr; gap:14px}
+.tile{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; padding:12px 8px 12px; border-radius:26px; background:var(--bg); color:#4A3B52; text-decoration:none;
+  box-shadow:0 0 0 3px #4A3B52, 0 6px 0 0 #4A3B52; font-weight:900; font-size:1.0625rem; text-align:center; transition:transform .1s ease-out, box-shadow .1s ease-out; min-height:150px}
+.tile:active{transform:translateY(4px); box-shadow:0 0 0 3px #4A3B52, 0 2px 0 0 #4A3B52}
+.tile:focus-visible{outline:4px solid #FF8A3D; outline-offset:4px}
+.tile svg{width:min(100%,150px); height:auto; display:block; overflow:visible}
+.bob{transform-box:fill-box; transform-origin:50% 100%; animation:bob 3s ease-in-out infinite; animation-delay:var(--d,0s)}
+@keyframes bob{50%{transform:translateY(-6px) scale(1.02,.98)}}
+.spin{transform-box:fill-box; transform-origin:50% 50%; animation:spin 9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sway{transform-box:fill-box; transform-origin:50% 100%; animation:sway 2.8s ease-in-out infinite}
+@keyframes sway{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
+.blink{transform-box:fill-box; transform-origin:50% 50%; animation:blink 4.4s ease-in-out infinite; animation-delay:var(--d,0s)}
+@keyframes blink{0%,91%,100%{transform:scaleY(1)}95%{transform:scaleY(.08)}}
+.flow{stroke-dasharray:14 11; animation:flow .7s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-25}}
+@media (prefers-reduced-motion: reduce){ .bob,.spin,.sway,.blink,.flow,.tailw,.bulb,h1 span{animation:none} }
+</style>
+</head>
+<body>
+<main class="app">
+  <header class="top">
+    <svg class="mascot" viewBox="-64 -78 134 122" aria-hidden="true">
+      <ellipse cx="0" cy="38" rx="34" ry="6" fill="#4A3B52" opacity=".16"/>
+      <g class="bulb"><path d="M36 -74l3 -7M52 -66l7 -4M20 -66l-7 -4" fill="none" stroke="#F2872E" stroke-width="4" stroke-linecap="round"/><path d="M36 -68a11 11 0 0 1 7 19.500v4h-14v-4a11 11 0 0 1 7 -19.500Z" fill="#FFD95A" stroke="#4A3B52" stroke-width="4" stroke-linejoin="round"/><path d="M31 -40h10" stroke="#4A3B52" stroke-width="4" stroke-linecap="round"/></g>
+      <g class="bob"><g class="tailw"><path d="M-16 16q-26 6 -36 -14q14 10 36 0Z" fill="#5FBF6A" stroke="#4A3B52" stroke-width="4.500" stroke-linejoin="round"/></g>
+        <rect x="-15" y="20" width="13" height="19" rx="6" fill="#3F9A4E" stroke="#4A3B52" stroke-width="4"/><rect x="5" y="20" width="13" height="19" rx="6" fill="#3F9A4E" stroke="#4A3B52" stroke-width="4"/>
+        <path d="M-24 14q0 -24 24 -24q10 0 16 5q2 -26 20 -32q18 -3 19 11q0 12 -15 13q-3 22 -12 34q-8 10 -28 10q-24 0 -24 -17Z" fill="#5FBF6A" stroke="#4A3B52" stroke-width="4.500" stroke-linejoin="round"/>
+        <ellipse cx="2" cy="20" rx="15" ry="9" fill="#D6F2C9"/><path d="M-17 -5l5 -12l8 9ZM-3 -11l6 -13l8 11Z" fill="#F59A3A" stroke="#4A3B52" stroke-width="3.500" stroke-linejoin="round"/>
+        <g class="blink"><circle cx="40" cy="-31" r="4.400" fill="#4A3B52"/><circle cx="41.400" cy="-32.400" r="1.500" fill="#fff"/></g><circle cx="50" cy="-28" r="1.800" fill="#4A3B52"/><path d="M38 -19q8 4 15 -2" fill="none" stroke="#4A3B52" stroke-width="3" stroke-linecap="round"/></g>
+    </svg>
+    <div class="ttl"><h1 aria-label="Giocapensa"><span style="--c:#EE5E4D;--k:0">G</span><span style="--c:#F2872E;--k:1">i</span><span style="--c:#D9A516;--k:2">o</span><span style="--c:#4FAE57;--k:3">c</span><span style="--c:#3F86E0;--k:4">a</span><span style="--c:#2E9AA1;--k:5">p</span><span style="--c:#EE5E4D;--k:6">e</span><span style="--c:#F2872E;--k:7">n</span><span style="--c:#4FAE57;--k:8">s</span><span style="--c:#3F86E0;--k:9">a</span></h1><p>Giochi per pensare con le dita</p></div>
+  </header>
+  <nav class="grid" id="grid" aria-label="Giochi"></nav>
+</main>
+<script>
+(function () {
+  'use strict';
+  var INK = '#4A3B52', S = ' stroke="' + INK + '" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"';
+  function dot(x, y, r, f) { return '<circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="' + (f || INK) + '"/>'; }
+  function face(x, y, g, d) { return '<g class="blink" style="--d:' + (d || 0) + 's">' + dot(x - g, y, 4.4) + dot(x + g, y, 4.4) + '</g><path d="M' + (x - 7) + ' ' + (y + 11) + 'q7 7 14 0" fill="none"' + S.replace('5', '4') + '/>' + dot(x - g - 9, y + 9, 5, '#FFB59A') + dot(x + g + 9, y + 9, 5, '#FFB59A'); }
+  function star(cx, cy, rad, f) { var d = '', i, a, rr; for (i = 0; i < 10; i++) { a = -Math.PI / 2 + i * Math.PI / 5; rr = i % 2 ? rad * 0.47 : rad; d += (i ? 'L' : 'M') + (cx + rr * Math.cos(a)).toFixed(1) + ' ' + (cy + rr * Math.sin(a)).toFixed(1); } return '<path d="' + d + 'Z" fill="' + (f || '#FFD95A') + '"' + S.replace('5', '4') + '/>'; }
+  var GAMES = [
+    { href: 'via-libera.html', name: 'Via libera', bg: '#CFE3F7', art: '<g class="bob"><rect x="38" y="30" width="26" height="14" rx="7" fill="' + INK + '"/><rect x="98" y="30" width="26" height="14" rx="7" fill="' + INK + '"/><rect x="38" y="86" width="26" height="14" rx="7" fill="' + INK + '"/><rect x="98" y="86" width="26" height="14" rx="7" fill="' + INK + '"/><rect x="20" y="36" width="122" height="58" rx="22" fill="#D6274A"' + S + '/><path d="M22 58h118M22 72h118" stroke="#fff" stroke-width="7"/><rect x="58" y="44" width="46" height="42" rx="12" fill="#DFF3FC"' + S + '/>' + dot(132, 50, 5, '#FFF3A6') + dot(132, 80, 5, '#FFF3A6') + '</g><path d="M150 50l14 15-14 15" fill="none" stroke="#FF8A3D" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>' },
+    { href: 'palline.html', name: 'Palline nei tubi', bg: '#FFE6C4', art: '<path d="M52 18V92a28 28 0 0 0 56 0V18Z" fill="#DFF3FC" fill-opacity=".8"' + S + '/><rect x="44" y="8" width="72" height="18" rx="9" fill="#EAF7FD"' + S + '/><g class="bob" style="--d:-.4s"><circle cx="80" cy="94" r="22" fill="#7DB7F7"' + S + '/>' + face(80, 90, 8, -1) + '</g><g class="bob" style="--d:-1.2s"><circle cx="80" cy="50" r="22" fill="#FFD95A"' + S + '/>' + face(80, 46, 8, -2.2) + '</g>' },
+    { href: 'labirinti.html', name: 'Labirinti', bg: '#DDF0C8', art: '<path d="M14 14H150V116H14ZM14 60H70M70 60V92M108 14V66M108 66H130" fill="none" stroke="' + INK + '" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 14H150V116H14ZM14 60H70M70 60V92M108 14V66M108 66H130" fill="none" stroke="#7FC47E" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><g class="bob"><path d="M24 100q-2 -20 16 -22q8 0 12 4q2 -18 14 -22q12 -2 12 8t-10 9q-2 16 -8 24q-6 6 -20 6q-16 0 -16 -7Z" fill="#5FBF6A"' + S.replace('5', '4') + '/><path d="M33 80l4 -9l6 7Z" fill="#F59A3A"' + S.replace('5', '3') + '/>' + dot(70, 66, 3) + '</g><path d="M112 108q-4 -34 16 -40q18 -4 24 14q4 12 2 26Z" fill="#B9B2AA"' + S.replace('5', '4') + '/><path d="M124 108v-12a9 9 0 0 1 18 0v12Z" fill="#2A2430"' + S.replace('5', '3.5') + '/>' },
+    { href: 'acqua.html', name: 'Acqua ai fiori', bg: '#CFEBB5', art: '<path d="M26 40H84V96" fill="none" stroke="' + INK + '" stroke-width="30" stroke-linejoin="round"/><path d="M26 40H84V96" fill="none" stroke="#C3CDD7" stroke-width="21" stroke-linejoin="round"/><path class="flow" d="M26 40H84V96" fill="none" stroke="#56B4EE" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/><circle cx="26" cy="40" r="17" fill="#7DB7F7"' + S + '/><g class="sway"><g>' + [0, 1, 2, 3, 4, 5].map(function (i) { var a = i * Math.PI / 3; return '<circle cx="' + (120 + Math.cos(a) * 22).toFixed(1) + '" cy="' + (76 + Math.sin(a) * 22).toFixed(1) + '" r="14" fill="#FFC23F"' + S.replace('5', '4') + '/>'; }).join('') + '<circle cx="120" cy="76" r="17" fill="#C98A3D"' + S.replace('5', '4') + '/>' + dot(114, 73, 3) + dot(126, 73, 3) + '<path d="M114 80q6 6 12 0" fill="none"' + S.replace('5', '3.5') + '/></g></g>' },
+    { href: 'incastri.html', name: 'Incastri', bg: '#D3F0EE', art: '<g class="bob" style="--d:-.8s"><path d="M20 24h80v40h-40v40h-40Z" fill="#8DD68A"' + S + '/>' + face(40, 42, 8, -1.5) + '</g><g class="bob" style="--d:-2s"><path d="M70 74h40v-40h40v80h-80Z" fill="#F2A65A"' + S + '/>' + face(130, 56, 8, -3) + '</g>' },
+    { href: 'adesivi.html', name: 'Adesivi e numeri', bg: '#FFF1C9', art: '<g class="bob"><path d="M66 96q14 30 14 30t14 -30Z" fill="#FFD95A"' + S.replace('5', '4') + '/><path d="M56 82l-14 24 16 -7ZM104 82l14 24 -16 -7Z" fill="#EE5E4D"' + S + '/><path d="M80 10q24 25 24 60v22H56V70q0 -35 24 -60Z" fill="#EEF3F7"' + S + '/><path d="M80 10q13 13 19 32H61q6 -19 19 -32Z" fill="#EE5E4D"' + S + '/><circle cx="80" cy="62" r="12" fill="#7DB7F7"' + S.replace('5', '4') + '/></g><g class="bob" style="--d:-1.4s"><circle cx="134" cy="40" r="24" fill="#fff"' + S + '/><text x="134" y="53" text-anchor="middle" font-size="36" font-weight="900" font-family="inherit" fill="#EE5E4D">3</text></g><g class="spin">' + star(26, 60, 11) + '</g>' }
+  ];
+  var PREVIEW = window.PREVIEW_LINKS || null;
+  if (PREVIEW) document.querySelector('.app').insertAdjacentHTML('beforeend', '<p class="note">Anteprima: qui ogni gioco si apre in una scheda a parte. Nell\'app pubblicata si apre dentro l\'app.</p>');
+  document.getElementById('grid').innerHTML = GAMES.map(function (g, i) { return '<a class="tile" href="' + (PREVIEW ? PREVIEW[g.href] + '" target="_blank" rel="noopener' : g.href) + '" style="--bg:' + g.bg + '"><svg viewBox="0 0 164 128" aria-hidden="true">' + g.art + '</svg>' + g.name + '</a>'; }).join('');
+  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+})();
+</script>
+</body>
+</html>

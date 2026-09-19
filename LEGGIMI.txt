@@ -1,0 +1,32 @@
+GIOCAPENSA - come aggiornare l'app
+
+0) LA PRIMA VOLTA: crea il repository
+    In Safari apri github.com/new : nome "giocapensa", Public, spunta "Add a README file", poi "Create repository".
+    Dopo il primo caricamento (punto A) apri github.com/mauriziotarsia-dev/giocapensa/settings/pages :
+    Source "Deploy from a branch", Branch "main" e cartella "/ (root)", poi "Save".
+    Dopo due o tre minuti l'app e' su  mauriziotarsia-dev.github.io/giocapensa/
+
+A) A MANO, DAL TELEFONO (cinque minuti)
+ 1. Decomprimi questo zip nell'app File: si crea una cartella con 15 file.
+ 2. Apri SAFARI (non l'app GitHub) all'indirizzo
+      github.com/mauriziotarsia-dev/giocapensa/upload/main
+    e accedi a GitHub se te lo chiede.
+ 3. Tocca "choose your files", vai nella cartella, seleziona TUTTI i 15 file e conferma.
+ 4. Aspetta che compaiano tutti nell'elenco, scorri in fondo e premi il tasto verde "Commit changes".
+ 5. Dopo due o tre minuti apri l'app dalla Home. Se vedi ancora la versione vecchia, chiudila e riaprila.
+ I file con lo stesso nome vengono sostituiti da soli: non c'e' niente da cancellare.
+ I progressi del bambino restano: sono salvati sul telefono, non in questi file.
+
+B) CON CLAUDE CODE (dopo aver fatto A almeno una volta)
+ 1. Nell'app Claude apri la scheda "Code" (oppure claude.ai/code in Safari), collega GitHub quando lo chiede
+    e scegli il repository "giocapensa".
+ 2. La prima volta incolla questo messaggio:
+
+      Leggi CLAUDE.md. Decomprimi sorgenti.zip nella radice (crea la cartella src/, sovrascrivendola se esiste gia'),
+      poi elimina sorgenti.zip e LEGGIMI.txt. Esegui python3 src/build.py e node src/tests/verify.js:
+      le pagine nella radice non devono cambiare. Fai commit su main.
+
+ 3. Da li' in poi scrivi li' le modifiche che vuoi, in italiano. Claude Code le prepara e te le propone:
+    quando le approvi (tasto per creare e unire la pull request) vanno online da sole in pochi minuti.
+
+Non rinominare il repository: cambierebbe l'indirizzo dell'app e l'icona sulla Home smetterebbe di funzionare.
