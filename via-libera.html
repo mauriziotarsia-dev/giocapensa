@@ -839,7 +839,7 @@ window.VL_LEVELS = ["ooooooooooBoooAABooooooooooooooooooo:g:2",
     var a = ensureAudio(); if (!a) return;
     try { var s = a.createBufferSource(); s.buffer = a.createBuffer(1, 1, 22050); s.connect(a.destination); s.start(0); } catch (e) {}
   }
-  ['pointerup', 'touchend', 'click', 'keydown'].forEach(function (ev) { window.addEventListener(ev, function () { if (store.sound && (!actx || actx.state !== 'running')) wakeAudio(); }, true); });
+  ['pointerdown', 'pointerup', 'touchstart', 'touchend', 'click', 'keydown'].forEach(function (ev) { window.addEventListener(ev, function () { if (store.sound && (!actx || actx.state !== 'running')) wakeAudio(); }, true); });
   document.addEventListener('visibilitychange', function () { if (document.hidden) { clearTimeout(cloud.timer); pump(); } });
   function tone(t, f0, f1, dur, type, vol, attack) {
     var o = actx.createOscillator(), g = actx.createGain(); o.type = type; o.frequency.setValueAtTime(f0, t);
@@ -902,7 +902,11 @@ window.VL_LEVELS = ["ooooooooooBoooAABooooooooooooooooooo:g:2",
   };
   function sfx(kind, k) {
     var a = ensureAudio(); if (!a) return;
-    try { SFX[S().skin][kind](a.currentTime + 0.015, k == null ? 1 : k); } catch (e) {}
+    function fire() { try { SFX[S().skin][kind](a.currentTime + 0.015, k == null ? 1 : k); } catch (e) {} }
+    if (a.state === 'running') { fire(); return; }
+    if (!a.resume) return;
+    var r = a.resume();                                                          // the first sound of the page must wait for the audio to be awake
+    if (r && r.then) r.then(fire, function () {}); else fire();
   }
   function buzz(ms) { try { if (navigator.vibrate) navigator.vibrate(ms); } catch (e) {} }
 

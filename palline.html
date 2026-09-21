@@ -233,7 +233,7 @@ window.SFX = (function () {
     } catch (e) { return null; }
   }
   // iOS only starts audio from inside a touch or click handler: wake the context on every gesture until it runs
-  ['pointerup', 'touchend', 'click', 'keydown'].forEach(function (ev) { window.addEventListener(ev, function () { if (!forced && (!ctx || ctx.state !== 'running')) ensure(); }, true); });
+  ['pointerdown', 'pointerup', 'touchstart', 'touchend', 'click', 'keydown'].forEach(function (ev) { window.addEventListener(ev, function () { if (!forced && (!ctx || ctx.state !== 'running')) ensure(); }, true); });
 
   function out(g, send) { g.connect(dry); if (send) { var s = ctx.createGain(); s.gain.value = send; g.connect(s); s.connect(wet); } }
   function voice(type, f0, t, dur, peak, o) {
@@ -284,7 +284,15 @@ window.SFX = (function () {
       hiss(t + 0.5, 0.9, 0.03, 'highpass', 5000, 9000, 1, 0.6);
     }
   };
-  function play(name, o) { if (window.OPZ && !OPZ.get('suoni')) return; var c = ensure(); if (!c || !FX[name]) return; try { FX[name](c.currentTime + 0.012, o || {}); } catch (e) {} }
+  function play(name, o) {
+    if (window.OPZ && !OPZ.get('suoni')) return;
+    var c = ensure(); if (!c || !FX[name]) return;
+    function fire() { try { FX[name](c.currentTime + 0.012, o || {}); } catch (e) {} }
+    if (c.state === 'running') { fire(); return; }
+    if (!c.resume) return;
+    var r = c.resume();                                                          // waking up takes a moment: play as soon as it is awake, or the sound is lost
+    if (r && r.then) r.then(fire, function () {}); else fire();
+  }
   return { play: play, penta: penta, major: major, names: Object.keys(FX), _use: function (c) { forced = c; ctx = null; } };
 })();
 
