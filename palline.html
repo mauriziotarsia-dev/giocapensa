@@ -87,6 +87,8 @@ button:focus-visible{outline:3px solid var(--joy); outline-offset:2px}
 .result{position:fixed; z-index:20; left:0; right:0; bottom:0; max-width:560px; margin:0 auto; background:var(--surface); border-radius:26px 26px 0 0; padding:22px 20px max(20px,env(safe-area-inset-bottom)); text-align:center; box-shadow:0 0 0 3px var(--ink); transform:translateY(108%); transition:transform .36s cubic-bezier(.2,.9,.25,1)}
 .result.show{transform:none}
 .result h2{margin:0; font-weight:900; font-size:1.875rem; letter-spacing:-.01em; line-height:1.1}
+.result.show .perfect{animation:badge .6s cubic-bezier(.2,1.6,.4,1) .25s both}
+@keyframes badge{0%{transform:scale(.3) rotate(-12deg)}60%{transform:scale(1.15) rotate(5deg)}100%{transform:none}}
 .result .perfect{display:inline-flex; align-items:center; gap:6px; margin:10px 0 0; padding:5px 12px 3px 9px; border-radius:16px; background:#FFD95A; color:#4A3B52; box-shadow:0 0 0 2.5px #4A3B52; font-weight:900; font-size:.875rem}
 .result .perfect svg{width:16px; height:16px; margin-top:-3px}
 .result p{margin:10px auto 0; max-width:34ch; color:var(--ink-2); text-wrap:balance}
@@ -226,14 +228,31 @@ window.SFX = (function () {
     var conv = ctx.createConvolver(); conv.buffer = ir; wet = ctx.createGain(); wet.gain.value = 0.5; wet.connect(conv); conv.connect(comp);
     n = Math.floor(ctx.sampleRate * 0.7); noiseBuf = ctx.createBuffer(1, n, ctx.sampleRate); d = noiseBuf.getChannelData(0); for (i = 0; i < n; i++) d[i] = Math.random() * 2 - 1;
   }
+  var waiting = [];                                                              // sounds asked for while the audio was still asleep
+  function flush() {
+    if (!ctx || ctx.state !== 'running') return;
+    var now = Date.now(), q = waiting; waiting = [];
+    q.forEach(function (w) { if (now - w.t < 1200) { try { FX[w.n](ctx.currentTime + 0.012, w.o); } catch (e) {} } });
+  }
   function ensure() {
     try {
       if (forced) { if (ctx !== forced) build(forced); return ctx; }
-      if (!AC) return null; if (!ctx) build(new AC()); if (ctx.state !== 'running' && ctx.resume) ctx.resume(); return ctx;
+      if (!AC) return null;
+      if (!ctx) { build(new AC()); if (ctx.addEventListener) ctx.addEventListener('statechange', flush); ctx.onstatechange = flush; }
+      if (ctx.state !== 'running' && ctx.resume) { var r = ctx.resume(); if (r && r.then) r.then(flush, function () {}); }
+      return ctx;
     } catch (e) { return null; }
   }
-  // iOS only starts audio from inside a touch or click handler: wake the context on every gesture until it runs
-  ['pointerdown', 'pointerup', 'touchstart', 'touchend', 'click', 'keydown'].forEach(function (ev) { window.addEventListener(ev, function () { if (!forced && (!ctx || ctx.state !== 'running')) ensure(); }, true); });
+  // iOS starts audio only from inside a touch or click, and only once a real sound has gone through: at every gesture
+  // wake the context and push a silent blip through it, until it is running.
+  function unlock() {
+    if (forced) return;
+    var c = ensure(); if (!c) return;
+    try { var s2 = c.createBufferSource(); s2.buffer = c.createBuffer(1, 1, 22050); s2.connect(c.destination); s2.start(0); } catch (e) {}
+    flush();
+  }
+  ['pointerdown', 'pointerup', 'touchstart', 'touchend', 'click', 'keydown'].forEach(function (ev) { window.addEventListener(ev, function () { if (!ctx || ctx.state !== 'running') unlock(); }, true); });
+  document.addEventListener('visibilitychange', function () { if (!document.hidden && ctx && ctx.state !== 'running') ensure(); });
 
   function out(g, send) { g.connect(dry); if (send) { var s = ctx.createGain(); s.gain.value = send; g.connect(s); s.connect(wet); } }
   function voice(type, f0, t, dur, peak, o) {
@@ -277,6 +296,13 @@ window.SFX = (function () {
     react: function (t, o) { var f = o.note || 600; voice('triangle', f, t, 0.13, 0.34, { to: f * 1.5, send: 0.3 }); voice('triangle', f * 1.5, t + 0.13, 0.2, 0.3, { to: f * 1.25, vib: 9, send: 0.3 }); },
     night: function (t) { [523.25, 392, 329.63].forEach(function (f, k) { pad(t + k * 0.16, f, 1.1, 0.12); }); bell(t + 0.5, 1318.5, 0.07, true); },
     day: function (t) { [329.63, 392, 523.25, 659.25].forEach(function (f, k) { pad(t + k * 0.12, f, 0.9, 0.12); }); bell(t + 0.48, 1568, 0.08); },
+    applause: function (t) {                                     // many little claps, thickening and then thinning out
+      var n, k, when;
+      for (k = 0; k < 64; k++) { n = Math.random(); when = t + 0.04 + Math.pow(n, 0.6) * 1.7; hiss(when, 0.04 + Math.random() * 0.035, 0.3 + Math.random() * 0.25, 'bandpass', 1300 + Math.random() * 2200, null, 1.4, 0.35); }
+      hiss(t + 0.05, 1.8, 0.16, 'bandpass', 900, 1800, 0.6, 0.6);
+      voice('sine', 1760, t + 0.35, 0.5, 0.11, { to: 2350, glide: 0.18, vib: 7, send: 0.9 });               // a little whistle in the crowd
+    },
+    perfect: function (t, o) { FX.win(t, o); FX.applause(t + 0.55, o); },
     win: function (t) {
       [523.25, 659.25, 783.99, 1046.5].forEach(function (f, k) { marimba(t + 0.12 + k * 0.1, f, 0.27); bell(t + 0.12 + k * 0.1, f * 2, 0.07); });
       [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach(function (f) { pad(t + 0.56, f, 1.5, 0.06); }); bell(t + 0.56, 2093, 0.13, true);
@@ -287,11 +313,9 @@ window.SFX = (function () {
   function play(name, o) {
     if (window.OPZ && !OPZ.get('suoni')) return;
     var c = ensure(); if (!c || !FX[name]) return;
-    function fire() { try { FX[name](c.currentTime + 0.012, o || {}); } catch (e) {} }
-    if (c.state === 'running') { fire(); return; }
-    if (!c.resume) return;
-    var r = c.resume();                                                          // waking up takes a moment: play as soon as it is awake, or the sound is lost
-    if (r && r.then) r.then(fire, function () {}); else fire();
+    if (forced || c.state === 'running') { try { FX[name](c.currentTime + 0.012, o || {}); } catch (e) {} return; }   // forced = an offline context, used to measure the sounds
+    if (waiting.length < 6) waiting.push({ n: name, o: o || {}, t: Date.now() });  // still waking up: keep the sound and play it the moment it is awake
+    if (c.resume) { var r = c.resume(); if (r && r.then) r.then(flush, function () {}); }
   }
   return { play: play, penta: penta, major: major, names: Object.keys(FX), _use: function (c) { forced = c; ctx = null; } };
 })();
@@ -616,8 +640,8 @@ window.TB_LEVELS = ["2|bg,b,g|2","3|bp,bb,pp|2","3|ggr,g,rr|2","2|pp,r,rb,b|2","
     if (!prev || moves < prev) data.best[level + 1] = moves;
     data.last = Math.min(RAW.length - 1, level + 1); persist(); updateStats();
     els.forEach(function (col, ti) { col.forEach(function (el, j) { el.style.setProperty('--pd', (ti * 0.09 + j * 0.05).toFixed(2) + 's'); el.classList.remove('land'); el.classList.add('party'); }); if (col.length) setTimeout(function () { sparkle(cx(ti), TOP - 50); }, 120 * ti); });
-    sfx('win'); buzz([12, 60, 18]); confetti();
     var perfect = moves <= minMoves, text;
+    sfx(perfect ? 'perfect' : 'win'); buzz(perfect ? [12, 60, 18, 60, 22] : [12, 60, 18]); confetti();
     if (perfect) text = 'Risolto in ' + moves + ' mosse: meno di così non si può.';
     else if (!prev || moves < prev) text = 'Risolto in ' + moves + ' mosse' + (prev ? ', nuovo record' : '') + '. Il minimo è ' + minMoves + '.';
     else text = 'Risolto in ' + moves + ' mosse. Il tuo record è ' + prev + ', il minimo è ' + minMoves + '.';

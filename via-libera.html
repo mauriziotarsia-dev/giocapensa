@@ -479,6 +479,118 @@ window.OPZ = (function () {
 })();
 
 </script>
+<script id="sound">
+/* Shared sound engine. Every effect is synthesised on the spot with Web Audio (no audio files): small "instruments"
+   (marimba, bell, pop, thud, whoosh, boing, bubbles, pad) played through a soft compressor and a little room reverb.
+   On iPhone Web Audio follows the ring/silent switch. Use: SFX.play('place', { i: 3 }) or SFX.play('drop', { note: 659.25 }). */
+window.SFX = (function () {
+  'use strict';
+  var AC = window.AudioContext || window.webkitAudioContext, ctx = null, dry = null, wet = null, noiseBuf = null, forced = null;
+  var PENTA = [1, 9 / 8, 5 / 4, 3 / 2, 5 / 3], MAJOR = [1, 9 / 8, 5 / 4, 4 / 3, 3 / 2, 5 / 3, 15 / 8];
+  function penta(i) { i = Math.max(0, i | 0); return 523.25 * PENTA[i % 5] * Math.pow(2, Math.floor(i / 5)); }
+  function major(i) { i = Math.max(0, i | 0); return 523.25 * MAJOR[i % 7] * Math.pow(2, Math.floor(i / 7)); }
+  function build(c) {
+    ctx = c;
+    var comp = ctx.createDynamicsCompressor(); comp.threshold.value = -14; comp.knee.value = 20; comp.ratio.value = 3.5; comp.attack.value = 0.003; comp.release.value = 0.2; comp.connect(ctx.destination);
+    dry = ctx.createGain(); dry.gain.value = 0.9; dry.connect(comp);
+    var n = Math.floor(ctx.sampleRate * 1.3), ir = ctx.createBuffer(2, n, ctx.sampleRate), ch, i, d;              // a small bright room, made of decaying noise
+    for (ch = 0; ch < 2; ch++) { d = ir.getChannelData(ch); for (i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 3.2) * (i < 400 ? i / 400 : 1); }
+    var conv = ctx.createConvolver(); conv.buffer = ir; wet = ctx.createGain(); wet.gain.value = 0.5; wet.connect(conv); conv.connect(comp);
+    n = Math.floor(ctx.sampleRate * 0.7); noiseBuf = ctx.createBuffer(1, n, ctx.sampleRate); d = noiseBuf.getChannelData(0); for (i = 0; i < n; i++) d[i] = Math.random() * 2 - 1;
+  }
+  var waiting = [];                                                              // sounds asked for while the audio was still asleep
+  function flush() {
+    if (!ctx || ctx.state !== 'running') return;
+    var now = Date.now(), q = waiting; waiting = [];
+    q.forEach(function (w) { if (now - w.t < 1200) { try { FX[w.n](ctx.currentTime + 0.012, w.o); } catch (e) {} } });
+  }
+  function ensure() {
+    try {
+      if (forced) { if (ctx !== forced) build(forced); return ctx; }
+      if (!AC) return null;
+      if (!ctx) { build(new AC()); if (ctx.addEventListener) ctx.addEventListener('statechange', flush); ctx.onstatechange = flush; }
+      if (ctx.state !== 'running' && ctx.resume) { var r = ctx.resume(); if (r && r.then) r.then(flush, function () {}); }
+      return ctx;
+    } catch (e) { return null; }
+  }
+  // iOS starts audio only from inside a touch or click, and only once a real sound has gone through: at every gesture
+  // wake the context and push a silent blip through it, until it is running.
+  function unlock() {
+    if (forced) return;
+    var c = ensure(); if (!c) return;
+    try { var s2 = c.createBufferSource(); s2.buffer = c.createBuffer(1, 1, 22050); s2.connect(c.destination); s2.start(0); } catch (e) {}
+    flush();
+  }
+  ['pointerdown', 'pointerup', 'touchstart', 'touchend', 'click', 'keydown'].forEach(function (ev) { window.addEventListener(ev, function () { if (!ctx || ctx.state !== 'running') unlock(); }, true); });
+  document.addEventListener('visibilitychange', function () { if (!document.hidden && ctx && ctx.state !== 'running') ensure(); });
+
+  function out(g, send) { g.connect(dry); if (send) { var s = ctx.createGain(); s.gain.value = send; g.connect(s); s.connect(wet); } }
+  function voice(type, f0, t, dur, peak, o) {
+    o = o || {}; var os = ctx.createOscillator(), g = ctx.createGain(); os.type = type; os.frequency.setValueAtTime(f0, t);
+    if (o.to) os.frequency.exponentialRampToValueAtTime(o.to, t + (o.glide || dur));
+    if (o.vib) { var l = ctx.createOscillator(), lg = ctx.createGain(); l.frequency.value = o.vib; lg.gain.value = f0 * 0.05; l.connect(lg); lg.connect(os.frequency); l.start(t); l.stop(t + dur + 0.1); }
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + (o.attack || 0.005)); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    os.connect(g); out(g, o.send); os.start(t); os.stop(t + dur + 0.1);
+  }
+  function hiss(t, dur, peak, kind, f0, f1, q, send) {
+    var s = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain(); s.buffer = noiseBuf; s.loop = true;
+    f.type = kind; f.frequency.setValueAtTime(f0, t); if (f1) f.frequency.exponentialRampToValueAtTime(f1, t + dur); f.Q.value = q || 0.8;
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + Math.min(0.02, dur * 0.3)); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    s.connect(f); f.connect(g); out(g, send); s.start(t, Math.random() * 0.3); s.stop(t + dur + 0.05);
+  }
+  /* instruments */
+  function marimba(t, f, v) { voice('sine', f, t, 0.42, v, { send: 0.5 }); voice('sine', f * 3.98, t, 0.1, v * 0.32); voice('triangle', f * 2, t, 0.2, v * 0.16); hiss(t, 0.02, v * 0.35, 'highpass', 2500); }
+  function bell(t, f, v, long) { var d = long ? 1.6 : 0.9; voice('sine', f, t, d, v, { send: 0.9 }); voice('sine', f * 2.76, t, d * 0.6, v * 0.4, { send: 0.9 }); voice('sine', f * 5.4, t, d * 0.35, v * 0.22, { send: 0.6 }); voice('sine', f * 8.93, t, d * 0.2, v * 0.1); }
+  function pop(t, f, v) { voice('sine', f * 1.9, t, 0.09, v, { to: f, glide: 0.06 }); }
+  function thud(t, v) { voice('sine', 170, t, 0.13, v, { to: 62 }); hiss(t, 0.05, v * 0.5, 'lowpass', 900, 250); }
+  function whoosh(t, dur, v, up) { hiss(t, dur, v, 'bandpass', up ? 500 : 2600, up ? 2600 : 450, 1.2, 0.3); }
+  function boing(t, v) { voice('sine', 300, t, 0.26, v, { to: 170, vib: 22, send: 0.2 }); voice('triangle', 150, t, 0.2, v * 0.4, { to: 95 }); }
+  function bubble(t, f, v) { voice('sine', f, t, 0.08, v, { to: f * 1.7, glide: 0.07, send: 0.4 }); }
+  function pad(t, f, dur, v) { voice('sine', f, t, dur, v, { attack: dur * 0.35, send: 0.9 }); voice('triangle', f * 2, t, dur, v * 0.2, { attack: dur * 0.4, send: 0.9 }); }
+
+  var FX = {
+    tap: function (t, o) { pop(t, o.note || 620, 0.42); },
+    page: function (t) { pop(t, 480, 0.4); hiss(t, 0.03, 0.2, 'highpass', 3000); },
+    pick: function (t, o) { pop(t, o.note || 520, 0.55); whoosh(t, 0.12, 0.16, true); },
+    place: function (t, o) { marimba(t, o.note || penta(o.i || 0), 0.36); thud(t, 0.34); },
+    drop: function (t, o) { thud(t, 0.4); marimba(t + 0.01, o.note || 523.25, 0.36); },
+    step: function (t, o) { thud(t, 0.3); voice('sine', penta([0, 2, 1, 3, 2, 4, 3, 1][(o.i || 0) % 8]) / 2, t, 0.14, 0.26, { send: 0.3 }); },          // soft feet, humming a little tune
+    turn: function (t, o) { hiss(t, 0.035, 0.5, 'highpass', 1800); voice('triangle', 880 + (o.i || 0) * 70, t + 0.015, 0.13, 0.3, { to: 660, send: 0.3 }); thud(t + 0.03, 0.3); },   // a ratchet click and a metal ping
+    water: function (t, o) { for (var k = 0; k < 6; k++) bubble(t + k * 0.055 + Math.random() * 0.02, 500 + k * 130 + Math.random() * 80, 0.13); bell(t + 0.3, penta(5 + (o.i || 0) % 4), 0.2); },
+    star: function (t) { bell(t, 1046.5, 0.2); bell(t + 0.09, 1568, 0.18); hiss(t, 0.25, 0.04, 'highpass', 6000, 9000, 1, 0.5); },
+    key: function (t) { bell(t, 784, 0.2); bell(t + 0.1, 1174.7, 0.16); hiss(t + 0.02, 0.03, 0.18, 'highpass', 3000); },
+    no: function (t) { boing(t, 0.6); },
+    back: function (t) { whoosh(t, 0.16, 0.24, false); pop(t + 0.03, 300, 0.4); },
+    done: function (t, o) { var f = o.note || 659.25; [1, 1.26, 1.5].forEach(function (r, k) { marimba(t + k * 0.075, f * r, 0.24); }); bell(t + 0.24, f * 2, 0.2); },
+    count: function (t, o) { var f = major(Math.max(0, (o.i || 1) - 1)); marimba(t, f, 0.42); bell(t, f * 2, 0.1); },                  // counting walks up the scale: do, re, mi…
+    react: function (t, o) { var f = o.note || 600; voice('triangle', f, t, 0.13, 0.34, { to: f * 1.5, send: 0.3 }); voice('triangle', f * 1.5, t + 0.13, 0.2, 0.3, { to: f * 1.25, vib: 9, send: 0.3 }); },
+    night: function (t) { [523.25, 392, 329.63].forEach(function (f, k) { pad(t + k * 0.16, f, 1.1, 0.12); }); bell(t + 0.5, 1318.5, 0.07, true); },
+    day: function (t) { [329.63, 392, 523.25, 659.25].forEach(function (f, k) { pad(t + k * 0.12, f, 0.9, 0.12); }); bell(t + 0.48, 1568, 0.08); },
+    applause: function (t) {                                     // many little claps, thickening and then thinning out
+      var n, k, when;
+      for (k = 0; k < 64; k++) { n = Math.random(); when = t + 0.04 + Math.pow(n, 0.6) * 1.7; hiss(when, 0.04 + Math.random() * 0.035, 0.3 + Math.random() * 0.25, 'bandpass', 1300 + Math.random() * 2200, null, 1.4, 0.35); }
+      hiss(t + 0.05, 1.8, 0.16, 'bandpass', 900, 1800, 0.6, 0.6);
+      voice('sine', 1760, t + 0.35, 0.5, 0.11, { to: 2350, glide: 0.18, vib: 7, send: 0.9 });               // a little whistle in the crowd
+    },
+    perfect: function (t, o) { FX.win(t, o); FX.applause(t + 0.55, o); },
+    win: function (t) {
+      [523.25, 659.25, 783.99, 1046.5].forEach(function (f, k) { marimba(t + 0.12 + k * 0.1, f, 0.27); bell(t + 0.12 + k * 0.1, f * 2, 0.07); });
+      [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach(function (f) { pad(t + 0.56, f, 1.5, 0.06); }); bell(t + 0.56, 2093, 0.13, true);
+      for (var k = 0; k < 7; k++) bell(t + 0.75 + k * 0.085, penta(7 + (k * 3) % 8), 0.06);                                          // a little shower of sparkles
+      hiss(t + 0.5, 0.9, 0.03, 'highpass', 5000, 9000, 1, 0.6);
+    }
+  };
+  function play(name, o) {
+    if (window.OPZ && !OPZ.get('suoni')) return;
+    var c = ensure(); if (!c || !FX[name]) return;
+    if (forced || c.state === 'running') { try { FX[name](c.currentTime + 0.012, o || {}); } catch (e) {} return; }   // forced = an offline context, used to measure the sounds
+    if (waiting.length < 6) waiting.push({ n: name, o: o || {}, t: Date.now() });  // still waking up: keep the sound and play it the moment it is awake
+    if (c.resume) { var r = c.resume(); if (r && r.then) r.then(flush, function () {}); }
+  }
+  return { play: play, penta: penta, major: major, names: Object.keys(FX), _use: function (c) { forced = c; ctx = null; } };
+})();
+
+</script>
 <script id="logic">
 /* Pure game logic: level parsing and shortest-path solver (no DOM). */
 (function (root) {
@@ -1292,8 +1404,9 @@ window.VL_LEVELS = ["ooooooooooBoooAABooooooooooooooooooo:g:2",
     hero.el.classList.add('leaving'); place(hero, 9.5); exitEl.classList.add('flash');
     if (!prev || moves < prev) s.best[level + 1] = moves;
     s.board = null; s.level = Math.min(RAW.length - 1, level + 1); commitSave(true);
-    updateStats(); sfx('win'); buzz([12, 60, 18]); confetti();
-    var perfect = moves <= minMoves, text;
+    updateStats(); var perfect = moves <= minMoves, text;
+    sfx('win'); if (perfect && window.SFX && window.SFX.play && soundOn() && store.sound) setTimeout(function () { window.SFX.play('applause'); }, 550);   // inside here SFX is this game's own table, the shared engine lives on window
+    buzz(perfect ? [12, 60, 18, 60, 22] : [12, 60, 18]); confetti();
     if (perfect) text = 'Risolto in ' + moves + (moves === 1 ? ' mossa' : ' mosse') + ': meno di così non si può.';
     else if (!prev || moves < prev) text = 'Risolto in ' + moves + ' mosse' + (prev ? ', nuovo record' : '') + '. Il minimo è ' + minMoves + '.';
     else text = 'Risolto in ' + moves + ' mosse. Il tuo record è ' + prev + ', il minimo è ' + minMoves + '.';
