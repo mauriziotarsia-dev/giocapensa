@@ -28,6 +28,7 @@ h1 span{color:var(--c); display:inline-block; animation:letter 2.6s ease-in-out 
 @keyframes letter{0%,70%,100%{transform:none}80%{transform:translateY(-5px)}}
 .ttl{flex:1; min-width:0}
 .ttl p{margin:4px 0 0; color:var(--ink-2); font-size:.875rem}
+@media (max-width:370px){ .mascot{width:58px; height:54px} .mus{width:38px !important; height:38px !important} .mus svg{width:19px !important; height:19px !important} h1{font-size:1.375rem !important} .ttl p{font-size:.75rem} .top{gap:6px} }
 .mus{order:3; flex:none; width:44px; height:44px; border-radius:50%; background:var(--page); color:inherit; box-shadow:0 0 0 2.500px currentColor; display:grid; place-items:center; transition:opacity .2s, transform .1s}
 .mus svg{width:22px; height:22px}
 .mus[aria-pressed="false"]{opacity:.3}
@@ -208,6 +209,53 @@ window.OPZ = (function () {
     document.addEventListener(ev, function (e) { if (inArea(e.target) && e.cancelable) e.preventDefault(); }, { passive: false });
   });
   document.addEventListener('dblclick', function (e) { if (inArea(e.target) && e.cancelable) e.preventDefault(); }, { passive: false });
+})();
+
+</script>
+<script id="festa">
+/* A cheering dinosaur over every «well done» panel (with a gold star when the level was solved in the fewest moves),
+   and a soft confetti pattern behind the games. Shared by all pages; does nothing where there is no result panel. */
+(function () {
+  'use strict';
+  var INK = '#4A3B52';
+  var DINO = '<svg viewBox="0 0 150 124" aria-hidden="true">' +
+    '<ellipse cx="74" cy="117" rx="44" ry="6" fill="' + INK + '" opacity=".16"/>' +
+    '<g class="ch-tail"><path d="M40 92q-26 4-34-16q18 8 36 0Z" fill="#7CCB78" stroke="' + INK + '" stroke-width="4" stroke-linejoin="round"/></g>' +
+    '<path d="M52 104v10h14v-10M80 104v10h14v-10" fill="#7CCB78" stroke="' + INK + '" stroke-width="4" stroke-linejoin="round"/>' +
+    '<path d="M60 56l6-12 6 12M74 52l7-12 6 13M88 52l7-11 5 13" fill="#F59A3A" stroke="' + INK + '" stroke-width="3.5" stroke-linejoin="round"/>' +
+    '<ellipse cx="74" cy="84" rx="36" ry="30" fill="#8DD68A" stroke="' + INK + '" stroke-width="4"/><ellipse cx="74" cy="92" rx="21" ry="16" fill="#DDF3CF"/>' +
+    '<g class="ch-arm l"><path d="M46 76q-14-8-18-26" fill="none" stroke="' + INK + '" stroke-width="12" stroke-linecap="round"/><path d="M46 76q-14-8-18-26" fill="none" stroke="#8DD68A" stroke-width="6" stroke-linecap="round"/></g>' +
+    '<g class="ch-arm r"><path d="M102 76q14-8 18-26" fill="none" stroke="' + INK + '" stroke-width="12" stroke-linecap="round"/><path d="M102 76q14-8 18-26" fill="none" stroke="#8DD68A" stroke-width="6" stroke-linecap="round"/></g>' +
+    '<ellipse cx="74" cy="44" rx="27" ry="23" fill="#8DD68A" stroke="' + INK + '" stroke-width="4"/>' +
+    '<path d="M60 40q5-6 10 0M78 40q5-6 10 0" fill="none" stroke="' + INK + '" stroke-width="3.5" stroke-linecap="round"/>' +
+    '<path d="M62 52q12 14 24 0Z" fill="#7A3B46" stroke="' + INK + '" stroke-width="3" stroke-linejoin="round"/><circle cx="56" cy="51" r="4.5" fill="#FFB59A"/><circle cx="92" cy="51" r="4.5" fill="#FFB59A"/>' +
+    '<g class="ch-gold"><path d="M74 2l6 12 13 2-9 9 2 13-12-6-12 6 2-13-9-9 13-2Z" fill="#FFD95A" stroke="' + INK + '" stroke-width="3.5" stroke-linejoin="round"/></g>' +
+    '<g class="ch-dots"><circle cx="16" cy="30" r="4" fill="#EE5E4D"/><circle cx="134" cy="26" r="4" fill="#7DB7F7"/><rect x="24" y="10" width="7" height="10" rx="2" fill="#FFD95A" transform="rotate(20 27 15)"/><rect x="118" y="6" width="7" height="10" rx="2" fill="#8DD68A" transform="rotate(-20 121 11)"/></g></svg>';
+  var CSS = '.result .cheer{position:absolute; left:50%; top:-84px; width:118px; height:98px; margin-left:-59px; pointer-events:none; transform-origin:50% 100%}' +
+    '.result .cheer svg{width:100%; height:100%; overflow:visible}' +
+    '.result.show .cheer{animation:chHop 1.1s cubic-bezier(.3,1.5,.5,1) both, chBounce 1.6s ease-in-out 1.1s infinite}' +
+    '@keyframes chHop{0%{transform:translateY(60px) scale(.4); opacity:0}60%{opacity:1}100%{transform:none; opacity:1}}' +
+    '@keyframes chBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}' +
+    '.result .ch-arm{transform-box:fill-box; animation:chWave .5s ease-in-out infinite alternate}' +
+    '.result .ch-arm.l{transform-origin:100% 100%} .result .ch-arm.r{transform-origin:0 100%; animation-delay:-.25s}' +
+    '@keyframes chWave{from{transform:rotate(-10deg)}to{transform:rotate(10deg)}}' +
+    '.result .ch-tail{transform-box:fill-box; transform-origin:100% 50%; animation:chWave .7s ease-in-out infinite alternate}' +
+    '.result .ch-gold{display:none} .result .cheer.gold .ch-gold{display:inline; transform-box:fill-box; transform-origin:50% 50%; animation:chSpin 2.4s linear infinite}' +
+    '@keyframes chSpin{0%,100%{transform:rotate(-12deg) scale(1)}50%{transform:rotate(12deg) scale(1.12)}}' +
+    'body.festa-bg{background-image:radial-gradient(rgba(74,59,82,.055) 2px,transparent 2.6px),radial-gradient(rgba(255,196,90,.2) 3px,transparent 3.6px);background-size:36px 36px,58px 58px;background-position:0 0,18px 29px}' +
+    '@media (prefers-reduced-motion: reduce){.result .cheer,.result .ch-arm,.result .ch-tail,.result .cheer.gold .ch-gold{animation:none !important}}';
+  function setup() {
+    var res = document.getElementById('result'); if (!res || res.querySelector('.cheer')) return;
+    var st = document.createElement('style'); st.textContent = CSS; document.head.appendChild(st);
+    document.body.classList.add('festa-bg');
+    var d = document.createElement('div'); d.className = 'cheer'; d.setAttribute('aria-hidden', 'true'); d.innerHTML = DINO; res.insertBefore(d, res.firstChild);
+    var mo = new MutationObserver(function () {
+      if (!res.classList.contains('show')) return;
+      var gp = document.getElementById('resPerfect'); d.classList.toggle('gold', !!(gp && !gp.hidden && gp.offsetParent !== null));
+    });
+    mo.observe(res, { attributes: true, attributeFilter: ['class'] });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', setup); else setup();
 })();
 
 </script>
@@ -424,7 +472,7 @@ window.MUSICA = (function () {
     { href: 'labirinti.html', name: L('Labirinti', 'Mazes'), bg: '#DDF0C8', art: '<path d="M14 14H150V116H14ZM14 60H70M70 60V92M108 14V66M108 66H130" fill="none" stroke="' + INK + '" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 14H150V116H14ZM14 60H70M70 60V92M108 14V66M108 66H130" fill="none" stroke="#7FC47E" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><g class="bob"><path d="M24 100q-2 -20 16 -22q8 0 12 4q2 -18 14 -22q12 -2 12 8t-10 9q-2 16 -8 24q-6 6 -20 6q-16 0 -16 -7Z" fill="#5FBF6A"' + S.replace('5', '4') + '/><path d="M33 80l4 -9l6 7Z" fill="#F59A3A"' + S.replace('5', '3') + '/>' + dot(70, 66, 3) + '</g><path d="M112 108q-4 -34 16 -40q18 -4 24 14q4 12 2 26Z" fill="#B9B2AA"' + S.replace('5', '4') + '/><path d="M124 108v-12a9 9 0 0 1 18 0v12Z" fill="#2A2430"' + S.replace('5', '3.5') + '/>' },
     { href: 'acqua.html', name: L('Acqua ai fiori', 'Water the flowers'), bg: '#CFEBB5', art: '<path d="M26 40H84V96" fill="none" stroke="' + INK + '" stroke-width="30" stroke-linejoin="round"/><path d="M26 40H84V96" fill="none" stroke="#C3CDD7" stroke-width="21" stroke-linejoin="round"/><path class="flow" d="M26 40H84V96" fill="none" stroke="#56B4EE" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/><circle cx="26" cy="40" r="17" fill="#7DB7F7"' + S + '/><g class="sway"><g>' + [0, 1, 2, 3, 4, 5].map(function (i) { var a = i * Math.PI / 3; return '<circle cx="' + (120 + Math.cos(a) * 22).toFixed(1) + '" cy="' + (76 + Math.sin(a) * 22).toFixed(1) + '" r="14" fill="#FFC23F"' + S.replace('5', '4') + '/>'; }).join('') + '<circle cx="120" cy="76" r="17" fill="#C98A3D"' + S.replace('5', '4') + '/>' + dot(114, 73, 3) + dot(126, 73, 3) + '<path d="M114 80q6 6 12 0" fill="none"' + S.replace('5', '3.5') + '/></g></g>' },
     { href: 'incastri.html', name: L('Incastri', 'Shape puzzles'), bg: '#D3F0EE', art: '<g class="bob" style="--d:-.8s"><path d="M20 24h80v40h-40v40h-40Z" fill="#8DD68A"' + S + '/>' + face(40, 42, 8, -1.5) + '</g><g class="bob" style="--d:-2s"><path d="M70 74h40v-40h40v80h-80Z" fill="#F2A65A"' + S + '/>' + face(130, 56, 8, -3) + '</g>' },
-    { href: 'adesivi.html', name: L('Adesivi', 'Stickers'), bg: '#FFF1C9', art: '<g class="bob"><path d="M66 96q14 30 14 30t14 -30Z" fill="#FFD95A"' + S.replace('5', '4') + '/><path d="M56 82l-14 24 16 -7ZM104 82l14 24 -16 -7Z" fill="#EE5E4D"' + S + '/><path d="M80 10q24 25 24 60v22H56V70q0 -35 24 -60Z" fill="#EEF3F7"' + S + '/><path d="M80 10q13 13 19 32H61q6 -19 19 -32Z" fill="#EE5E4D"' + S + '/><circle cx="80" cy="62" r="12" fill="#7DB7F7"' + S.replace('5', '4') + '/></g><g class="bob" style="--d:-1.4s"><circle cx="134" cy="40" r="24" fill="#fff"' + S + '/><text x="134" y="53" text-anchor="middle" font-size="36" font-weight="900" font-family="inherit" fill="#EE5E4D">3</text></g><g class="spin">' + star(26, 60, 11) + '</g>' }
+    { href: 'adesivi.html', name: L('Adesivi', 'Stickers'), bg: '#FFF1C9', art: '<g class="bob"><path d="M66 96q14 30 14 30t14 -30Z" fill="#FFD95A"' + S.replace('5', '4') + '/><path d="M56 82l-14 24 16 -7ZM104 82l14 24 -16 -7Z" fill="#EE5E4D"' + S + '/><path d="M80 10q24 25 24 60v22H56V70q0 -35 24 -60Z" fill="#EEF3F7"' + S + '/><path d="M80 10q13 13 19 32H61q6 -19 19 -32Z" fill="#EE5E4D"' + S + '/><circle cx="80" cy="62" r="12" fill="#7DB7F7"' + S.replace('5', '4') + '/></g><g class="bob" style="--d:-1.4s"><g transform="rotate(8 134 40)"><rect x="108" y="14" width="52" height="52" rx="12" fill="#fff"' + S + '/><path d="M146 14h14v14Z" fill="#E9E3DA" stroke="#4A3B52" stroke-width="4" stroke-linejoin="round"/><rect x="116" y="34" width="24" height="16" rx="5" fill="#EE5E4D" stroke="#4A3B52" stroke-width="3.5"/><rect x="136" y="27" width="15" height="23" rx="4" fill="#C7402F" stroke="#4A3B52" stroke-width="3.5"/><circle cx="123" cy="55" r="5" fill="#3A4654"/><circle cx="144" cy="55" r="5" fill="#3A4654"/><circle cx="124" cy="40" r="2.4" fill="#4A3B52"/></g></g><g class="spin">' + star(26, 60, 11) + '</g>' }
   ];
   var PREVIEW = window.PREVIEW_LINKS || null;
   if (PREVIEW) document.querySelector('.app').insertAdjacentHTML('beforeend', '<p class="note">' + L('Anteprima: qui ogni gioco si apre in una scheda a parte. Nell\'app pubblicata si apre dentro l\'app.', 'Preview: here each game opens in a separate tab. In the published app it opens inside the app.') + '</p>');
@@ -442,7 +490,8 @@ window.MUSICA = (function () {
   document.getElementById('btnWipe').addEventListener('click', function () {
     var note = document.getElementById('wipeNote');
     if (!wipeArmed) { wipeArmed = true; this.querySelector('.chev').textContent = L('Sicuro?', 'Sure?'); note.textContent = L('Tocca di nuovo per cancellare. Tocca altrove per lasciare tutto com\'è.', 'Tap again to delete. Tap anywhere else to keep everything.'); return; }
-    ['via-libera.v2', 'palline.v1', 'labirinti.v1', 'acqua.v2', 'incastri.v1', 'adesivi.cameretta.v2', 'adesivi.numeri.v1', 'adesivi.notte'].forEach(function (k) { try { localStorage.removeItem(k); } catch (err) {} });
+    ['via-libera.v2', 'via-libera.v1', 'palline.v1', 'labirinti.v1', 'acqua.v2', 'acqua.v1', 'incastri.v1', 'adesivi.cameretta.v2', 'adesivi.numeri.v1', 'adesivi.notte'].forEach(function (k) { try { localStorage.removeItem(k); } catch (err) {} });
+    try { var ad = JSON.parse(localStorage.getItem('adesivi.scene.v1') || 'null'); if (ad) localStorage.setItem('adesivi.scene.v1', JSON.stringify({ rounds: {}, mode: ad.mode || '', diff: ad.diff || '' })); } catch (err) {}   // stickers: the rounds won go, the chosen kind of game and difficulty stay
     wipeArmed = false; this.querySelector('.chev').textContent = L('Fatto', 'Done'); note.textContent = L('Progressi cancellati. I giochi ripartono da capo.', 'Progress deleted. The games start again from the beginning.'); if (window.SFX) SFX.play('no');
   });
   sheet.addEventListener('pointerdown', function (e) { if (wipeArmed && !e.target.closest('#btnWipe')) { wipeArmed = false; document.getElementById('btnWipe').querySelector('.chev').textContent = L('Azzera', 'Reset'); document.getElementById('wipeNote').textContent = L('Record, livelli raggiunti e partite di tutti i giochi. Non si torna indietro.', 'Records, levels reached and saved games of every game. This cannot be undone.'); } });
