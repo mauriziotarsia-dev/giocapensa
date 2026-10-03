@@ -60,6 +60,7 @@ dialog::backdrop{background:rgba(40,28,48,.55)}
 .chip{flex:1; min-width:90px; height:46px; padding:2px 10px 0; border-radius:23px; border:0; background:var(--page); color:inherit; box-shadow:0 0 0 2.5px var(--ink); font-weight:800; font-size:.9375rem}
 .chip[aria-pressed="true"]{background:var(--ink); color:var(--page)}
 .row.danger{color:#C7402F}
+a.row{color:inherit; text-decoration:none}
 .chev{font-weight:900; font-size:.875rem; padding:6px 12px 4px; border-radius:16px; box-shadow:0 0 0 2.5px currentColor}
 .grid{flex:1; display:grid; grid-template-columns:1fr 1fr; grid-auto-rows:1fr; gap:14px}
 .tile{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; padding:12px 8px 12px; border-radius:26px; background:var(--bg); color:#4A3B52; text-decoration:none;
@@ -92,39 +93,47 @@ dialog::backdrop{background:rgba(40,28,48,.55)}
         <ellipse cx="2" cy="20" rx="15" ry="9" fill="#D6F2C9"/><path d="M-17 -5l5 -12l8 9ZM-3 -11l6 -13l8 11Z" fill="#F59A3A" stroke="#4A3B52" stroke-width="3.500" stroke-linejoin="round"/>
         <g class="blink"><circle cx="40" cy="-31" r="4.400" fill="#4A3B52"/><circle cx="41.400" cy="-32.400" r="1.500" fill="#fff"/></g><circle cx="50" cy="-28" r="1.800" fill="#4A3B52"/><path d="M38 -19q8 4 15 -2" fill="none" stroke="#4A3B52" stroke-width="3" stroke-linecap="round"/></g>
     </svg>
-    <button class="mus" id="btnSet" type="button" aria-label="Impostazioni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.400"/><path d="M12 3v2.400M12 18.600V21M21 12h-2.400M5.400 12H3M18.400 5.600l-1.700 1.700M7.300 16.700l-1.700 1.700M18.400 18.400l-1.700-1.700M7.300 7.300L5.600 5.600"/></svg></button>
+    <button class="mus" id="btnSet" type="button" aria-label="Impostazioni" data-en-aria="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.400"/><path d="M12 3v2.400M12 18.600V21M21 12h-2.400M5.400 12H3M18.400 5.600l-1.700 1.700M7.300 16.700l-1.700 1.700M18.400 18.400l-1.700-1.700M7.300 7.300L5.600 5.600"/></svg></button>
     <button class="mus" id="btnMus" type="button" aria-pressed="true" aria-label="Spegni la musica"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6.500" cy="18" r="3"/><circle cx="17.500" cy="16" r="3"/></svg></button>
-    <div class="ttl"><h1 aria-label="Giocapensa"><span style="--c:#EE5E4D;--k:0">G</span><span style="--c:#F2872E;--k:1">i</span><span style="--c:#D9A516;--k:2">o</span><span style="--c:#4FAE57;--k:3">c</span><span style="--c:#3F86E0;--k:4">a</span><span style="--c:#2E9AA1;--k:5">p</span><span style="--c:#EE5E4D;--k:6">e</span><span style="--c:#F2872E;--k:7">n</span><span style="--c:#4FAE57;--k:8">s</span><span style="--c:#3F86E0;--k:9">a</span></h1><p>Giochi per pensare con le dita</p></div>
+    <div class="ttl"><h1 aria-label="Giocapensa"><span style="--c:#EE5E4D;--k:0">G</span><span style="--c:#F2872E;--k:1">i</span><span style="--c:#D9A516;--k:2">o</span><span style="--c:#4FAE57;--k:3">c</span><span style="--c:#3F86E0;--k:4">a</span><span style="--c:#2E9AA1;--k:5">p</span><span style="--c:#EE5E4D;--k:6">e</span><span style="--c:#F2872E;--k:7">n</span><span style="--c:#4FAE57;--k:8">s</span><span style="--c:#3F86E0;--k:9">a</span></h1><p data-en="Thinking games for little fingers">Giochi per pensare con le dita</p></div>
   </header>
-  <nav class="grid" id="grid" aria-label="Giochi"></nav>
+  <nav class="grid" id="grid" aria-label="Giochi" data-en-aria="Games"></nav>
 </main>
 <dialog class="sheet" id="sheet" aria-labelledby="setTitle">
   <div class="sheet-head">
-    <h2 id="setTitle">Impostazioni</h2>
-    <button class="round" id="btnClose" type="button" aria-label="Chiudi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <h2 id="setTitle" data-en="Settings">Impostazioni</h2>
+    <button class="round" id="btnClose" type="button" aria-label="Chiudi" data-en-aria="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   </div>
   <div class="sheet-body">
     <section class="blk">
-      <button class="row" type="button" role="switch" data-opt="suoni">Effetti sonori<span class="sw"></span></button>
-      <p>I suoni di tutti e sei i giochi. Su iPhone tacciono comunque quando il telefono è in silenzioso.</p>
-      <button class="row" type="button" role="switch" data-opt="musica">Musica della schermata<span class="sw"></span></button>
-      <button class="row" type="button" role="switch" data-opt="voce">Voce che conta<span class="sw"></span></button>
-      <p>In «Adesivi e numeri» una voce dice i numeri e conta gli adesivi ad alta voce.</p>
+      <button class="row" type="button" role="switch" data-opt="suoni"><span data-en="Sound effects">Effetti sonori</span><span class="sw"></span></button>
+      <p data-en="The sounds of all six games. On iPhone they stay silent anyway when the phone is on silent.">I suoni di tutti e sei i giochi. Su iPhone tacciono comunque quando il telefono è in silenzioso.</p>
+      <button class="row" type="button" role="switch" data-opt="musica"><span data-en="Home screen music">Musica della schermata</span><span class="sw"></span></button>
+      <button class="row" type="button" role="switch" data-opt="voce"><span data-en="Counting voice">Voce che conta</span><span class="sw"></span></button>
+      <p data-en="In «Stickers» a voice names the stickers, says where they go and counts them out loud.">Negli «Adesivi» una voce dice il nome degli adesivi, dove vanno e li conta ad alta voce.</p>
     </section>
     <section class="blk">
-      <h3>Lingua della voce</h3>
-      <div class="chips" data-opt="lingua"><button class="chip" type="button" data-val="it">Italiano</button><button class="chip" type="button" data-val="en">English</button></div>
-      <p>Cambia solo quello che la voce pronuncia: «tre razzi» oppure «three rockets». Le scritte restano in italiano, perché servono all'adulto.</p>
+      <h3 data-en="Language">Lingua</h3>
+      <div class="chips" data-opt="ui" data-reload="1"><button class="chip" type="button" data-val="auto" data-en="Automatic">Automatica</button><button class="chip" type="button" data-val="it">Italiano</button><button class="chip" type="button" data-val="en">English</button></div>
+      <p data-en="The language of everything written. «Automatic» follows the phone.">La lingua di tutte le scritte. «Automatica» segue quella del telefono.</p>
+      <h3 data-en="Language of the voice">Lingua della voce</h3>
+      <div class="chips" data-opt="lingua"><button class="chip" type="button" data-val="app" data-en="Same as the app">Come l'app</button><button class="chip" type="button" data-val="it">Italiano</button><button class="chip" type="button" data-val="en">English</button></div>
+      <p data-en="What the voice says: «three rockets» or «tre razzi». It can differ from the written language, to practise a second language.">Quello che la voce pronuncia: «tre razzi» oppure «three rockets». Può essere diversa dalla lingua delle scritte, per esercitare una seconda lingua.</p>
     </section>
     <section class="blk">
-      <h3>Pulsante Aiuto</h3>
-      <div class="chips" data-opt="aiuto"><button class="chip" type="button" data-val="subito">Subito</button><button class="chip" type="button" data-val="attesa">Dopo un po'</button><button class="chip" type="button" data-val="mai">Mai</button></div>
-      <p>Con «Dopo un po'» l'aiuto si sblocca dopo 40 secondi sul livello o dopo 8 mosse, e l'attesa ricomincia a ogni aiuto usato. Vale per tutti i giochi.</p>
+      <h3 data-en="Help button">Pulsante Aiuto</h3>
+      <div class="chips" data-opt="aiuto"><button class="chip" type="button" data-val="subito" data-en="Right away">Subito</button><button class="chip" type="button" data-val="attesa" data-en="After a while">Dopo un po'</button><button class="chip" type="button" data-val="mai" data-en="Never">Mai</button></div>
+      <p data-en="With «After a while» help unlocks after 40 seconds on the level or after 8 moves, and the wait starts again after each hint. It applies to every game.">Con «Dopo un po'» l'aiuto si sblocca dopo 40 secondi sul livello o dopo 8 mosse, e l'attesa ricomincia a ogni aiuto usato. Vale per tutti i giochi.</p>
     </section>
     <section class="blk">
-      <h3>Progressi</h3>
-      <button class="row danger" type="button" id="btnWipe">Cancella tutti i progressi<span class="chev">Azzera</span></button>
-      <p id="wipeNote">Record, livelli raggiunti e partite di tutti i giochi. Non si torna indietro.</p>
+      <h3 data-en="Progress">Progressi</h3>
+      <button class="row danger" type="button" id="btnWipe"><span data-en="Delete all progress">Cancella tutti i progressi</span><span class="chev" data-en="Reset">Azzera</span></button>
+      <p id="wipeNote" data-en="Records, levels reached and saved games of every game. This cannot be undone.">Record, livelli raggiunti e partite di tutti i giochi. Non si torna indietro.</p>
+    </section>
+    <section class="blk">
+      <h3 data-en="About">Informazioni</h3>
+      <a class="row" href="privacy.html">Privacy<span class="chev" data-en="Open">Apri</span></a>
+      <p data-en="Giocapensa collects no data: no account, no advertising, no tracking. Everything stays on the phone.">Giocapensa non raccoglie dati: nessun account, nessuna pubblicità, nessun tracciamento. Tutto resta sul telefono.</p>
     </section>
   </div>
 </dialog>
@@ -134,23 +143,52 @@ dialog::backdrop{background:rgba(40,28,48,.55)}
 window.OPZ = (function () {
   'use strict';
   var KEY = 'giocapensa.opzioni';
-  var DEF = { musica: true, suoni: true, voce: true, lingua: 'it', aiuto: 'attesa' };
+  var DEF = { musica: true, suoni: true, voce: true, ui: 'auto', lingua: 'app', aiuto: 'attesa' };
   var val = {}, k;
   for (k in DEF) val[k] = DEF[k];
   try {
     var raw = JSON.parse(localStorage.getItem(KEY) || 'null');
     if (raw && typeof raw === 'object') {
       ['musica', 'suoni', 'voce'].forEach(function (n) { if (typeof raw[n] === 'boolean') val[n] = raw[n]; });
-      if (raw.lingua === 'it' || raw.lingua === 'en') val.lingua = raw.lingua;
+      if (['app', 'it', 'en'].indexOf(raw.lingua) >= 0) val.lingua = raw.lingua;
+      if (['auto', 'it', 'en'].indexOf(raw.ui) >= 0) val.ui = raw.ui;
       if (['subito', 'attesa', 'mai'].indexOf(raw.aiuto) >= 0) val.aiuto = raw.aiuto;
     } else if (localStorage.getItem('giocapensa.musica') === '0') val.musica = false;      // the old music-only switch
   } catch (e) {}
   function save() { try { localStorage.setItem(KEY, JSON.stringify(val)); } catch (e) {} }
   return {
-    get: function (n) { return val[n]; },
+    get: function (n) { return n === 'lingua' && val.lingua === 'app' ? (window.LANG || 'it') : val[n]; },   // «app»: the voice speaks the interface language
+    raw: function (n) { return val[n]; },
     set: function (n, v) { if (!(n in DEF)) return; val[n] = v; save(); try { window.dispatchEvent(new CustomEvent('opz', { detail: { nome: n, valore: v } })); } catch (e) {} },
     all: function () { var o = {}, q; for (q in val) o[q] = val[q]; return o; }
   };
+})();
+
+</script>
+<script id="lingua">
+/* Interface language. «auto» follows the phone; the setting lives in OPZ ('ui': auto | it | en).
+   In the code every visible text is written as L('italiano', 'English'); in the markup an element with
+   data-en="…" gets that English text, data-en-aria / data-en-title do the same for aria-label and title. */
+(function () {
+  'use strict';
+  function pick() {
+    var v = window.OPZ ? OPZ.get('ui') : 'auto';
+    if (v === 'it' || v === 'en') return v;
+    var langs = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'it']);
+    return /^it/i.test(langs[0] || '') ? 'it' : (/^en/i.test(langs[0] || '') ? 'en' : 'en');      // Italian phones get Italian, everyone else English
+  }
+  window.LANG = pick();
+  window.L = function (it, en) { return window.LANG === 'en' && en != null ? en : it; };
+  window.applyLang = function (root) {
+    if (window.LANG !== 'en') return;
+    root = root || document;
+    Array.prototype.forEach.call(root.querySelectorAll('[data-en]'), function (el) { el.textContent = el.getAttribute('data-en'); });
+    Array.prototype.forEach.call(root.querySelectorAll('[data-en-aria]'), function (el) { el.setAttribute('aria-label', el.getAttribute('data-en-aria')); });
+    Array.prototype.forEach.call(root.querySelectorAll('[data-en-title]'), function (el) { el.setAttribute('title', el.getAttribute('data-en-title')); });
+  };
+  document.documentElement.lang = window.LANG;
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { window.applyLang(document); });
+  else window.applyLang(document);
 })();
 
 </script>
@@ -357,7 +395,7 @@ window.MUSICA = (function () {
     if (!started) return; started = false; clearInterval(timer); timer = 0;
     try { master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setValueAtTime(master.gain.value, ctx.currentTime); master.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.7); setTimeout(function () { if (!started && ctx.suspend) ctx.suspend(); }, 800); } catch (e) {}
   }
-  function paint() { if (btn) { btn.setAttribute('aria-pressed', on ? 'true' : 'false'); btn.setAttribute('aria-label', on ? 'Spegni la musica' : 'Accendi la musica'); } }
+  function paint() { if (btn) { btn.setAttribute('aria-pressed', on ? 'true' : 'false'); btn.setAttribute('aria-label', on ? (window.L ? L('Spegni la musica', 'Turn music off') : 'Spegni la musica') : (window.L ? L('Accendi la musica', 'Turn music on') : 'Accendi la musica')); } }
   function set(v) { on = v; if (window.OPZ) OPZ.set('musica', v); paint(); if (v) start(); else stop(); }
   window.addEventListener('opz', function (e) { if (e.detail && e.detail.nome === 'musica' && e.detail.valore !== on) { on = e.detail.valore; paint(); if (on) start(); else stop(); } });
   function init(button) {
@@ -381,36 +419,37 @@ window.MUSICA = (function () {
   function face(x, y, g, d) { return '<g class="blink" style="--d:' + (d || 0) + 's">' + dot(x - g, y, 4.4) + dot(x + g, y, 4.4) + '</g><path d="M' + (x - 7) + ' ' + (y + 11) + 'q7 7 14 0" fill="none"' + S.replace('5', '4') + '/>' + dot(x - g - 9, y + 9, 5, '#FFB59A') + dot(x + g + 9, y + 9, 5, '#FFB59A'); }
   function star(cx, cy, rad, f) { var d = '', i, a, rr; for (i = 0; i < 10; i++) { a = -Math.PI / 2 + i * Math.PI / 5; rr = i % 2 ? rad * 0.47 : rad; d += (i ? 'L' : 'M') + (cx + rr * Math.cos(a)).toFixed(1) + ' ' + (cy + rr * Math.sin(a)).toFixed(1); } return '<path d="' + d + 'Z" fill="' + (f || '#FFD95A') + '"' + S.replace('5', '4') + '/>'; }
   var GAMES = [
-    { href: 'via-libera.html', name: 'Via libera', bg: '#CFE3F7', art: '<g class="bob"><rect x="38" y="30" width="26" height="14" rx="7" fill="' + INK + '"/><rect x="98" y="30" width="26" height="14" rx="7" fill="' + INK + '"/><rect x="38" y="86" width="26" height="14" rx="7" fill="' + INK + '"/><rect x="98" y="86" width="26" height="14" rx="7" fill="' + INK + '"/><rect x="20" y="36" width="122" height="58" rx="22" fill="#D6274A"' + S + '/><path d="M22 58h118M22 72h118" stroke="#fff" stroke-width="7"/><rect x="58" y="44" width="46" height="42" rx="12" fill="#DFF3FC"' + S + '/>' + dot(132, 50, 5, '#FFF3A6') + dot(132, 80, 5, '#FFF3A6') + '</g><path d="M150 50l14 15-14 15" fill="none" stroke="#FF8A3D" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>' },
-    { href: 'palline.html', name: 'Palline nei tubi', bg: '#FFE6C4', art: '<path d="M52 18V92a28 28 0 0 0 56 0V18Z" fill="#DFF3FC" fill-opacity=".8"' + S + '/><rect x="44" y="8" width="72" height="18" rx="9" fill="#EAF7FD"' + S + '/><g class="bob" style="--d:-.4s"><circle cx="80" cy="94" r="22" fill="#7DB7F7"' + S + '/>' + face(80, 90, 8, -1) + '</g><g class="bob" style="--d:-1.2s"><circle cx="80" cy="50" r="22" fill="#FFD95A"' + S + '/>' + face(80, 46, 8, -2.2) + '</g>' },
-    { href: 'labirinti.html', name: 'Labirinti', bg: '#DDF0C8', art: '<path d="M14 14H150V116H14ZM14 60H70M70 60V92M108 14V66M108 66H130" fill="none" stroke="' + INK + '" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 14H150V116H14ZM14 60H70M70 60V92M108 14V66M108 66H130" fill="none" stroke="#7FC47E" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><g class="bob"><path d="M24 100q-2 -20 16 -22q8 0 12 4q2 -18 14 -22q12 -2 12 8t-10 9q-2 16 -8 24q-6 6 -20 6q-16 0 -16 -7Z" fill="#5FBF6A"' + S.replace('5', '4') + '/><path d="M33 80l4 -9l6 7Z" fill="#F59A3A"' + S.replace('5', '3') + '/>' + dot(70, 66, 3) + '</g><path d="M112 108q-4 -34 16 -40q18 -4 24 14q4 12 2 26Z" fill="#B9B2AA"' + S.replace('5', '4') + '/><path d="M124 108v-12a9 9 0 0 1 18 0v12Z" fill="#2A2430"' + S.replace('5', '3.5') + '/>' },
-    { href: 'acqua.html', name: 'Acqua ai fiori', bg: '#CFEBB5', art: '<path d="M26 40H84V96" fill="none" stroke="' + INK + '" stroke-width="30" stroke-linejoin="round"/><path d="M26 40H84V96" fill="none" stroke="#C3CDD7" stroke-width="21" stroke-linejoin="round"/><path class="flow" d="M26 40H84V96" fill="none" stroke="#56B4EE" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/><circle cx="26" cy="40" r="17" fill="#7DB7F7"' + S + '/><g class="sway"><g>' + [0, 1, 2, 3, 4, 5].map(function (i) { var a = i * Math.PI / 3; return '<circle cx="' + (120 + Math.cos(a) * 22).toFixed(1) + '" cy="' + (76 + Math.sin(a) * 22).toFixed(1) + '" r="14" fill="#FFC23F"' + S.replace('5', '4') + '/>'; }).join('') + '<circle cx="120" cy="76" r="17" fill="#C98A3D"' + S.replace('5', '4') + '/>' + dot(114, 73, 3) + dot(126, 73, 3) + '<path d="M114 80q6 6 12 0" fill="none"' + S.replace('5', '3.5') + '/></g></g>' },
-    { href: 'incastri.html', name: 'Incastri', bg: '#D3F0EE', art: '<g class="bob" style="--d:-.8s"><path d="M20 24h80v40h-40v40h-40Z" fill="#8DD68A"' + S + '/>' + face(40, 42, 8, -1.5) + '</g><g class="bob" style="--d:-2s"><path d="M70 74h40v-40h40v80h-80Z" fill="#F2A65A"' + S + '/>' + face(130, 56, 8, -3) + '</g>' },
-    { href: 'adesivi.html', name: 'Adesivi e numeri', bg: '#FFF1C9', art: '<g class="bob"><path d="M66 96q14 30 14 30t14 -30Z" fill="#FFD95A"' + S.replace('5', '4') + '/><path d="M56 82l-14 24 16 -7ZM104 82l14 24 -16 -7Z" fill="#EE5E4D"' + S + '/><path d="M80 10q24 25 24 60v22H56V70q0 -35 24 -60Z" fill="#EEF3F7"' + S + '/><path d="M80 10q13 13 19 32H61q6 -19 19 -32Z" fill="#EE5E4D"' + S + '/><circle cx="80" cy="62" r="12" fill="#7DB7F7"' + S.replace('5', '4') + '/></g><g class="bob" style="--d:-1.4s"><circle cx="134" cy="40" r="24" fill="#fff"' + S + '/><text x="134" y="53" text-anchor="middle" font-size="36" font-weight="900" font-family="inherit" fill="#EE5E4D">3</text></g><g class="spin">' + star(26, 60, 11) + '</g>' }
+    { href: 'via-libera.html', name: L('Via libera', 'Way out'), bg: '#CFE3F7', art: '<g class="bob"><rect x="38" y="30" width="26" height="14" rx="7" fill="' + INK + '"/><rect x="98" y="30" width="26" height="14" rx="7" fill="' + INK + '"/><rect x="38" y="86" width="26" height="14" rx="7" fill="' + INK + '"/><rect x="98" y="86" width="26" height="14" rx="7" fill="' + INK + '"/><rect x="20" y="36" width="122" height="58" rx="22" fill="#D6274A"' + S + '/><path d="M22 58h118M22 72h118" stroke="#fff" stroke-width="7"/><rect x="58" y="44" width="46" height="42" rx="12" fill="#DFF3FC"' + S + '/>' + dot(132, 50, 5, '#FFF3A6') + dot(132, 80, 5, '#FFF3A6') + '</g><path d="M150 50l14 15-14 15" fill="none" stroke="#FF8A3D" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>' },
+    { href: 'palline.html', name: L('Palline nei tubi', 'Balls in jars'), bg: '#FFE6C4', art: '<path d="M52 18V92a28 28 0 0 0 56 0V18Z" fill="#DFF3FC" fill-opacity=".8"' + S + '/><rect x="44" y="8" width="72" height="18" rx="9" fill="#EAF7FD"' + S + '/><g class="bob" style="--d:-.4s"><circle cx="80" cy="94" r="22" fill="#7DB7F7"' + S + '/>' + face(80, 90, 8, -1) + '</g><g class="bob" style="--d:-1.2s"><circle cx="80" cy="50" r="22" fill="#FFD95A"' + S + '/>' + face(80, 46, 8, -2.2) + '</g>' },
+    { href: 'labirinti.html', name: L('Labirinti', 'Mazes'), bg: '#DDF0C8', art: '<path d="M14 14H150V116H14ZM14 60H70M70 60V92M108 14V66M108 66H130" fill="none" stroke="' + INK + '" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 14H150V116H14ZM14 60H70M70 60V92M108 14V66M108 66H130" fill="none" stroke="#7FC47E" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><g class="bob"><path d="M24 100q-2 -20 16 -22q8 0 12 4q2 -18 14 -22q12 -2 12 8t-10 9q-2 16 -8 24q-6 6 -20 6q-16 0 -16 -7Z" fill="#5FBF6A"' + S.replace('5', '4') + '/><path d="M33 80l4 -9l6 7Z" fill="#F59A3A"' + S.replace('5', '3') + '/>' + dot(70, 66, 3) + '</g><path d="M112 108q-4 -34 16 -40q18 -4 24 14q4 12 2 26Z" fill="#B9B2AA"' + S.replace('5', '4') + '/><path d="M124 108v-12a9 9 0 0 1 18 0v12Z" fill="#2A2430"' + S.replace('5', '3.5') + '/>' },
+    { href: 'acqua.html', name: L('Acqua ai fiori', 'Water the flowers'), bg: '#CFEBB5', art: '<path d="M26 40H84V96" fill="none" stroke="' + INK + '" stroke-width="30" stroke-linejoin="round"/><path d="M26 40H84V96" fill="none" stroke="#C3CDD7" stroke-width="21" stroke-linejoin="round"/><path class="flow" d="M26 40H84V96" fill="none" stroke="#56B4EE" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/><circle cx="26" cy="40" r="17" fill="#7DB7F7"' + S + '/><g class="sway"><g>' + [0, 1, 2, 3, 4, 5].map(function (i) { var a = i * Math.PI / 3; return '<circle cx="' + (120 + Math.cos(a) * 22).toFixed(1) + '" cy="' + (76 + Math.sin(a) * 22).toFixed(1) + '" r="14" fill="#FFC23F"' + S.replace('5', '4') + '/>'; }).join('') + '<circle cx="120" cy="76" r="17" fill="#C98A3D"' + S.replace('5', '4') + '/>' + dot(114, 73, 3) + dot(126, 73, 3) + '<path d="M114 80q6 6 12 0" fill="none"' + S.replace('5', '3.5') + '/></g></g>' },
+    { href: 'incastri.html', name: L('Incastri', 'Shape puzzles'), bg: '#D3F0EE', art: '<g class="bob" style="--d:-.8s"><path d="M20 24h80v40h-40v40h-40Z" fill="#8DD68A"' + S + '/>' + face(40, 42, 8, -1.5) + '</g><g class="bob" style="--d:-2s"><path d="M70 74h40v-40h40v80h-80Z" fill="#F2A65A"' + S + '/>' + face(130, 56, 8, -3) + '</g>' },
+    { href: 'adesivi.html', name: L('Adesivi', 'Stickers'), bg: '#FFF1C9', art: '<g class="bob"><path d="M66 96q14 30 14 30t14 -30Z" fill="#FFD95A"' + S.replace('5', '4') + '/><path d="M56 82l-14 24 16 -7ZM104 82l14 24 -16 -7Z" fill="#EE5E4D"' + S + '/><path d="M80 10q24 25 24 60v22H56V70q0 -35 24 -60Z" fill="#EEF3F7"' + S + '/><path d="M80 10q13 13 19 32H61q6 -19 19 -32Z" fill="#EE5E4D"' + S + '/><circle cx="80" cy="62" r="12" fill="#7DB7F7"' + S.replace('5', '4') + '/></g><g class="bob" style="--d:-1.4s"><circle cx="134" cy="40" r="24" fill="#fff"' + S + '/><text x="134" y="53" text-anchor="middle" font-size="36" font-weight="900" font-family="inherit" fill="#EE5E4D">3</text></g><g class="spin">' + star(26, 60, 11) + '</g>' }
   ];
   var PREVIEW = window.PREVIEW_LINKS || null;
-  if (PREVIEW) document.querySelector('.app').insertAdjacentHTML('beforeend', '<p class="note">Anteprima: qui ogni gioco si apre in una scheda a parte. Nell\'app pubblicata si apre dentro l\'app.</p>');
+  if (PREVIEW) document.querySelector('.app').insertAdjacentHTML('beforeend', '<p class="note">' + L('Anteprima: qui ogni gioco si apre in una scheda a parte. Nell\'app pubblicata si apre dentro l\'app.', 'Preview: here each game opens in a separate tab. In the published app it opens inside the app.') + '</p>');
   document.getElementById('grid').innerHTML = GAMES.map(function (g, i) { return '<a class="tile" href="' + (PREVIEW ? PREVIEW[g.href] + '" target="_blank" rel="noopener' : g.href) + '" style="--bg:' + g.bg + '"><svg viewBox="0 0 164 128" aria-hidden="true">' + g.art + '</svg>' + g.name + '</a>'; }).join('');
   var sheet = document.getElementById('sheet'), wipeArmed = false;
   function paintSet() {
     [].forEach.call(sheet.querySelectorAll('.row[data-opt]'), function (r) { r.setAttribute('aria-checked', OPZ.get(r.getAttribute('data-opt')) ? 'true' : 'false'); });
-    [].forEach.call(sheet.querySelectorAll('.chips'), function (g) { var v = OPZ.get(g.getAttribute('data-opt')); [].forEach.call(g.children, function (c) { c.setAttribute('aria-pressed', c.getAttribute('data-val') === v ? 'true' : 'false'); }); });
+    [].forEach.call(sheet.querySelectorAll('.chips'), function (g) { var v = OPZ.raw(g.getAttribute('data-opt')); [].forEach.call(g.children, function (c) { c.setAttribute('aria-pressed', c.getAttribute('data-val') === v ? 'true' : 'false'); }); });
   }
   sheet.addEventListener('click', function (e) {
     var row = e.target.closest('.row[data-opt]'), chip = e.target.closest('.chip');
     if (row) { OPZ.set(row.getAttribute('data-opt'), row.getAttribute('aria-checked') !== 'true'); paintSet(); if (window.SFX) SFX.play('tap'); return; }
-    if (chip) { OPZ.set(chip.parentNode.getAttribute('data-opt'), chip.getAttribute('data-val')); paintSet(); if (window.SFX) SFX.play('tap'); }
+    if (chip) { OPZ.set(chip.parentNode.getAttribute('data-opt'), chip.getAttribute('data-val')); paintSet(); if (window.SFX) SFX.play('tap'); if (chip.parentNode.getAttribute('data-reload')) setTimeout(function () { try { sessionStorage.setItem('riapri', '1'); } catch (e) {} location.reload(); }, 180); }
   });
   document.getElementById('btnWipe').addEventListener('click', function () {
     var note = document.getElementById('wipeNote');
-    if (!wipeArmed) { wipeArmed = true; this.querySelector('.chev').textContent = 'Sicuro?'; note.textContent = 'Tocca di nuovo per cancellare. Tocca altrove per lasciare tutto com\'è.'; return; }
+    if (!wipeArmed) { wipeArmed = true; this.querySelector('.chev').textContent = L('Sicuro?', 'Sure?'); note.textContent = L('Tocca di nuovo per cancellare. Tocca altrove per lasciare tutto com\'è.', 'Tap again to delete. Tap anywhere else to keep everything.'); return; }
     ['via-libera.v2', 'palline.v1', 'labirinti.v1', 'acqua.v2', 'incastri.v1', 'adesivi.cameretta.v2', 'adesivi.numeri.v1', 'adesivi.notte'].forEach(function (k) { try { localStorage.removeItem(k); } catch (err) {} });
-    wipeArmed = false; this.querySelector('.chev').textContent = 'Fatto'; note.textContent = 'Progressi cancellati. I giochi ripartono da capo.'; if (window.SFX) SFX.play('no');
+    wipeArmed = false; this.querySelector('.chev').textContent = L('Fatto', 'Done'); note.textContent = L('Progressi cancellati. I giochi ripartono da capo.', 'Progress deleted. The games start again from the beginning.'); if (window.SFX) SFX.play('no');
   });
-  sheet.addEventListener('pointerdown', function (e) { if (wipeArmed && !e.target.closest('#btnWipe')) { wipeArmed = false; document.getElementById('btnWipe').querySelector('.chev').textContent = 'Azzera'; document.getElementById('wipeNote').textContent = 'Record, livelli raggiunti e partite di tutti i giochi. Non si torna indietro.'; } });
+  sheet.addEventListener('pointerdown', function (e) { if (wipeArmed && !e.target.closest('#btnWipe')) { wipeArmed = false; document.getElementById('btnWipe').querySelector('.chev').textContent = L('Azzera', 'Reset'); document.getElementById('wipeNote').textContent = L('Record, livelli raggiunti e partite di tutti i giochi. Non si torna indietro.', 'Records, levels reached and saved games of every game. This cannot be undone.'); } });
   document.getElementById('btnSet').addEventListener('click', function () { paintSet(); if (sheet.showModal) sheet.showModal(); else sheet.setAttribute('open', ''); });
   document.getElementById('btnClose').addEventListener('click', function () { if (sheet.close) sheet.close(); else sheet.removeAttribute('open'); });
   window.addEventListener('opz', paintSet);
+  try { if (sessionStorage.getItem('riapri')) { sessionStorage.removeItem('riapri'); paintSet(); if (sheet.showModal) sheet.showModal(); else sheet.setAttribute('open', ''); } } catch (e) {}
   var mb = document.getElementById('btnMus');
   if (window.MUSICA) { MUSICA.init(mb); setInterval(function () { mb.classList.toggle('play', MUSICA.isPlaying()); }, 500); } else mb.hidden = true;
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });

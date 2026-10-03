@@ -200,29 +200,29 @@ a.round{color:inherit; text-decoration:none}
 <main class="app" id="app">
   <header class="bar">
     <div class="lft">
-      <a class="round" id="btnHome" href="index.html" hidden aria-label="Tutti i giochi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></a>
-      <button class="pill" id="btnLevels" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg>Livelli</button>
+      <a class="round" id="btnHome" href="index.html" hidden aria-label="Tutti i giochi" data-en-aria="All games"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+      <button class="pill" id="btnLevels" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg><span data-en="Levels">Livelli</span></button>
     </div>
     <div class="where"><div class="badge" id="badge">1</div><div class="wtxt"><strong id="tierName"></strong><span id="lvOf"></span></div></div>
   </header>
-  <div class="stats"><span><span id="lblMoves">Mosse</span><b id="statMoves">0</b></span><span>Minimo<b id="statMin">0</b></span><span>Record<b id="statBest">–</b></span></div>
+  <div class="stats"><span><span id="lblMoves">Mosse</span><b id="statMoves">0</b></span><span><span data-en="Best possible">Minimo</span><b id="statMin">0</b></span><span><span data-en="Record">Record</span><b id="statBest">–</b></span></div>
   <div class="stage"><svg class="scene" id="scene" preserveAspectRatio="xMidYMid meet"></svg></div>
   <p class="status" id="status" aria-live="polite"></p>
   <nav class="controls" id="controls" aria-label="Comandi">
-    <button class="sign" id="btnUndo" type="button"><span class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5L3 10l5 5"/><path d="M3 10h11a5.5 5.5 0 010 11h-3"/></svg></span>Annulla</button>
-    <button class="sign" id="btnReset" type="button"><span class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 11-2.6-5.9"/><path d="M20 3.5V9h-5.5"/></svg></span>Ricomincia</button>
-    <button class="sign" id="btnHint" type="button"><svg class="ring" viewBox="0 0 64 64" aria-hidden="true"><circle class="bg" cx="32" cy="32" r="30"/><circle class="fill" id="ringFill" cx="32" cy="32" r="30" stroke-dasharray="188.5" stroke-dashoffset="188.5"/></svg><span class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 18.5h5M10.5 21.5h3"/><path d="M12 2.8a6 6 0 00-3.7 10.7c.7.6 1.1 1.4 1.1 2.3h5.2c0-.9.4-1.7 1.1-2.3A6 6 0 0012 2.8z"/></svg></span>Aiuto</button>
+    <button class="sign" id="btnUndo" type="button"><span class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5L3 10l5 5"/><path d="M3 10h11a5.5 5.5 0 010 11h-3"/></svg></span><span data-en="Undo">Annulla</span></button>
+    <button class="sign" id="btnReset" type="button"><span class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 11-2.6-5.9"/><path d="M20 3.5V9h-5.5"/></svg></span><span data-en="Restart">Ricomincia</span></button>
+    <button class="sign" id="btnHint" type="button"><svg class="ring" viewBox="0 0 64 64" aria-hidden="true"><circle class="bg" cx="32" cy="32" r="30"/><circle class="fill" id="ringFill" cx="32" cy="32" r="30" stroke-dasharray="188.5" stroke-dashoffset="188.5"/></svg><span class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 18.5h5M10.5 21.5h3"/><path d="M12 2.8a6 6 0 00-3.7 10.7c.7.6 1.1 1.4 1.1 2.3h5.2c0-.9.4-1.7 1.1-2.3A6 6 0 0012 2.8z"/></svg></span><span data-en="Help">Aiuto</span></button>
   </nav>
 </main>
 <section class="result" id="result" hidden aria-live="polite">
   <h2 id="resTitle"></h2>
   <div class="perfect" id="resPerfect" hidden><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg><span id="resPerfectTxt"></span></div>
   <p id="resText"></p>
-  <div class="actions"><button class="btn" id="btnAgain" type="button">Rigioca</button><button class="btn primary" id="btnNext" type="button">Livello successivo</button></div>
+  <div class="actions"><button class="btn" id="btnAgain" type="button" data-en="Play again">Rigioca</button><button class="btn primary" id="btnNext" type="button" data-en="Next level">Livello successivo</button></div>
 </section>
 <dialog class="sheet" id="sheet" aria-labelledby="sheetTitle">
-  <div class="sheet-head"><div><h2 id="sheetTitle">Livelli</h2><p id="sheetSummary"></p></div>
-    <button class="round" id="btnCloseSheet" type="button" aria-label="Chiudi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <div class="sheet-head"><div><h2 id="sheetTitle" data-en="Levels">Livelli</h2><p id="sheetSummary"></p></div>
+    <button class="round" id="btnCloseSheet" type="button" aria-label="Chiudi" data-en-aria="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
   <div class="sheet-body" id="sheetBody"></div>
 </dialog>
 
@@ -233,23 +233,52 @@ a.round{color:inherit; text-decoration:none}
 window.OPZ = (function () {
   'use strict';
   var KEY = 'giocapensa.opzioni';
-  var DEF = { musica: true, suoni: true, voce: true, lingua: 'it', aiuto: 'attesa' };
+  var DEF = { musica: true, suoni: true, voce: true, ui: 'auto', lingua: 'app', aiuto: 'attesa' };
   var val = {}, k;
   for (k in DEF) val[k] = DEF[k];
   try {
     var raw = JSON.parse(localStorage.getItem(KEY) || 'null');
     if (raw && typeof raw === 'object') {
       ['musica', 'suoni', 'voce'].forEach(function (n) { if (typeof raw[n] === 'boolean') val[n] = raw[n]; });
-      if (raw.lingua === 'it' || raw.lingua === 'en') val.lingua = raw.lingua;
+      if (['app', 'it', 'en'].indexOf(raw.lingua) >= 0) val.lingua = raw.lingua;
+      if (['auto', 'it', 'en'].indexOf(raw.ui) >= 0) val.ui = raw.ui;
       if (['subito', 'attesa', 'mai'].indexOf(raw.aiuto) >= 0) val.aiuto = raw.aiuto;
     } else if (localStorage.getItem('giocapensa.musica') === '0') val.musica = false;      // the old music-only switch
   } catch (e) {}
   function save() { try { localStorage.setItem(KEY, JSON.stringify(val)); } catch (e) {} }
   return {
-    get: function (n) { return val[n]; },
+    get: function (n) { return n === 'lingua' && val.lingua === 'app' ? (window.LANG || 'it') : val[n]; },   // «app»: the voice speaks the interface language
+    raw: function (n) { return val[n]; },
     set: function (n, v) { if (!(n in DEF)) return; val[n] = v; save(); try { window.dispatchEvent(new CustomEvent('opz', { detail: { nome: n, valore: v } })); } catch (e) {} },
     all: function () { var o = {}, q; for (q in val) o[q] = val[q]; return o; }
   };
+})();
+
+</script>
+<script id="lingua">
+/* Interface language. «auto» follows the phone; the setting lives in OPZ ('ui': auto | it | en).
+   In the code every visible text is written as L('italiano', 'English'); in the markup an element with
+   data-en="…" gets that English text, data-en-aria / data-en-title do the same for aria-label and title. */
+(function () {
+  'use strict';
+  function pick() {
+    var v = window.OPZ ? OPZ.get('ui') : 'auto';
+    if (v === 'it' || v === 'en') return v;
+    var langs = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'it']);
+    return /^it/i.test(langs[0] || '') ? 'it' : (/^en/i.test(langs[0] || '') ? 'en' : 'en');      // Italian phones get Italian, everyone else English
+  }
+  window.LANG = pick();
+  window.L = function (it, en) { return window.LANG === 'en' && en != null ? en : it; };
+  window.applyLang = function (root) {
+    if (window.LANG !== 'en') return;
+    root = root || document;
+    Array.prototype.forEach.call(root.querySelectorAll('[data-en]'), function (el) { el.textContent = el.getAttribute('data-en'); });
+    Array.prototype.forEach.call(root.querySelectorAll('[data-en-aria]'), function (el) { el.setAttribute('aria-label', el.getAttribute('data-en-aria')); });
+    Array.prototype.forEach.call(root.querySelectorAll('[data-en-title]'), function (el) { el.setAttribute('title', el.getAttribute('data-en-title')); });
+  };
+  document.documentElement.lang = window.LANG;
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { window.applyLang(document); });
+  else window.applyLang(document);
 })();
 
 </script>
@@ -389,7 +418,7 @@ window.SFX = (function () {
 window.Kit = (function () {
   'use strict';
   var INK = '#4A3B52', $ = function (id) { return document.getElementById(id); };
-  var TIERS = [{ name: 'Principiante', color: '#8DD68A' }, { name: 'Intermedio', color: '#FFD95A' }, { name: 'Avanzato', color: '#7DB7F7' }, { name: 'Esperto', color: '#F59A3A' }, { name: 'Maestro', color: '#EE5E4D' }];
+  var TIERS = [{ name: L('Principiante', 'Beginner'), color: '#8DD68A' }, { name: L('Intermedio', 'Intermediate'), color: '#FFD95A' }, { name: L('Avanzato', 'Advanced'), color: '#7DB7F7' }, { name: L('Esperto', 'Expert'), color: '#F59A3A' }, { name: L('Maestro', 'Master'), color: '#EE5E4D' }];
   var cfg, data = { best: {}, last: 0 }, level = 0, won = false, statusDefault = true, N = 0, PER = 24;
   var calm = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   function now() { return Date.now(); }
@@ -436,7 +465,7 @@ window.Kit = (function () {
   function load(i) {
     level = Math.max(0, Math.min(N - 1, i)); data.last = level; persist(); won = false; hideResult();
     var t = tierOf(level), app = $('app'); app.style.setProperty('--tier', t.color); app.style.setProperty('--tier-ink', INK);
-    $('badge').textContent = level + 1; $('tierName').textContent = t.name; $('lvOf').textContent = 'livello ' + (level + 1) + ' di ' + N;
+    $('badge').textContent = level + 1; $('tierName').textContent = t.name; $('lvOf').textContent = L('livello ' + (level + 1) + ' di ' + N, 'level ' + (level + 1) + ' of ' + N);
     var msg = cfg.load(level); setStatus(msg || ''); gateReset(FIRST); changed();   // a game may greet the level with its own hint text
   }
 
@@ -455,17 +484,18 @@ window.Kit = (function () {
 
   function win() {
     if (won) return; won = true; clearInterval(gate.timer); gate.timer = 0;
-    var moves = cfg.moves(), min = cfg.minOf(level), prev = data.best[level + 1], w = cfg.word || ['mossa', 'mosse'];
+    var moves = cfg.moves(), min = cfg.minOf(level), prev = data.best[level + 1], w = cfg.word || [L('mossa', 'move'), L('mosse', 'moves')];
     if (!prev || moves < prev) data.best[level + 1] = moves;
     data.last = Math.min(N - 1, level + 1); persist(); changed(true);
     var perfect = moves <= min, text;
     sfx(perfect ? 'perfect' : 'win'); buzz(perfect ? [12, 60, 18, 60, 22] : [12, 60, 18]);
-    if (perfect) text = 'Risolto in ' + moves + ' ' + (moves === 1 ? w[0] : w[1]) + ': meno di così non si può.';
-    else if (!prev || moves < prev) text = 'Risolto in ' + moves + ' ' + w[1] + (prev ? ', nuovo record' : '') + '. Il minimo è ' + min + '.';
-    else text = 'Risolto in ' + moves + ' ' + w[1] + '. Il tuo record è ' + prev + ', il minimo è ' + min + '.';
+    var mw = moves === 1 ? w[0] : w[1];
+    if (perfect) text = L('Risolto in ' + moves + ' ' + mw + ': meno di così non si può.', 'Solved in ' + moves + ' ' + mw + ': it cannot be done in fewer.');
+    else if (!prev || moves < prev) text = L('Risolto in ' + moves + ' ' + mw + (prev ? ', nuovo record' : '') + '. Il minimo è ' + min + '.', 'Solved in ' + moves + ' ' + mw + (prev ? ', a new record' : '') + '. The best possible is ' + min + '.');
+    else text = L('Risolto in ' + moves + ' ' + mw + '. Il tuo record è ' + prev + ', il minimo è ' + min + '.', 'Solved in ' + moves + ' ' + mw + '. Your record is ' + prev + ', the best possible is ' + min + '.');
     var last = level >= N - 1;
-    $('resTitle').textContent = cfg.winTitle; $('resPerfect').hidden = !perfect; $('resPerfectTxt').textContent = 'Minimo di ' + w[1];
-    $('resText').textContent = text + (last ? " Era l'ultimo livello." : ''); $('btnNext').textContent = last ? 'Scegli un livello' : 'Livello successivo';
+    $('resTitle').textContent = cfg.winTitle; $('resPerfect').hidden = !perfect; $('resPerfectTxt').textContent = L('Minimo di ' + w[1], 'Fewest ' + w[1]);
+    $('resText').textContent = text + (last ? L(" Era l'ultimo livello.", ' That was the last level.') : ''); $('btnNext').textContent = last ? L('Scegli un livello', 'Choose a level') : L('Livello successivo', 'Next level');
     statusDefault = false; $('status').textContent = '';
     setTimeout(function () { if (won) { var r = $('result'); r.hidden = false; void r.offsetWidth; r.classList.add('show'); $('controls').style.visibility = 'hidden'; } }, calm ? 200 : (cfg.winDelay || 1200));
   }
@@ -481,7 +511,7 @@ window.Kit = (function () {
       for (i = from; i < to; i++) html += '<button class="lv" type="button" data-level="' + i + '">' + (i + 1) + '</button>';
       html += '</div></section>';
     }
-    html += '<section class="rules"><h3>Come si gioca</h3><ul>' + cfg.rules.map(function (r) { return '<li>' + r + '</li>'; }).join('') + '</ul></section>';
+    html += '<section class="rules"><h3>' + L('Come si gioca', 'How to play') + '</h3><ul>' + cfg.rules.map(function (r) { return '<li>' + r + '</li>'; }).join('') + '</ul></section>';
     $('sheetBody').innerHTML = html;
     $('sheetBody').addEventListener('click', function (e) { var b = e.target.closest ? e.target.closest('.lv') : null; if (!b) return; load(+b.getAttribute('data-level')); closeDlg($('sheet')); });
   }
@@ -491,11 +521,11 @@ window.Kit = (function () {
       var i = +b.getAttribute('data-level'), mine = data.best[i + 1], min = cfg.minOf(i), ti = Math.floor(i / PER);
       b.classList.toggle('done', !!mine); b.classList.toggle('perfect', !!mine && mine <= min); b.classList.toggle('current', i === level);
       if (mine) { counts[ti] = (counts[ti] || 0) + 1; if (mine <= min) perfect++; }
-      b.setAttribute('aria-label', 'Livello ' + (i + 1) + (mine ? ', risolto' : ''));
+      b.setAttribute('aria-label', L('Livello ', 'Level ') + (i + 1) + (mine ? L(', risolto', ', solved') : ''));
     });
-    Array.prototype.forEach.call(sh.querySelectorAll('[data-count]'), function (el) { var ti = +el.getAttribute('data-count'); el.textContent = (counts[ti] || 0) + ' su ' + Math.min(PER, N - ti * PER); });
+    Array.prototype.forEach.call(sh.querySelectorAll('[data-count]'), function (el) { var ti = +el.getAttribute('data-count'); el.textContent = (counts[ti] || 0) + L(' su ', ' of ') + Math.min(PER, N - ti * PER); });
     var n = solvedCount();
-    $('sheetSummary').textContent = n === 0 ? 'Scegli da quale livello partire: sono tutti aperti.' : n + ' di ' + N + ' risolti, ' + perfect + ' con il minimo.';
+    $('sheetSummary').textContent = n === 0 ? L('Scegli da quale livello partire: sono tutti aperti.', 'Pick any level to start: they are all open.') : L(n + ' di ' + N + ' risolti, ' + perfect + ' con il minimo.', n + ' of ' + N + ' solved, ' + perfect + ' in the fewest moves.');
     openDlg(sh); var cur = sh.querySelector('.lv.current'); if (cur) { try { cur.scrollIntoView({ block: 'center' }); } catch (e) {} }
   }
 
@@ -508,7 +538,7 @@ window.Kit = (function () {
         if (typeof saved.last === 'number' && saved.last >= 0) data.last = Math.floor(saved.last);
       }
     } catch (e) {}
-    if (c.moveLabel) $('lblMoves').textContent = c.moveLabel;
+    $('lblMoves').textContent = c.moveLabel || L('Mosse', 'Moves');
     if (window.KIT_HOME) { $('btnHome').hidden = false; $('btnHome').setAttribute('href', window.KIT_HOME); }
     $('btnUndo').addEventListener('click', function () { if (!won && cfg.canUndo()) { cfg.clearHint(); cfg.undo(); setStatus(''); } });
     $('btnReset').addEventListener('click', function () { load(level); });
@@ -682,9 +712,9 @@ window.GAME_LEVELS = [{"w":4,"h":4,"c":"46ac7b8552c53839","s":3,"e":13,"st":[],"
     scene.innerHTML = s + '</g><g id="hintG"></g>' + teddy() + '</g>' + butterfly('#7DB7F7', 23, -4) + butterfly('#F59A3A', 31, -17) + '<g id="fxG"></g>';
     chr = scene.querySelector('#chr'); trailG = scene.querySelector('#trail'); itemsG = scene.querySelector('#items'); hintG = scene.querySelector('#hintG'); fxG = scene.querySelector('#fxG');
     setChr(cx(G.s), cy(G.s)); refreshHouse();
-    if (G.door && G.stars.length) return 'Prendi la chiave per aprire il cancello e raccogli tutte le stelle, poi vai alla grotta.';
-    if (G.door) return 'La chiave apre il cancello: prendila, poi raggiungi la grotta.';
-    if (G.stars.length) return 'Raccogli tutte le stelle: solo allora il masso libera la grotta.';
+    if (G.door && G.stars.length) return L('Prendi la chiave per aprire il cancello e raccogli tutte le stelle, poi vai alla grotta.', 'Take the key to open the gate and collect all the stars, then go to the cave.');
+    if (G.door) return L('La chiave apre il cancello: prendila, poi raggiungi la grotta.', 'The key opens the gate: take it, then reach the cave.');
+    if (G.stars.length) return L('Raccogli tutte le stelle: solo allora il masso libera la grotta.', 'Collect all the stars: only then does the boulder roll away from the cave.');
     return '';
   }
   function full() { return st.mask === (1 << G.stars.length) - 1; }
@@ -697,7 +727,7 @@ window.GAME_LEVELS = [{"w":4,"h":4,"c":"46ac7b8552c53839","s":3,"e":13,"st":[],"
   }
 
   /* ---------- walking: the dinosaur follows the path the finger has traced, smoothly and at its own pace ---------- */
-  var way = [], raf = 0, lastT = 0, SPEED = 520;
+  var way = [], raf = 0, lastT = 0, SPEED = 600;
   function mid() { return Math.abs(chr._x - cx(st.c)) + Math.abs(chr._y - cy(st.c)) > 0.5; }
   function arrive(n) {                                           // the centre of a new cell: that is one step
     var prev = { c: st.c, mask: st.mask, key: st.key }, px = cx(prev.c), py = cy(prev.c), x1 = cx(n), y1 = cy(n);
@@ -711,14 +741,14 @@ window.GAME_LEVELS = [{"w":4,"h":4,"c":"46ac7b8552c53839","s":3,"e":13,"st":[],"
     K.changed();
     if (st.c === G.e) {
       if (full()) { way = []; walking = false; chr.classList.remove('walk'); chr.classList.add('joy'); K.sparkle(fxG, x1, y1 - 20, 18); K.confetti(fxG, W, H); K.win(); return false; }
-      var hs = scene.querySelector('#house'); hs.classList.remove('no'); void hs.getBoundingClientRect(); hs.classList.add('no'); K.sfx('bad'); K.status('Un masso chiude la grotta: mancano ancora delle stelle.');
+      var hs = scene.querySelector('#house'); hs.classList.remove('no'); void hs.getBoundingClientRect(); hs.classList.add('no'); K.sfx('bad'); K.status(L('Un masso chiude la grotta: mancano ancora delle stelle.', 'A boulder blocks the cave: there are still stars to collect.'));
     }
     return true;
   }
   function frame(t) {
     raf = 0; if (K.isWon()) return;
     var dt = lastT ? Math.min(48, t - lastT) : 16; lastT = t;
-    var left = K.calm ? 1e9 : (SPEED + 70 * Math.min(way.length, 6)) * dt / 1000;        // a long trace ahead: hurry up a little
+    var left = K.calm ? 1e9 : (SPEED + 110 * Math.min(way.length, 6)) * dt / 1000;        // a long trace ahead: hurry up a little
     while (left > 0 && way.length) {
       var wp = way[0], dx = cx(wp.c) - chr._x, dy = cy(wp.c) - chr._y, dist = Math.abs(dx) + Math.abs(dy);   // corridors run straight: one of the two is always zero
       if (Math.abs(dx) > 0.5) chr.querySelector('.flip').style.transform = dx < 0 ? 'scaleX(-1)' : '';
@@ -728,9 +758,9 @@ window.GAME_LEVELS = [{"w":4,"h":4,"c":"46ac7b8552c53839","s":3,"e":13,"st":[],"
     if (way.length) raf = requestAnimationFrame(frame); else { walking = false; lastT = 0; chr.classList.remove('walk'); K.changed(); }
   }
   function go() { if (way.length && !raf) { walking = true; chr.classList.add('walk'); lastT = 0; raf = requestAnimationFrame(frame); K.changed(); } }
-  function cellAt(x, y) {
-    var b = scene.getBoundingClientRect(), s = Math.min(b.width / W, b.height / H), px = (x - b.left - (b.width - W * s) / 2) / s - PAD, py = (y - b.top - (b.height - H * s) / 2) / s - PAD;
-    var gx = Math.floor(px / C), gy = Math.floor(py / C); if (gx < 0 || gy < 0 || gx >= G.w || gy >= G.h) return -1; return gy * G.w + gx;
+  function toMaze(x, y) {                                       // finger position in maze units (0..w*C, 0..h*C)
+    var b = scene.getBoundingClientRect(), s = Math.min(b.width / W, b.height / H);
+    return { x: (x - b.left - (b.width - W * s) / 2) / s - PAD, y: (y - b.top - (b.height - H * s) / 2) / s - PAD };
   }
   function straight(a, b, max, key) {                            // same corridor, nothing in between
     var ax = a % G.w, ay = Math.floor(a / G.w), bx = b % G.w, bq = Math.floor(b / G.w), d, c = a, out = [];
@@ -739,33 +769,81 @@ window.GAME_LEVELS = [{"w":4,"h":4,"c":"46ac7b8552c53839","s":3,"e":13,"st":[],"
     while (c !== b) { if (LB.blocked(G, c, d, key)) return null; c = LB.nb(G, c, d); out.push(c); }
     return out;
   }
-  function aim(x, y) {                                           // the finger draws the way, cell by cell; a touch far away is not a way
-    if (K.isWon()) return; var t = cellAt(x, y), k; if (t < 0 || t === lastAim) return; lastAim = t; clearHint();
-    var tail = way.length ? way[way.length - 1].c : st.c; if (t === tail) return;
-    for (k = 0; k < way.length; k++) if (way[k].count && way[k].c === t) { way.length = k + 1; return; }            // the finger went back along its own trace
-    if (t === st.c) { way = mid() ? [{ c: st.c, count: false }] : []; go(); return; }                               // back to where it last stood
-    var key = st.key || way.some(function (w) { return w.c === G.key; }) ? 1 : 0;
-    var path = LB.route(G, tail, t, key, 3) || straight(tail, t, 5, key); if (!path) return;
-    way = way.concat(path.map(function (c) { return { c: c, count: true }; })); go();
+  function precious(c) {                                         // a cell worth walking to: a star still to take, the key, the cave
+    var i = G.stars.indexOf(c); return (i >= 0 && !(st.mask >> i & 1)) || (c === G.key && !st.key) || c === G.e;
   }
-  scene.addEventListener('pointerdown', function (e) { if (e.pointerType === 'mouse' && e.button !== 0) return; e.preventDefault(); down = true; lastAim = -1; try { scene.setPointerCapture(e.pointerId); } catch (err) {} aim(e.clientX, e.clientY); });
-  scene.addEventListener('pointermove', function (e) { if (down) aim(e.clientX, e.clientY); });
-  function up() { down = false; lastAim = -1; }
+  function tryCell(t, tap) {                              // can the trace go on to this cell? if so, queue it
+    var tail = way.length ? way[way.length - 1].c : st.c, k, q, hit = -2, keep = false;
+    if (t === tail) return true;
+    for (k = way.length - 1; k >= 0; k--) if (way[k].count && way[k].c === t) { hit = k; break; }
+    if (hit === -2 && t === st.c) hit = -1;                      // back on the dinosaur itself
+    if (hit >= -1) {
+      // the finger came back along its own trace: drop what it overshot — unless a star or the key is out there:
+      // then it went into the dead end on purpose, and the dinosaur walks in and back out just like the finger did
+      for (q = hit + 1; q < way.length; q++) if (precious(way[q].c)) keep = true;
+      if (!keep) { if (hit >= 0) way.length = hit + 1; else { way = mid() ? [{ c: st.c, count: false }] : []; go(); } return true; }
+    }
+    var key = st.key || way.some(function (w) { return w.c === G.key; }) ? 1 : 0;
+    // only squares the finger really reaches through an open passage: the next square, or the one round a corner.
+    // A square on the other side of a hedge is never reached by walking round it — the trace has to go there.
+    var gx = Math.abs(t % G.w - tail % G.w), gy = Math.abs(Math.floor(t / G.w) - Math.floor(tail / G.w)), path = null;
+    if (gx + gy === 1) path = LB.route(G, tail, t, key, 1);                      // next door, and no hedge in between
+    else if (gx === 1 && gy === 1) path = LB.route(G, tail, t, key, 2);          // round a corner
+    else if (tap) path = straight(tail, t, 5, key);                               // a tap a little further along the same corridor
+    if (!path) return false;
+    way = way.concat(path.map(function (c) { return { c: c, count: true }; })); go(); return true;
+  }
+  function aimAt(px, py, tap) {
+    if (K.isWon()) return;
+    // the cell under the finger first, then its neighbours by distance: a finger a little off the path, or over a hedge, still counts
+    var cx0 = Math.floor(px / C), cy0 = Math.floor(py / C), cands = [], dx, dy, gx, gy, c, d;
+    for (dy = -1; dy <= 1; dy++) for (dx = -1; dx <= 1; dx++) {
+      gx = cx0 + dx; gy = cy0 + dy; if (gx < 0 || gy < 0 || gx >= G.w || gy >= G.h) continue;
+      d = Math.hypot(px - (gx + 0.5) * C, py - (gy + 0.5) * C); if (d > C * 0.72) continue;
+      cands.push({ c: gy * G.w + gx, d: d });
+    }
+    cands.sort(function (u, v) { return u.d - v.d; });
+    for (var i = 0; i < cands.length; i++) {
+      c = cands[i].c; if (c === lastAim) return;                  // already on it
+      if (tryCell(c, tap)) { lastAim = c; clearHint(); return; }
+    }                                                             // nothing reachable here: keep listening, the next movement may be
+  }
+  var lastPt = null;
+  function follow(e) {                                           // a fast finger skips cells between two events: walk the segment in small steps
+    var p = toMaze(e.clientX, e.clientY);
+    if (lastPt) {
+      var n = Math.max(1, Math.ceil(Math.hypot(p.x - lastPt.x, p.y - lastPt.y) / (C / 4)));
+      for (var k = 1; k <= n; k++) aimAt(lastPt.x + (p.x - lastPt.x) * k / n, lastPt.y + (p.y - lastPt.y) * k / n, false);
+    } else aimAt(p.x, p.y, false);
+    lastPt = p;
+  }
+  scene.addEventListener('pointerdown', function (e) {
+    if (e.pointerType === 'mouse' && e.button !== 0) return; e.preventDefault(); down = true; lastAim = -1;
+    try { scene.setPointerCapture(e.pointerId); } catch (err) {}
+    var p = toMaze(e.clientX, e.clientY); lastPt = p; aimAt(p.x, p.y, true);
+  });
+  scene.addEventListener('pointermove', function (e) {
+    if (!down) return;
+    var evs = e.getCoalescedEvents ? e.getCoalescedEvents() : null;   // every point the finger touched since the last frame, not just the last one
+    if (evs && evs.length) evs.forEach(follow); else follow(e);
+  });
+  function up() { down = false; lastAim = -1; lastPt = null; }
   scene.addEventListener('pointerup', up); scene.addEventListener('pointercancel', up);
   scene.addEventListener('contextmenu', function (e) { e.preventDefault(); });
 
   function clearHint() { if (hintG) hintG.innerHTML = ''; }
   K.start({
-    key: 'labirinti.v1', count: RAW.length, perTier: 24, moveLabel: 'Passi', word: ['passo', 'passi'], winTitle: 'Arrivato alla grotta!', winDelay: 1500,
-    intro: 'Trascina il dito lungo il sentiero: il dinosauro ti segue fino alla sua grotta. Non si passa attraverso le siepi.',
-    rules: ['Porta il dinosauro alla sua grotta tracciando il sentiero con il dito: lui segue il percorso disegnato, le siepi non si attraversano.', 'Un tocco lontano non lo fa partire: il percorso va tracciato casella dopo casella.', 'Se ci sono stelle, vanno raccolte tutte prima che il masso liberi la grotta.', 'Il cancello si apre solo dopo aver preso la chiave.', 'Ogni casella percorsa conta un passo, anche quando si torna indietro.'],
+    key: 'labirinti.v1', count: RAW.length, perTier: 24, moveLabel: L('Passi', 'Steps'), word: [L('passo', 'step'), L('passi', 'steps')], winTitle: L('Arrivato alla grotta!', 'Home in the cave!'), winDelay: 1500,
+    intro: L('Trascina il dito lungo il sentiero: il dinosauro ti segue fino alla sua grotta. Non si passa attraverso le siepi.', 'Drag your finger along the path: the dinosaur follows you to its cave. Hedges cannot be crossed.'),
+    rules: LANG === 'en' ? ['Lead the dinosaur to its cave by tracing the path with your finger: it follows the trace, hedges cannot be crossed.', 'A tap far away does not set it walking: the path is traced square by square.', 'If there are stars, all of them must be collected before the boulder frees the cave.', 'The gate opens only after taking the key.', 'Every square walked counts as one step, going back included.']
+      : ['Porta il dinosauro alla sua grotta tracciando il sentiero con il dito: lui segue il percorso disegnato, le siepi non si attraversano.', 'Un tocco lontano non lo fa partire: il percorso va tracciato casella dopo casella.', 'Se ci sono stelle, vanno raccolte tutte prima che il masso liberi la grotta.', 'Il cancello si apre solo dopo aver preso la chiave.', 'Ogni casella percorsa conta un passo, anche quando si torna indietro.'],
     minOf: function (i) { return RAW[i].m; }, load: load, moves: function () { return hist ? hist.length : 0; }, canUndo: function () { return hist && hist.length > 0 && !walking; },
     undo: function () { way = []; var p = hist.pop(); st = p; setChr(cx(p.c), cy(p.c)); if (trailG.lastElementChild) trailG.removeChild(trailG.lastElementChild); refreshItems(); K.sfx('back'); K.changed(); },
     clearHint: clearHint,
     hint: function () {
       if (walking) return null; var path = LB.solve(G, st); if (!path || !path.length) return null;
       hintG.innerHTML = path.slice(0, 6).map(function (c, n) { return '<g class="hdot" style="--d:' + (n * 0.12) + 's"><circle cx="' + cx(c) + '" cy="' + cy(c) + '" r="34" fill="url(#gHint)"/>' + dot(cx(c), cy(c), 11, '#FFF4D9') + '</g>'; }).join('');
-      return 'Segui i puntini arancioni. Da qui mancano ' + path.length + ' passi.';
+      return L('Segui i puntini arancioni. Da qui mancano ' + path.length + ' passi.', 'Follow the orange dots. ' + path.length + ' steps to go from here.');
     }
   });
 })();

@@ -132,34 +132,34 @@ a.round{color:inherit; text-decoration:none}
 <body>
 <main class="app" id="app">
   <header class="bar">
-    <div class="lft"><a class="round" href="index.html" aria-label="Tutti i giochi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></a><button class="pill" id="btnLevels" type="button">
+    <div class="lft"><a class="round" href="index.html" aria-label="Tutti i giochi" data-en-aria="All games"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></a><button class="pill" id="btnLevels" type="button">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg>
-      Livelli
+      <span data-en="Levels">Livelli</span>
     </button></div>
     <div class="where"><div class="badge" id="badge">1</div><div class="wtxt"><strong id="tierName"></strong><span id="lvOf"></span></div></div>
     <span></span>
   </header>
-  <div class="stats"><span>Mosse<b id="statMoves">0</b></span><span>Minimo<b id="statMin">0</b></span><span>Record<b id="statBest">–</b></span></div>
-  <div class="stage"><svg class="scene" id="scene" aria-label="Barattoli con le palline" preserveAspectRatio="xMidYMid meet"></svg></div>
+  <div class="stats"><span><span data-en="Moves">Mosse</span><b id="statMoves">0</b></span><span><span data-en="Best possible">Minimo</span><b id="statMin">0</b></span><span><span data-en="Record">Record</span><b id="statBest">–</b></span></div>
+  <div class="stage"><svg class="scene" id="scene" aria-label="Barattoli con le palline" data-en-aria="Jars with balls" preserveAspectRatio="xMidYMid meet"></svg></div>
   <p class="status" id="status" aria-live="polite"></p>
-  <nav class="controls" id="controls" aria-label="Comandi">
-    <button class="sign" id="btnUndo" type="button"><span class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5L3 10l5 5"/><path d="M3 10h11a5.5 5.5 0 010 11h-3"/></svg></span>Annulla</button>
-    <button class="sign" id="btnReset" type="button"><span class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 11-2.6-5.9"/><path d="M20 3.5V9h-5.5"/></svg></span>Ricomincia</button>
-    <button class="sign" id="btnHint" type="button"><svg class="ring" viewBox="0 0 64 64" aria-hidden="true"><circle class="bg" cx="32" cy="32" r="30"/><circle class="fill" id="ringFill" cx="32" cy="32" r="30" stroke-dasharray="188.5" stroke-dashoffset="188.5"/></svg><span class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 18.5h5M10.5 21.5h3"/><path d="M12 2.8a6 6 0 00-3.7 10.7c.7.6 1.1 1.4 1.1 2.3h5.2c0-.9.4-1.7 1.1-2.3A6 6 0 0012 2.8z"/></svg></span>Aiuto</button>
+  <nav class="controls" id="controls" aria-label="Comandi" data-en-aria="Controls">
+    <button class="sign" id="btnUndo" type="button"><span class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5L3 10l5 5"/><path d="M3 10h11a5.5 5.5 0 010 11h-3"/></svg></span><span data-en="Undo">Annulla</span></button>
+    <button class="sign" id="btnReset" type="button"><span class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 11-2.6-5.9"/><path d="M20 3.5V9h-5.5"/></svg></span><span data-en="Restart">Ricomincia</span></button>
+    <button class="sign" id="btnHint" type="button"><svg class="ring" viewBox="0 0 64 64" aria-hidden="true"><circle class="bg" cx="32" cy="32" r="30"/><circle class="fill" id="ringFill" cx="32" cy="32" r="30" stroke-dasharray="188.5" stroke-dashoffset="188.5"/></svg><span class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 18.5h5M10.5 21.5h3"/><path d="M12 2.8a6 6 0 00-3.7 10.7c.7.6 1.1 1.4 1.1 2.3h5.2c0-.9.4-1.7 1.1-2.3A6 6 0 0012 2.8z"/></svg></span><span data-en="Help">Aiuto</span></button>
   </nav>
 </main>
 
 <section class="result" id="result" hidden aria-live="polite">
-  <h2 id="resTitle">Tutto in ordine!</h2>
-  <div class="perfect" id="resPerfect" hidden><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg>Minimo di mosse</div>
+  <h2 id="resTitle" data-en="All sorted!">Tutto in ordine!</h2>
+  <div class="perfect" id="resPerfect" hidden><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg><span data-en="Fewest moves">Minimo di mosse</span></div>
   <p id="resText"></p>
-  <div class="actions"><button class="btn" id="btnAgain" type="button">Rigioca</button><button class="btn primary" id="btnNext" type="button">Livello successivo</button></div>
+  <div class="actions"><button class="btn" id="btnAgain" type="button" data-en="Play again">Rigioca</button><button class="btn primary" id="btnNext" type="button" data-en="Next level">Livello successivo</button></div>
 </section>
 
 <dialog class="sheet" id="sheet" aria-labelledby="sheetTitle">
   <div class="sheet-head">
-    <div><h2 id="sheetTitle">Livelli</h2><p id="sheetSummary"></p></div>
-    <button class="round" id="btnCloseSheet" type="button" aria-label="Chiudi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div><h2 id="sheetTitle" data-en="Levels">Livelli</h2><p id="sheetSummary"></p></div>
+    <button class="round" id="btnCloseSheet" type="button" aria-label="Chiudi" data-en-aria="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   </div>
   <div class="sheet-body" id="sheetBody"></div>
 </dialog>
@@ -170,23 +170,52 @@ a.round{color:inherit; text-decoration:none}
 window.OPZ = (function () {
   'use strict';
   var KEY = 'giocapensa.opzioni';
-  var DEF = { musica: true, suoni: true, voce: true, lingua: 'it', aiuto: 'attesa' };
+  var DEF = { musica: true, suoni: true, voce: true, ui: 'auto', lingua: 'app', aiuto: 'attesa' };
   var val = {}, k;
   for (k in DEF) val[k] = DEF[k];
   try {
     var raw = JSON.parse(localStorage.getItem(KEY) || 'null');
     if (raw && typeof raw === 'object') {
       ['musica', 'suoni', 'voce'].forEach(function (n) { if (typeof raw[n] === 'boolean') val[n] = raw[n]; });
-      if (raw.lingua === 'it' || raw.lingua === 'en') val.lingua = raw.lingua;
+      if (['app', 'it', 'en'].indexOf(raw.lingua) >= 0) val.lingua = raw.lingua;
+      if (['auto', 'it', 'en'].indexOf(raw.ui) >= 0) val.ui = raw.ui;
       if (['subito', 'attesa', 'mai'].indexOf(raw.aiuto) >= 0) val.aiuto = raw.aiuto;
     } else if (localStorage.getItem('giocapensa.musica') === '0') val.musica = false;      // the old music-only switch
   } catch (e) {}
   function save() { try { localStorage.setItem(KEY, JSON.stringify(val)); } catch (e) {} }
   return {
-    get: function (n) { return val[n]; },
+    get: function (n) { return n === 'lingua' && val.lingua === 'app' ? (window.LANG || 'it') : val[n]; },   // «app»: the voice speaks the interface language
+    raw: function (n) { return val[n]; },
     set: function (n, v) { if (!(n in DEF)) return; val[n] = v; save(); try { window.dispatchEvent(new CustomEvent('opz', { detail: { nome: n, valore: v } })); } catch (e) {} },
     all: function () { var o = {}, q; for (q in val) o[q] = val[q]; return o; }
   };
+})();
+
+</script>
+<script id="lingua">
+/* Interface language. «auto» follows the phone; the setting lives in OPZ ('ui': auto | it | en).
+   In the code every visible text is written as L('italiano', 'English'); in the markup an element with
+   data-en="…" gets that English text, data-en-aria / data-en-title do the same for aria-label and title. */
+(function () {
+  'use strict';
+  function pick() {
+    var v = window.OPZ ? OPZ.get('ui') : 'auto';
+    if (v === 'it' || v === 'en') return v;
+    var langs = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'it']);
+    return /^it/i.test(langs[0] || '') ? 'it' : (/^en/i.test(langs[0] || '') ? 'en' : 'en');      // Italian phones get Italian, everyone else English
+  }
+  window.LANG = pick();
+  window.L = function (it, en) { return window.LANG === 'en' && en != null ? en : it; };
+  window.applyLang = function (root) {
+    if (window.LANG !== 'en') return;
+    root = root || document;
+    Array.prototype.forEach.call(root.querySelectorAll('[data-en]'), function (el) { el.textContent = el.getAttribute('data-en'); });
+    Array.prototype.forEach.call(root.querySelectorAll('[data-en-aria]'), function (el) { el.setAttribute('aria-label', el.getAttribute('data-en-aria')); });
+    Array.prototype.forEach.call(root.querySelectorAll('[data-en-title]'), function (el) { el.setAttribute('title', el.getAttribute('data-en-title')); });
+  };
+  document.documentElement.lang = window.LANG;
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { window.applyLang(document); });
+  else window.applyLang(document);
 })();
 
 </script>
@@ -383,11 +412,11 @@ window.TB_LEVELS = ["2|bg,b,g|2","3|bp,bb,pp|2","3|ggr,g,rr|2","2|pp,r,rb,b|2","
   'use strict';
   var RAW = window.TB_LEVELS, TB = window.TB, PER_TIER = 24, KEY = 'palline.v1', INK = '#4A3B52';
   var TIERS = [
-    { name: 'Principiante', color: '#8DD68A' }, { name: 'Intermedio', color: '#FFD95A' }, { name: 'Avanzato', color: '#7DB7F7' },
-    { name: 'Esperto', color: '#F59A3A' }, { name: 'Maestro', color: '#EE5E4D' }
+    { name: L('Principiante', 'Beginner'), color: '#8DD68A' }, { name: L('Intermedio', 'Intermediate'), color: '#FFD95A' }, { name: L('Avanzato', 'Advanced'), color: '#7DB7F7' },
+    { name: L('Esperto', 'Expert'), color: '#F59A3A' }, { name: L('Maestro', 'Master'), color: '#EE5E4D' }
   ];
-  var NAME = { r: 'rossa', y: 'gialla', b: 'blu', g: 'verde', p: 'arancione' }, NOTE = { r: 523.25, y: 587.33, b: 659.25, g: 783.99, p: 880 };
-  var ORD = ['primo', 'secondo', 'terzo', 'quarto', 'quinto', 'sesto'];
+  var NAME = LANG === 'en' ? { r: 'red', y: 'yellow', b: 'blue', g: 'green', p: 'orange' } : { r: 'rossa', y: 'gialla', b: 'blu', g: 'verde', p: 'arancione' }, NOTE = { r: 523.25, y: 587.33, b: 659.25, g: 783.99, p: 880 };
+  var ORD = LANG === 'en' ? ['first', 'second', 'third', 'fourth', 'fifth', 'sixth'] : ['primo', 'secondo', 'terzo', 'quarto', 'quinto', 'sesto'];
   var $ = function (id) { return document.getElementById(id); };
   var scene = $('scene'), statusEl = $('status'), result = $('result'), controls = $('controls'), sheet = $('sheet');
   var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -476,7 +505,7 @@ window.TB_LEVELS = ["2|bg,b,g|2","3|bp,bb,pp|2","3|ggr,g,rr|2","2|pp,r,rb,b|2","
   var statusDefault = true;
   function setStatus(t) {
     statusDefault = !t;
-    statusEl.textContent = t || (solvedCount() === 0 && history.length === 0 ? 'Tocca un barattolo per sollevare la pallina in cima, poi tocca quello dove vuoi metterla. Ogni barattolo deve avere un solo colore.' : '');
+    statusEl.textContent = t || (solvedCount() === 0 && history.length === 0 ? L('Tocca un barattolo per sollevare la pallina in cima, poi tocca quello dove vuoi metterla. Ogni barattolo deve avere un solo colore.', 'Tap a jar to lift the top ball, then tap the jar where you want it. Each jar must end up with one colour only.') : '');
   }
 
   function loadLevel(i) {
@@ -500,7 +529,7 @@ window.TB_LEVELS = ["2|bg,b,g|2","3|bp,bb,pp|2","3|ggr,g,rr|2","2|pp,r,rb,b|2","
     hideResult(); refreshDone(true);
     var t = tierOf(level), app = $('app');
     app.style.setProperty('--tier', t.color); app.style.setProperty('--tier-ink', INK);
-    $('badge').textContent = level + 1; $('tierName').textContent = t.name; $('lvOf').textContent = 'livello ' + (level + 1) + ' di ' + RAW.length;
+    $('badge').textContent = level + 1; $('tierName').textContent = t.name; $('lvOf').textContent = L('livello ' + (level + 1) + ' di ' + RAW.length, 'level ' + (level + 1) + ' of ' + RAW.length);
     setStatus(''); gateReset(HINT_FIRST); updateStats();
     if (!calm) els.forEach(function (col, ti) { col.forEach(function (el, j) { var y1 = el._y; setPos(el, el._x, y1 - 420); setTimeout(function () { tween(300, function (q) { setPos(el, el._x, y1 - 420 * (1 - inQuad(q))); }, function () { land(el); }); }, 60 * ti + 70 * j); }); });
   }
@@ -630,7 +659,8 @@ window.TB_LEVELS = ["2|bg,b,g|2","3|bp,bb,pp|2","3|ggr,g,rr|2","2|pp,r,rb,b|2","
       '<g class="arrowG"><path d="M' + xa + ' ' + top + 'Q' + mid + ' ' + (top - 96) + ' ' + xb + ' ' + top + '" fill="none" stroke="#FF8A3D" stroke-width="10" stroke-linecap="round"/>' +
       '<path d="M' + (xb - dir * 30) + ' ' + (top - 30) + 'L' + xb + ' ' + top + 'L' + (xb - dir * 34) + ' ' + (top + 8) + '" fill="none" stroke="#FF8A3D" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></g>';
     var c = tubes[m.from][tubes[m.from].length - 1];
-    setStatus('Sposta la pallina ' + NAME[c] + ' dal ' + ORD[m.from] + ' al ' + ORD[m.to] + ' barattolo.' + (sol.length > 1 ? ' Da qui mancano ' + sol.length + ' mosse.' : ''));
+    setStatus(L('Sposta la pallina ' + NAME[c] + ' dal ' + ORD[m.from] + ' al ' + ORD[m.to] + ' barattolo.' + (sol.length > 1 ? ' Da qui mancano ' + sol.length + ' mosse.' : ''),
+      'Move the ' + NAME[c] + ' ball from the ' + ORD[m.from] + ' to the ' + ORD[m.to] + ' jar.' + (sol.length > 1 ? ' ' + sol.length + ' moves to go from here.' : '')));
   }
 
   /* ---------- winning ---------- */
@@ -642,12 +672,12 @@ window.TB_LEVELS = ["2|bg,b,g|2","3|bp,bb,pp|2","3|ggr,g,rr|2","2|pp,r,rb,b|2","
     els.forEach(function (col, ti) { col.forEach(function (el, j) { el.style.setProperty('--pd', (ti * 0.09 + j * 0.05).toFixed(2) + 's'); el.classList.remove('land'); el.classList.add('party'); }); if (col.length) setTimeout(function () { sparkle(cx(ti), TOP - 50); }, 120 * ti); });
     var perfect = moves <= minMoves, text;
     sfx(perfect ? 'perfect' : 'win'); buzz(perfect ? [12, 60, 18, 60, 22] : [12, 60, 18]); confetti();
-    if (perfect) text = 'Risolto in ' + moves + ' mosse: meno di così non si può.';
-    else if (!prev || moves < prev) text = 'Risolto in ' + moves + ' mosse' + (prev ? ', nuovo record' : '') + '. Il minimo è ' + minMoves + '.';
-    else text = 'Risolto in ' + moves + ' mosse. Il tuo record è ' + prev + ', il minimo è ' + minMoves + '.';
+    if (perfect) text = L('Risolto in ' + moves + ' mosse: meno di così non si può.', 'Solved in ' + moves + ' moves: it cannot be done in fewer.');
+    else if (!prev || moves < prev) text = L('Risolto in ' + moves + ' mosse' + (prev ? ', nuovo record' : '') + '. Il minimo è ' + minMoves + '.', 'Solved in ' + moves + ' moves' + (prev ? ', a new record' : '') + '. The best possible is ' + minMoves + '.');
+    else text = L('Risolto in ' + moves + ' mosse. Il tuo record è ' + prev + ', il minimo è ' + minMoves + '.', 'Solved in ' + moves + ' moves. Your record is ' + prev + ', the best possible is ' + minMoves + '.');
     var last = level >= RAW.length - 1;
-    $('resPerfect').hidden = !perfect; $('resText').textContent = text + (last ? " Era l'ultimo livello." : '');
-    $('btnNext').textContent = last ? 'Scegli un livello' : 'Livello successivo';
+    $('resPerfect').hidden = !perfect; $('resText').textContent = text + (last ? L(" Era l'ultimo livello.", ' That was the last level.') : '');
+    $('btnNext').textContent = last ? L('Scegli un livello', 'Choose a level') : L('Livello successivo', 'Next level');
     statusDefault = false; statusEl.textContent = '';
     setTimeout(function () { if (won) { result.hidden = false; void result.offsetWidth; result.classList.add('show'); controls.style.visibility = 'hidden'; } }, calm ? 200 : 1250);
   }
@@ -664,21 +694,22 @@ window.TB_LEVELS = ["2|bg,b,g|2","3|bp,bb,pp|2","3|ggr,g,rr|2","2|pp,r,rb,b|2","
       for (var i = from; i < to; i++) html += '<button class="lv" type="button" data-level="' + i + '">' + (i + 1) + '</button>';
       html += '</div></section>';
     });
-    html += '<section class="rules"><h3>Come si gioca</h3><ul><li>Ogni barattolo deve finire con palline di un solo colore.</li><li>Si sposta una pallina alla volta, quella in cima: toccala e poi tocca il barattolo di arrivo, oppure trascinala.</li><li>Una pallina entra in qualsiasi barattolo che abbia ancora posto.</li><li>Ogni spostamento conta una mossa.</li></ul></section>';
+    html += LANG === 'en' ? '<section class="rules"><h3>How to play</h3><ul><li>Each jar must end up with balls of one colour only.</li><li>One ball moves at a time, the top one: tap it and then tap the jar it goes to, or drag it.</li><li>A ball fits in any jar that still has room.</li><li>Each move counts as one move.</li></ul></section>'
+      : '<section class="rules"><h3>Come si gioca</h3><ul><li>Ogni barattolo deve finire con palline di un solo colore.</li><li>Si sposta una pallina alla volta, quella in cima: toccala e poi tocca il barattolo di arrivo, oppure trascinala.</li><li>Una pallina entra in qualsiasi barattolo che abbia ancora posto.</li><li>Ogni spostamento conta una mossa.</li></ul></section>';
     $('sheetBody').innerHTML = html;
     $('sheetBody').addEventListener('click', function (e) { var b = e.target.closest ? e.target.closest('.lv') : null; if (!b) return; loadLevel(+b.getAttribute('data-level')); closeDlg(sheet); });
   }
   function refreshSheet() {
     var counts = TIERS.map(function () { return 0; }), perfect = 0;
     Array.prototype.forEach.call(sheet.querySelectorAll('.lv'), function (b) {
-      var i = +b.getAttribute('data-level'), mine = data.best[i + 1], min = +RAW[i].split('|')[2], label = 'Livello ' + (i + 1);
+      var i = +b.getAttribute('data-level'), mine = data.best[i + 1], min = +RAW[i].split('|')[2], label = L('Livello ', 'Level ') + (i + 1);
       b.classList.toggle('done', !!mine); b.classList.toggle('perfect', !!mine && mine <= min); b.classList.toggle('current', i === level);
-      if (mine) { counts[Math.floor(i / PER_TIER)]++; label += mine <= min ? ', risolto con il minimo di mosse' : ', risolto in ' + mine + ' mosse'; if (mine <= min) perfect++; }
+      if (mine) { counts[Math.floor(i / PER_TIER)]++; label += mine <= min ? L(', risolto con il minimo di mosse', ', solved in the fewest moves') : L(', risolto in ' + mine + ' mosse', ', solved in ' + mine + ' moves'); if (mine <= min) perfect++; }
       b.setAttribute('aria-label', label);
     });
-    Array.prototype.forEach.call(sheet.querySelectorAll('[data-count]'), function (el) { var ti = +el.getAttribute('data-count'); el.textContent = counts[ti] + ' su ' + Math.min(PER_TIER, RAW.length - ti * PER_TIER); });
+    Array.prototype.forEach.call(sheet.querySelectorAll('[data-count]'), function (el) { var ti = +el.getAttribute('data-count'); el.textContent = counts[ti] + L(' su ', ' of ') + Math.min(PER_TIER, RAW.length - ti * PER_TIER); });
     var n = solvedCount();
-    $('sheetSummary').textContent = n === 0 ? 'Scegli da quale livello partire: sono tutti aperti.' : n + ' di ' + RAW.length + ' risolti, ' + perfect + ' con il minimo di mosse.';
+    $('sheetSummary').textContent = n === 0 ? L('Scegli da quale livello partire: sono tutti aperti.', 'Pick any level to start: they are all open.') : L(n + ' di ' + RAW.length + ' risolti, ' + perfect + ' con il minimo di mosse.', n + ' of ' + RAW.length + ' solved, ' + perfect + ' in the fewest moves.');
   }
   function openSheet() { refreshSheet(); openDlg(sheet); var cur = sheet.querySelector('.lv.current'); if (cur) { try { cur.scrollIntoView({ block: 'center' }); } catch (e) {} } }
 

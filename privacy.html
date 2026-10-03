@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Giocapensa — Privacy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;800;900&display=swap">
+<style>
+:root{ color-scheme:light; --page:#FDF3E3; --ink:#4A3B52; --ink-2:#7A6B80; --surface:#fff; --font:"Overpass","Helvetica Neue",Helvetica,Arial,sans-serif }
+@media (prefers-color-scheme: dark){ :root{ color-scheme:dark; --page:#241E28; --ink:#F2E8DC; --ink-2:#B3A6B8; --surface:#332B38 } }
+*{box-sizing:border-box}
+body{margin:0; background:var(--page); color:var(--ink); font-family:var(--font); line-height:1.5}
+main{max-width:720px; margin:0 auto; padding:max(20px,env(safe-area-inset-top)) 18px max(40px,env(safe-area-inset-bottom))}
+a.back{display:inline-flex; align-items:center; gap:8px; margin-bottom:18px; padding:9px 16px 7px; border-radius:20px; background:var(--surface); box-shadow:0 0 0 2.5px var(--ink); color:inherit; text-decoration:none; font-weight:800; font-size:.9375rem}
+h1{font-weight:900; font-size:1.875rem; letter-spacing:-.02em; margin:0 0 4px}
+.date{color:var(--ink-2); font-size:.875rem; margin:0 0 20px}
+h2{font-weight:900; font-size:1.1875rem; margin:26px 0 8px}
+p,li{font-size:1rem} li{margin:6px 0}
+.box{background:var(--surface); border-radius:22px; box-shadow:0 0 0 2.5px var(--ink); padding:16px 18px; margin:18px 0}
+.en{color:var(--ink-2)}
+footer{margin-top:30px; color:var(--ink-2); font-size:.875rem}
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="index.html">← Giocapensa</a>
+<article lang="it">
+  <h1>Privacy</h1>
+  <p class="date">Ultimo aggiornamento: 3 ottobre 2026</p>
+
+  <div class="box">
+    <p><strong>Giocapensa non raccoglie alcun dato.</strong> Nessun account, nessuna registrazione, nessuna pubblicità, nessun tracciamento, nessun servizio di terze parti, nessun acquisto all'interno dell'app.</p>
+  </div>
+
+  <h2>Cosa resta sul dispositivo</h2>
+  <p>L'app salva sul telefono soltanto l'avanzamento del gioco: livello raggiunto, record di mosse, partite in corso, adesivi attaccati e le impostazioni (suoni, musica, voce, lingua della voce, pulsante Aiuto). Questi dati restano nella memoria locale del dispositivo, non vengono inviati a nessuno e si cancellano disinstallando l'app oppure con «Cancella tutti i progressi» nelle impostazioni.</p>
+
+  <h2>Nessun dato personale</h2>
+  <p>L'app non chiede né registra nome, età, email, posizione, rubrica, foto o microfono. Non usa identificatori pubblicitari e non profila chi gioca.</p>
+
+  <h2>Rete</h2>
+  <p>L'app funziona senza connessione. L'unica richiesta verso l'esterno è il caricamento del carattere tipografico da Google Fonts alla prima apertura; dopo resta sul dispositivo.</p>
+
+  <h2>Bambini</h2>
+  <p>Giocapensa è pensata per bambini in età prescolare. Proprio per questo non contiene pubblicità, acquisti, link esterni, social, chat né raccolta di dati di alcun tipo.</p>
+
+  <h2>Contatti</h2>
+  <p>Per domande sulla privacy è possibile scrivere all'indirizzo email indicato nella pagina dell'app.</p>
+
+</article>
+<article lang="en" hidden>
+  <h1>Privacy</h1>
+  <p class="date">Last updated: 3 October 2026</p>
+
+  <div class="box">
+    <p><strong>Giocapensa collects no data at all.</strong> No account, no sign-up, no advertising, no tracking, no third-party services, no in-app purchases.</p>
+  </div>
+
+  <h2>What stays on the device</h2>
+  <p>The app only saves game progress on the phone: level reached, best number of moves, games in progress, stickers placed, and the settings (sounds, music, voice, languages, Help button). This data stays in the device's local storage, is never sent to anyone, and is deleted when the app is removed or with «Delete all progress» in the settings.</p>
+
+  <h2>No personal data</h2>
+  <p>The app does not ask for or record name, age, email, location, contacts, photos or microphone. It uses no advertising identifiers and does not profile whoever plays.</p>
+
+  <h2>Network</h2>
+  <p>The app works offline. The only request to the outside is loading the typeface from Google Fonts the first time it opens; after that it stays on the device.</p>
+
+  <h2>Children</h2>
+  <p>Giocapensa is made for pre-school children. For that very reason it contains no advertising, purchases, external links, social features, chat or data collection of any kind.</p>
+
+  <h2>Contact</h2>
+  <p>For questions about privacy, write to the email address shown on the app's page.</p>
+</article>
+  <footer>Giocapensa — giochi di logica per bambini.</footer>
+</main>
+<script>
+(function () {                                    // same language as the app: the setting, or else the phone
+  var ui = 'auto'; try { var o = JSON.parse(localStorage.getItem('giocapensa.opzioni') || 'null'); if (o && o.ui) ui = o.ui; } catch (e) {}
+  var en = ui === 'en' || (ui === 'auto' && !/^it/i.test((navigator.languages && navigator.languages[0]) || navigator.language || 'it'));
+  if (!en) return;
+  document.documentElement.lang = 'en'; document.title = 'Giocapensa — Privacy';
+  document.querySelector('article[lang="it"]').hidden = true; document.querySelector('article[lang="en"]').hidden = false;
+  document.querySelector('footer').textContent = 'Giocapensa — logic games for children.';
+})();
+</script>
+</body>
+</html>

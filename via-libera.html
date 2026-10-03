@@ -337,26 +337,26 @@ dialog::backdrop{background:rgba(0,0,0,.55)}
 <body data-skin="cars">
 <main class="app" id="app">
   <header class="bar">
-    <div class="lft"><a class="homebtn" href="index.html" aria-label="Tutti i giochi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></a><button class="pill" id="btnLevels" type="button">
+    <div class="lft"><a class="homebtn" href="index.html" aria-label="Tutti i giochi" data-en-aria="All games"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></a><button class="pill" id="btnLevels" type="button">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg>
-      Livelli
+      <span data-en="Levels">Livelli</span>
     </button></div>
     <div class="where">
       <div class="badge" id="badge">1</div>
       <div class="wtxt"><strong id="tierName"></strong><span id="lvOf"></span></div>
     </div>
-    <button class="iconbtn" id="btnMenu" type="button" aria-label="Menu: partite salvate, stile, suoni">
+    <button class="iconbtn" id="btnMenu" type="button" aria-label="Menu: partite salvate, stile, suoni" data-en-aria="Menu: saved games, style, sounds">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
   </header>
 
   <div class="stats" aria-live="off">
-    <span>Mosse<b id="statMoves">0</b></span>
-    <span>Minimo<b id="statMin">0</b></span>
-    <span>Record<b id="statBest">–</b></span>
+    <span><span data-en="Moves">Mosse</span><b id="statMoves">0</b></span>
+    <span><span data-en="Best possible">Minimo</span><b id="statMin">0</b></span>
+    <span><span data-en="Record">Record</span><b id="statBest">–</b></span>
   </div>
 
-  <section class="stage" aria-label="Tabellone">
+  <section class="stage" aria-label="Tabellone" data-en-aria="Board">
     <div class="tray">
       <div class="grid" id="grid">
         <div class="exit" id="exit" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5l7 7-7 7M13 5l7 7-7 7"/></svg></div>
@@ -367,27 +367,27 @@ dialog::backdrop{background:rgba(0,0,0,.55)}
 
   <p class="status" id="status" aria-live="polite"></p>
 
-  <nav class="controls" id="controls" aria-label="Comandi">
-    <button class="sign" id="btnUndo" type="button"><span class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5L3 10l5 5"/><path d="M3 10h11a5.5 5.5 0 010 11h-3"/></svg></span>Annulla</button>
-    <button class="sign" id="btnReset" type="button"><span class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 11-2.6-5.9"/><path d="M20 3.5V9h-5.5"/></svg></span>Ricomincia</button>
-    <button class="sign" id="btnHint" type="button"><svg class="ring" id="hintRing" viewBox="0 0 64 64" aria-hidden="true"><circle class="bg" cx="32" cy="32" r="30"/><circle class="fill" cx="32" cy="32" r="30" stroke-dasharray="188.5" stroke-dashoffset="188.5"/></svg><span class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 18.5h5M10.5 21.5h3"/><path d="M12 2.8a6 6 0 00-3.7 10.7c.7.6 1.1 1.4 1.1 2.3h5.2c0-.9.4-1.7 1.1-2.3A6 6 0 0012 2.8z"/></svg></span>Aiuto</button>
+  <nav class="controls" id="controls" aria-label="Comandi" data-en-aria="Controls">
+    <button class="sign" id="btnUndo" type="button"><span class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5L3 10l5 5"/><path d="M3 10h11a5.5 5.5 0 010 11h-3"/></svg></span><span data-en="Undo">Annulla</span></button>
+    <button class="sign" id="btnReset" type="button"><span class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 11-2.6-5.9"/><path d="M20 3.5V9h-5.5"/></svg></span><span data-en="Restart">Ricomincia</span></button>
+    <button class="sign" id="btnHint" type="button"><svg class="ring" id="hintRing" viewBox="0 0 64 64" aria-hidden="true"><circle class="bg" cx="32" cy="32" r="30"/><circle class="fill" cx="32" cy="32" r="30" stroke-dasharray="188.5" stroke-dashoffset="188.5"/></svg><span class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 18.5h5M10.5 21.5h3"/><path d="M12 2.8a6 6 0 00-3.7 10.7c.7.6 1.1 1.4 1.1 2.3h5.2c0-.9.4-1.7 1.1-2.3A6 6 0 0012 2.8z"/></svg></span><span data-en="Help">Aiuto</span></button>
   </nav>
 </main>
 
 <section class="result" id="result" hidden aria-live="polite">
-  <h2 id="resTitle">Via libera!</h2>
-  <div class="perfect" id="resPerfect" hidden><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg>Minimo di mosse</div>
+  <h2 id="resTitle"><span data-en="Way out!">Via libera!</span></h2>
+  <div class="perfect" id="resPerfect" hidden><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg><span data-en="Fewest moves">Minimo di mosse</span></div>
   <p id="resText"></p>
   <div class="actions">
-    <button class="btn" id="btnAgain" type="button">Rigioca</button>
-    <button class="btn primary" id="btnNextLevel" type="button">Livello successivo</button>
+    <button class="btn" id="btnAgain" type="button"><span data-en="Play again">Rigioca</span></button>
+    <button class="btn primary" id="btnNextLevel" type="button"><span data-en="Next level">Livello successivo</span></button>
   </div>
 </section>
 
 <dialog class="sheet" id="sheet" aria-labelledby="sheetTitle">
   <div class="sheet-head">
-    <div><h2 id="sheetTitle">Livelli</h2><p id="sheetSummary"></p></div>
-    <button class="iconbtn" id="btnCloseSheet" type="button" aria-label="Chiudi">
+    <div><h2 id="sheetTitle"><span data-en="Levels">Livelli</span></h2><p id="sheetSummary"></p></div>
+    <button class="iconbtn" id="btnCloseSheet" type="button" aria-label="Chiudi" data-en-aria="Close">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
   </div>
@@ -396,8 +396,8 @@ dialog::backdrop{background:rgba(0,0,0,.55)}
 
 <dialog class="sheet" id="menu" aria-labelledby="menuTitle">
   <div class="sheet-head">
-    <div><h2 id="menuTitle">Via libera</h2><p id="menuSummary"></p></div>
-    <button class="iconbtn" id="btnCloseMenu" type="button" aria-label="Chiudi">
+    <div><h2 id="menuTitle"><span data-en="Way out">Via libera</span></h2><p id="menuSummary"></p></div>
+    <button class="iconbtn" id="btnCloseMenu" type="button" aria-label="Chiudi" data-en-aria="Close">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
   </div>
@@ -405,23 +405,23 @@ dialog::backdrop{background:rgba(0,0,0,.55)}
 </dialog>
 
 <dialog class="confirm" id="nameDlg" aria-labelledby="nameTitle">
-  <h2 id="nameTitle">Salva con nome</h2>
+  <h2 id="nameTitle"><span data-en="Save as">Salva con nome</span></h2>
   <p id="nameIntro"></p>
-  <label class="field"><span>Nome della partita</span>
+  <label class="field"><span><span data-en="Game name">Nome della partita</span></span>
     <input id="nameInput" type="text" maxlength="24" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" enterkeyhint="done">
     <small class="err" id="nameErr" aria-live="polite"></small>
   </label>
-  <div class="field" id="startField"><span>Parti dal livello</span>
+  <div class="field" id="startField"><span><span data-en="Start from level">Parti dal livello</span></span>
     <div class="stepper">
-      <button type="button" id="startMinus" aria-label="Livello precedente">−</button>
-      <input id="startInput" type="number" inputmode="numeric" min="1" max="160" value="1" aria-label="Livello di partenza">
-      <button type="button" id="startPlus" aria-label="Livello successivo">+</button>
+      <button type="button" id="startMinus" aria-label="Livello precedente" data-en-aria="Previous level">−</button>
+      <input id="startInput" type="number" inputmode="numeric" min="1" max="160" value="1" aria-label="Livello di partenza" data-en-aria="Starting level">
+      <button type="button" id="startPlus" aria-label="Livello successivo" data-en-aria="Next level">+</button>
     </div>
     <div class="tierpick" id="tierPick"></div>
   </div>
   <div class="actions">
-    <button class="btn" id="btnNameNo" type="button">Annulla</button>
-    <button class="btn primary" id="btnNameYes" type="button">Salva</button>
+    <button class="btn" id="btnNameNo" type="button"><span data-en="Cancel">Annulla</span></button>
+    <button class="btn primary" id="btnNameYes" type="button"><span data-en="Save">Salva</span></button>
   </div>
 </dialog>
 
@@ -429,8 +429,8 @@ dialog::backdrop{background:rgba(0,0,0,.55)}
   <h2 id="confirmTitle"></h2>
   <p id="confirmText"></p>
   <div class="actions">
-    <button class="btn" id="btnConfirmNo" type="button">Annulla</button>
-    <button class="btn primary" id="btnConfirmYes" type="button">Elimina</button>
+    <button class="btn" id="btnConfirmNo" type="button"><span data-en="Cancel">Annulla</span></button>
+    <button class="btn primary" id="btnConfirmYes" type="button"><span data-en="Delete">Elimina</span></button>
   </div>
 </dialog>
 
@@ -440,23 +440,52 @@ dialog::backdrop{background:rgba(0,0,0,.55)}
 window.OPZ = (function () {
   'use strict';
   var KEY = 'giocapensa.opzioni';
-  var DEF = { musica: true, suoni: true, voce: true, lingua: 'it', aiuto: 'attesa' };
+  var DEF = { musica: true, suoni: true, voce: true, ui: 'auto', lingua: 'app', aiuto: 'attesa' };
   var val = {}, k;
   for (k in DEF) val[k] = DEF[k];
   try {
     var raw = JSON.parse(localStorage.getItem(KEY) || 'null');
     if (raw && typeof raw === 'object') {
       ['musica', 'suoni', 'voce'].forEach(function (n) { if (typeof raw[n] === 'boolean') val[n] = raw[n]; });
-      if (raw.lingua === 'it' || raw.lingua === 'en') val.lingua = raw.lingua;
+      if (['app', 'it', 'en'].indexOf(raw.lingua) >= 0) val.lingua = raw.lingua;
+      if (['auto', 'it', 'en'].indexOf(raw.ui) >= 0) val.ui = raw.ui;
       if (['subito', 'attesa', 'mai'].indexOf(raw.aiuto) >= 0) val.aiuto = raw.aiuto;
     } else if (localStorage.getItem('giocapensa.musica') === '0') val.musica = false;      // the old music-only switch
   } catch (e) {}
   function save() { try { localStorage.setItem(KEY, JSON.stringify(val)); } catch (e) {} }
   return {
-    get: function (n) { return val[n]; },
+    get: function (n) { return n === 'lingua' && val.lingua === 'app' ? (window.LANG || 'it') : val[n]; },   // «app»: the voice speaks the interface language
+    raw: function (n) { return val[n]; },
     set: function (n, v) { if (!(n in DEF)) return; val[n] = v; save(); try { window.dispatchEvent(new CustomEvent('opz', { detail: { nome: n, valore: v } })); } catch (e) {} },
     all: function () { var o = {}, q; for (q in val) o[q] = val[q]; return o; }
   };
+})();
+
+</script>
+<script id="lingua">
+/* Interface language. «auto» follows the phone; the setting lives in OPZ ('ui': auto | it | en).
+   In the code every visible text is written as L('italiano', 'English'); in the markup an element with
+   data-en="…" gets that English text, data-en-aria / data-en-title do the same for aria-label and title. */
+(function () {
+  'use strict';
+  function pick() {
+    var v = window.OPZ ? OPZ.get('ui') : 'auto';
+    if (v === 'it' || v === 'en') return v;
+    var langs = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'it']);
+    return /^it/i.test(langs[0] || '') ? 'it' : (/^en/i.test(langs[0] || '') ? 'en' : 'en');      // Italian phones get Italian, everyone else English
+  }
+  window.LANG = pick();
+  window.L = function (it, en) { return window.LANG === 'en' && en != null ? en : it; };
+  window.applyLang = function (root) {
+    if (window.LANG !== 'en') return;
+    root = root || document;
+    Array.prototype.forEach.call(root.querySelectorAll('[data-en]'), function (el) { el.textContent = el.getAttribute('data-en'); });
+    Array.prototype.forEach.call(root.querySelectorAll('[data-en-aria]'), function (el) { el.setAttribute('aria-label', el.getAttribute('data-en-aria')); });
+    Array.prototype.forEach.call(root.querySelectorAll('[data-en-title]'), function (el) { el.setAttribute('title', el.getAttribute('data-en-title')); });
+  };
+  document.documentElement.lang = window.LANG;
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { window.applyLang(document); });
+  else window.applyLang(document);
 })();
 
 </script>
@@ -810,11 +839,11 @@ window.VL_LEVELS = ["ooooooooooBoooAABooooooooooooooooooo:g:2",
   'use strict';
   var RAW = window.VL_LEVELS, VL = window.VL, PER_TIER = 32, KEY = 'via-libera.v2', OLD_KEY = 'via-libera.v1', MAX_SAVES = 20;
   var TIERS = [
-    { name: 'Principiante', color: '#27AE86', ink: '#04241A' },
-    { name: 'Intermedio', color: '#F3B61F', ink: '#2A1E00' },
-    { name: 'Avanzato', color: '#2D5BDA', ink: '#FFFFFF' },
-    { name: 'Esperto', color: '#E8452E', ink: '#2B0803' },
-    { name: 'Maestro', color: '#A30F2D', ink: '#FFFFFF' }
+    { name: L('Principiante', 'Beginner'), color: '#27AE86', ink: '#04241A' },
+    { name: L('Intermedio', 'Intermediate'), color: '#F3B61F', ink: '#2A1E00' },
+    { name: L('Avanzato', 'Advanced'), color: '#2D5BDA', ink: '#FFFFFF' },
+    { name: L('Esperto', 'Expert'), color: '#E8452E', ink: '#2B0803' },
+    { name: L('Maestro', 'Master'), color: '#A30F2D', ink: '#FFFFFF' }
   ];
   var $ = function (id) { return document.getElementById(id); };
   var grid = $('grid'), ghost = $('ghost'), statusEl = $('status'), exitEl = $('exit'), result = $('result'), controls = $('controls');
@@ -835,7 +864,7 @@ window.VL_LEVELS = ["ooooooooooBoooAABooooooooooooooooooo:g:2",
   function newId() { return 's' + now().toString(36) + Math.floor(Math.random() * 1679616).toString(36); }
   function cleanSave(o, id) {
     if (!o || typeof o !== 'object') return null;
-    var s = { id: id, name: String(o.name == null ? 'Partita' : o.name).trim().slice(0, 24) || 'Partita', created: +o.created || now(), updated: +o.updated || 0,
+    var s = { id: id, name: String(o.name == null ? L('Partita', 'Game') : o.name).trim().slice(0, 24) || L('Partita', 'Game'), created: +o.created || now(), updated: +o.updated || 0,
       level: clampInt(o.level, 0, RAW.length - 1), skin: SKIN_ORDER.indexOf(o.skin) >= 0 ? o.skin : 'cars', best: {}, board: null, deleted: !!o.deleted };
     if (o.best && typeof o.best === 'object') Object.keys(o.best).forEach(function (k) { var lv = Math.floor(+k), n = Math.floor(+o.best[k]); if (lv >= 1 && lv <= RAW.length && isFinite(n) && n > 0) s.best[lv] = n; });
     var b = o.board;
@@ -853,7 +882,7 @@ window.VL_LEVELS = ["ooooooooooBoooAABooooooooooooooooooo:g:2",
     if (S() && !S().deleted) return;
     var l = liveSaves();
     if (l.length) store.active = l[0].id;
-    else { var d = blankSave('Partita 1', 0); store.saves[d.id] = d; store.active = d.id; freshDefault = true; }
+    else { var d = blankSave(L('Partita 1', 'Game 1'), 0); store.saves[d.id] = d; store.active = d.id; freshDefault = true; }
   }
   function loadLocal() {
     try {
@@ -868,7 +897,7 @@ window.VL_LEVELS = ["ooooooooooBoooAABooooooooooooooooooo:g:2",
     if (!liveSaves().length) {
       try { // progress made with the first version of the game
         var old = JSON.parse(localStorage.getItem(OLD_KEY) || 'null');
-        if (old && typeof old === 'object') { var m = cleanSave({ name: 'Partita 1', created: now(), updated: now(), level: old.last, best: old.best }, newId()); store.saves[m.id] = m; store.active = m.id; if (typeof old.sound === 'boolean') store.sound = old.sound; }
+        if (old && typeof old === 'object') { var m = cleanSave({ name: L('Partita 1', 'Game 1'), created: now(), updated: now(), level: old.last, best: old.best }, newId()); store.saves[m.id] = m; store.active = m.id; if (typeof old.sound === 'boolean') store.sound = old.sound; }
       } catch (e) {}
     }
     ensureActive();
@@ -1197,13 +1226,19 @@ window.VL_LEVELS = ["ooooooooooBoooAABooooooooooooooooooo:g:2",
     return s;
   }
 
-  var COLOR = { r: ['rosso', 'rossa'], y: ['giallo', 'gialla'], b: ['blu', 'blu'], g: ['verde', 'verde'] };
+  var COLOR = LANG === 'en' ? { r: ['red', 'red'], y: ['yellow', 'yellow'], b: ['blue', 'blue'], g: ['green', 'green'] } : { r: ['rosso', 'rossa'], y: ['giallo', 'gialla'], b: ['blu', 'blu'], g: ['verde', 'verde'] };
   var SKINS = {
-    cars: { label: 'Traffico', art: artCars, floor: floorCars, shine: true, hero: "l'auto a strisce", two: ["l'auto", 1], three: ['il camion', 0],
+    cars: LANG === 'en' ? { label: 'Traffic', art: artCars, floor: floorCars, shine: true, hero: 'the striped car', two: ['the car', 1], three: ['the truck', 0],
+      intro: 'Drag the vehicles to clear the road: the striped car must reach the exit on the right.', out: 'Drive the striped car out of the exit.' }
+      : { label: 'Traffico', art: artCars, floor: floorCars, shine: true, hero: "l'auto a strisce", two: ["l'auto", 1], three: ['il camion', 0],
       intro: "Trascina i veicoli per liberare la strada: l'auto a strisce deve raggiungere l'uscita a destra.", out: "Porta l'auto a strisce fuori dall'uscita." },
-    medieval: { label: 'Medioevo', art: artMedieval, floor: floorMedieval, shine: false, hero: 'la carrozza reale', two: ['il carretto', 0], three: ['il carro', 0],
+    medieval: LANG === 'en' ? { label: 'Middle Ages', art: artMedieval, floor: floorMedieval, shine: false, hero: 'the royal coach', two: ['the cart', 0], three: ['the wagon', 0],
+      intro: 'Drag the carts and wagons to clear the courtyard: the royal coach must reach the gate on the right.', out: 'Drive the royal coach out of the gate.' }
+      : { label: 'Medioevo', art: artMedieval, floor: floorMedieval, shine: false, hero: 'la carrozza reale', two: ['il carretto', 0], three: ['il carro', 0],
       intro: 'Trascina carri e carretti per liberare il cortile: la carrozza reale deve raggiungere il portone a destra.', out: 'Porta la carrozza reale fuori dal portone.' },
-    harbor: { label: 'Porto', art: artHarbor, floor: floorHarbor, shine: false, hero: 'il motoscafo a strisce', two: ['la barca', 1], three: ['la nave', 1],
+    harbor: LANG === 'en' ? { label: 'Harbour', art: artHarbor, floor: floorHarbor, shine: false, hero: 'the striped speedboat', two: ['the boat', 1], three: ['the ship', 1],
+      intro: 'Drag the boats and ships to clear the canal: the striped speedboat must reach the harbour exit on the right.', out: 'Take the striped speedboat out of the harbour.' }
+      : { label: 'Porto', art: artHarbor, floor: floorHarbor, shine: false, hero: 'il motoscafo a strisce', two: ['la barca', 1], three: ['la nave', 1],
       intro: "Trascina barche e navi per liberare il canale: il motoscafo a strisce deve raggiungere l'uscita del porto a destra.", out: 'Porta il motoscafo a strisce fuori dal porto.' }
   };
   ['pixel', 'pastel'].forEach(function (k) { var o = {}; Object.keys(SKINS.cars).forEach(function (f) { o[f] = SKINS.cars[f]; }); o.shine = false; SKINS[k] = o; }); // same vocabulary as the cars
@@ -1221,8 +1256,8 @@ window.VL_LEVELS = ["ooooooooooBoooAABooooooooooooooooooo:g:2",
     }
     return '<svg viewBox="' + vb + '" aria-hidden="true"><g transform="' + tf + '">' + sk.art(v, so) + '</g>' + shine + '</svg>';
   }
-  function nameOf(v) { var sk = SKINS[S().skin]; if (v.hero) return sk.hero; var n = v.len === 2 ? sk.two : sk.three; return n[0] + ' ' + COLOR[v.color][n[1]]; }
-  function labelOf(v) { var n = nameOf(v).replace(/^(l'|il |la |lo )/, ''); return n.charAt(0).toUpperCase() + n.slice(1) + (v.horiz ? ', si muove in orizzontale' : ', si muove in verticale'); }
+  function nameOf(v) { var sk = SKINS[S().skin]; if (v.hero) return sk.hero; var n = v.len === 2 ? sk.two : sk.three; return LANG === 'en' ? n[0].replace(/^the /, 'the ' + COLOR[v.color][0] + ' ') : n[0] + ' ' + COLOR[v.color][n[1]]; }
+  function labelOf(v) { var n = nameOf(v).replace(/^(l'|il |la |lo |the )/, ''); return n.charAt(0).toUpperCase() + n.slice(1) + (v.horiz ? L(', si muove in orizzontale', ', moves sideways') : L(', si muove in verticale', ', moves up and down')); }
   function paintBoard() {
     var skin = S().skin, old = grid.querySelector('.floor');
     document.body.setAttribute('data-skin', skin);
@@ -1241,7 +1276,7 @@ window.VL_LEVELS = ["ooooooooooBoooAABooooooooooooooooooo:g:2",
   function tierOf(i) { return TIERS[Math.min(TIERS.length - 1, Math.floor(i / PER_TIER))]; }
   function solvedCount(s) { return Object.keys((s || S()).best).length; }
   var statusDefault = true;
-  function setStatus(t) { statusDefault = !t; statusEl.textContent = t || (solvedCount() === 0 && moveCount() === 0 ? SKINS[S().skin].intro : 'Partita «' + S().name + '»'); }
+  function setStatus(t) { statusDefault = !t; statusEl.textContent = t || (solvedCount() === 0 && moveCount() === 0 ? SKINS[S().skin].intro : L('Partita «', 'Game «') + S().name + '»'); }
   function validBoard(b, vs) {
     if (!b || b.level !== level || b.pos.length !== vs.length) return false;
     var occ = {}, ok = true;
@@ -1267,7 +1302,7 @@ window.VL_LEVELS = ["ooooooooooBoooAABooooooooooooooooooo:g:2",
     hideResult(); exitEl.classList.remove('flash');
     var t = tierOf(level), app = $('app');
     app.style.setProperty('--tier', t.color); app.style.setProperty('--tier-ink', t.ink);
-    $('badge').textContent = level + 1; $('tierName').textContent = t.name; $('lvOf').textContent = 'livello ' + (level + 1) + ' di ' + RAW.length;
+    $('badge').textContent = level + 1; $('tierName').textContent = t.name; $('lvOf').textContent = L('livello ' + (level + 1) + ' di ' + RAW.length, 'level ' + (level + 1) + ' of ' + RAW.length);
     setStatus(notice); notice = '';
     gateReset(HINT_FIRST); updateStats();
   }
@@ -1391,12 +1426,12 @@ window.VL_LEVELS = ["ooooooooooBoooAABooooooooooooooooooo:g:2",
     gateReset(HINT_AGAIN);
     clearHint();
     var sol = VL.solve(vehicles, positions());
-    if (!sol || !sol.length) { setStatus('Nessuna mossa trovata: ricomincia il livello.'); return; }
-    var v = vehicles[sol[0].i], to = sol[0].to, n = Math.abs(to - v.pos), dir = v.horiz ? (to > v.pos ? 'a destra' : 'a sinistra') : (to > v.pos ? 'in basso' : 'in alto');
+    if (!sol || !sol.length) { setStatus(L('Nessuna mossa trovata: ricomincia il livello.', 'No move found: restart the level.')); return; }
+    var v = vehicles[sol[0].i], to = sol[0].to, n = Math.abs(to - v.pos), dir = v.horiz ? (to > v.pos ? L('a destra', 'to the right') : L('a sinistra', 'to the left')) : (to > v.pos ? L('in basso', 'down') : L('in alto', 'up'));
     v.el.classList.add('hint');
     ghost.style.setProperty('--w', v.horiz ? v.len : 1); ghost.style.setProperty('--h', v.horiz ? 1 : v.len);
     ghost.style.setProperty('--x', v.horiz ? to : v.line); ghost.style.setProperty('--y', v.horiz ? v.line : to); ghost.hidden = false;
-    setStatus((v.hero && to === 4 ? SKINS[S().skin].out : 'Sposta ' + nameOf(v) + ' di ' + n + (n === 1 ? ' casella ' : ' caselle ') + dir + '.') + (sol.length > 1 ? ' Da qui mancano ' + sol.length + ' mosse.' : ''));
+    setStatus((v.hero && to === 4 ? SKINS[S().skin].out : L('Sposta ' + nameOf(v) + ' di ' + n + (n === 1 ? ' casella ' : ' caselle ') + dir + '.', 'Move ' + nameOf(v) + ' ' + n + (n === 1 ? ' square ' : ' squares ') + dir + '.')) + (sol.length > 1 ? L(' Da qui mancano ' + sol.length + ' mosse.', ' ' + sol.length + ' moves to go from here.') : ''));
   }
 
   function win() {
@@ -1407,13 +1442,13 @@ window.VL_LEVELS = ["ooooooooooBoooAABooooooooooooooooooo:g:2",
     updateStats(); var perfect = moves <= minMoves, text;
     sfx('win'); if (perfect && window.SFX && window.SFX.play && soundOn() && store.sound) setTimeout(function () { window.SFX.play('applause'); }, 550);   // inside here SFX is this game's own table, the shared engine lives on window
     buzz(perfect ? [12, 60, 18, 60, 22] : [12, 60, 18]); confetti();
-    if (perfect) text = 'Risolto in ' + moves + (moves === 1 ? ' mossa' : ' mosse') + ': meno di così non si può.';
-    else if (!prev || moves < prev) text = 'Risolto in ' + moves + ' mosse' + (prev ? ', nuovo record' : '') + '. Il minimo è ' + minMoves + '.';
-    else text = 'Risolto in ' + moves + ' mosse. Il tuo record è ' + prev + ', il minimo è ' + minMoves + '.';
+    if (perfect) text = L('Risolto in ' + moves + (moves === 1 ? ' mossa' : ' mosse') + ': meno di così non si può.', 'Solved in ' + moves + (moves === 1 ? ' move' : ' moves') + ': it cannot be done in fewer.');
+    else if (!prev || moves < prev) text = L('Risolto in ' + moves + ' mosse' + (prev ? ', nuovo record' : '') + '. Il minimo è ' + minMoves + '.', 'Solved in ' + moves + ' moves' + (prev ? ', a new record' : '') + '. The best possible is ' + minMoves + '.');
+    else text = L('Risolto in ' + moves + ' mosse. Il tuo record è ' + prev + ', il minimo è ' + minMoves + '.', 'Solved in ' + moves + ' moves. Your record is ' + prev + ', the best possible is ' + minMoves + '.');
     var lastLevel = level >= RAW.length - 1;
     $('resTitle').textContent = lastLevel ? 'Via libera, fino in fondo!' : 'Via libera!';
-    $('resPerfect').hidden = !perfect; $('resText').textContent = text + (lastLevel ? " Era l'ultimo livello." : '');
-    $('btnNextLevel').textContent = lastLevel ? 'Scegli un livello' : 'Livello successivo';
+    $('resPerfect').hidden = !perfect; $('resText').textContent = text + (lastLevel ? L(" Era l'ultimo livello.", ' That was the last level.') : '');
+    $('btnNextLevel').textContent = lastLevel ? L('Scegli un livello', 'Choose a level') : L('Livello successivo', 'Next level');
     statusDefault = false; statusEl.textContent = '';
     winTimer = setTimeout(showResult, 560);
   }
@@ -1448,14 +1483,14 @@ window.VL_LEVELS = ["ooooooooooBoooAABooooooooooooooooooo:g:2",
   function refreshSheet() {
     var counts = TIERS.map(function () { return 0; }), perfect = 0, best = S().best;
     Array.prototype.forEach.call(sheet.querySelectorAll('.lv'), function (b) {
-      var i = +b.getAttribute('data-level'), mine = best[i + 1], min = +RAW[i].split(':')[2], label = 'Livello ' + (i + 1);
+      var i = +b.getAttribute('data-level'), mine = best[i + 1], min = +RAW[i].split(':')[2], label = L('Livello ', 'Level ') + (i + 1);
       b.classList.toggle('done', !!mine); b.classList.toggle('perfect', !!mine && mine <= min); b.classList.toggle('current', i === level);
-      if (mine) { counts[Math.floor(i / PER_TIER)]++; label += mine <= min ? ', risolto con il minimo di mosse' : ', risolto in ' + mine + ' mosse'; if (mine <= min) perfect++; }
+      if (mine) { counts[Math.floor(i / PER_TIER)]++; label += mine <= min ? L(', risolto con il minimo di mosse', ', solved in the fewest moves') : L(', risolto in ' + mine + ' mosse', ', solved in ' + mine + ' moves'); if (mine <= min) perfect++; }
       b.setAttribute('aria-label', label); if (i === level) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
     });
-    Array.prototype.forEach.call(sheet.querySelectorAll('[data-count]'), function (el) { var ti = +el.getAttribute('data-count'); el.textContent = counts[ti] + ' su ' + Math.min(PER_TIER, RAW.length - ti * PER_TIER); });
+    Array.prototype.forEach.call(sheet.querySelectorAll('[data-count]'), function (el) { var ti = +el.getAttribute('data-count'); el.textContent = counts[ti] + L(' su ', ' of ') + Math.min(PER_TIER, RAW.length - ti * PER_TIER); });
     var n = solvedCount();
-    $('sheetSummary').textContent = n === 0 ? 'Scegli da quale livello partire: sono tutti aperti.' : n + ' di ' + RAW.length + ' risolti, ' + perfect + ' con il minimo di mosse.';
+    $('sheetSummary').textContent = n === 0 ? L('Scegli da quale livello partire: sono tutti aperti.', 'Pick any level to start: they are all open.') : L(n + ' di ' + RAW.length + ' risolti, ' + perfect + ' con il minimo di mosse.', n + ' of ' + RAW.length + ' solved, ' + perfect + ' in the fewest moves.');
   }
   function openSheet() {
     refreshSheet(); openDlg(sheet);
@@ -1465,8 +1500,8 @@ window.VL_LEVELS = ["ooooooooooBoooAABooooooooooooooooooo:g:2",
   /* =====================================================================
      Menu: saved games, look, sound
      ===================================================================== */
-  function summary(s) { var n = solvedCount(s); return 'livello ' + (s.level + 1) + ', ' + (n === 1 ? '1 risolto' : n + ' risolti'); }
-  function dateOf(s) { try { return new Date(s.updated).toLocaleDateString('it-IT', { day: 'numeric', month: 'short' }); } catch (e) { return ''; } }
+  function summary(s) { var n = solvedCount(s); return L('livello ' + (s.level + 1) + ', ' + (n === 1 ? '1 risolto' : n + ' risolti'), 'level ' + (s.level + 1) + ', ' + n + ' solved'); }
+  function dateOf(s) { try { return new Date(s.updated).toLocaleDateString(LANG === 'en' ? 'en-GB' : 'it-IT', { day: 'numeric', month: 'short' }); } catch (e) { return ''; } }
   function skinPreview(name) {
     var a = { hero: true, horiz: true, len: 2, line: 2, face: 1, color: 'h' }, b = { hero: false, horiz: true, len: 2, line: 3, face: -1, color: 'y' };
     return '<span class="pv" data-skin="' + name + '"' + (name === 'cars' ? ' style="background:#202328"' : '') + '><span style="display:block;--c:var(--c-h)">' + vehicleSVG(a, name) + '</span><span style="display:block;margin-top:4px;--c:var(--c-' + (name === 'harbor' ? 'y' : 'b') + ')">' + vehicleSVG(b, name) + '</span></span>';
@@ -1474,24 +1509,25 @@ window.VL_LEVELS = ["ooooooooooBoooAABooooooooooooooooooo:g:2",
   var TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 002 2h6a2 2 0 002-2l1-12M9 7V4h6v3"/></svg>';
   function renderMenu() {
     var s = S(), others = liveSaves().filter(function (x) { return x.id !== s.id; }), full = liveSaves().length >= MAX_SAVES, h = '';
-    h += '<section class="blk"><h3>Partita</h3><div class="save current"><div class="who"><strong>' + esc(s.name) + '</strong><span>in corso, ' + summary(s) + '</span></div><button class="chip" type="button" data-act="rename">Rinomina</button></div>';
-    h += '<div class="row2"><button class="btn" type="button" data-act="saveas"' + (full ? ' disabled' : '') + '>Salva con nome</button><button class="btn" type="button" data-act="new"' + (full ? ' disabled' : '') + '>Nuova partita</button></div>';
+    h += '<section class="blk"><h3>' + L('Partita', 'Game') + '</h3><div class="save current"><div class="who"><strong>' + esc(s.name) + '</strong><span>' + L('in corso, ', 'playing, ') + summary(s) + '</span></div><button class="chip" type="button" data-act="rename">' + L('Rinomina', 'Rename') + '</button></div>';
+    h += '<div class="row2"><button class="btn" type="button" data-act="saveas"' + (full ? ' disabled' : '') + '>' + L('Salva con nome', 'Save as') + '</button><button class="btn" type="button" data-act="new"' + (full ? ' disabled' : '') + '>' + L('Nuova partita', 'New game') + '</button></div>';
     if (others.length) {
-      h += '<h4>Altre partite salvate</h4>';
-      others.forEach(function (o) { h += '<div class="save"><div class="who"><strong>' + esc(o.name) + '</strong><span>' + summary(o) + (dateOf(o) ? ', ' + dateOf(o) : '') + '</span></div><button class="chip solid" type="button" data-act="load" data-id="' + o.id + '">Carica</button><button class="chip icon" type="button" data-act="delete" data-id="' + o.id + '" aria-label="Elimina la partita ' + esc(o.name) + '">' + TRASH + '</button></div>'; });
+      h += '<h4>' + L('Altre partite salvate', 'Other saved games') + '</h4>';
+      others.forEach(function (o) { h += '<div class="save"><div class="who"><strong>' + esc(o.name) + '</strong><span>' + summary(o) + (dateOf(o) ? ', ' + dateOf(o) : '') + '</span></div><button class="chip solid" type="button" data-act="load" data-id="' + o.id + '">' + L('Carica', 'Load') + '</button><button class="chip icon" type="button" data-act="delete" data-id="' + o.id + '" aria-label="' + L('Elimina la partita ', 'Delete game ') + esc(o.name) + '">' + TRASH + '</button></div>'; });
     }
-    h += '<p>' + (full ? 'Hai raggiunto il massimo di ' + MAX_SAVES + ' partite: eliminane una per crearne altre. ' : '') + (cloud.state === 'on' ? 'Ogni mossa viene salvata da sola, su questo dispositivo e nel tuo account Claude.' : 'Ogni mossa viene salvata da sola su questo dispositivo.') + '</p></section>';
-    h += '<section class="blk"><h3>Stile</h3><div class="skins">';
+    h += '<p>' + (full ? L('Hai raggiunto il massimo di ' + MAX_SAVES + ' partite: eliminane una per crearne altre. ', 'You have reached the limit of ' + MAX_SAVES + ' games: delete one to make more. ') : '') + (cloud.state === 'on' ? L('Ogni mossa viene salvata da sola, su questo dispositivo e nel tuo account Claude.', 'Every move is saved automatically, on this device and in your Claude account.') : L('Ogni mossa viene salvata da sola su questo dispositivo.', 'Every move is saved automatically on this device.')) + '</p></section>';
+    h += '<section class="blk"><h3>' + L('Stile', 'Style') + '</h3><div class="skins">';
     SKIN_ORDER.forEach(function (k) { h += '<button class="skin" type="button" data-act="skin" data-skin-name="' + k + '" aria-pressed="' + (s.skin === k) + '">' + skinPreview(k) + SKINS[k].label + '</button>'; });
     h += '</div></section>';
-    h += '<section class="blk"><h3>Aiuti</h3><div class="chips">';
-    [['subito', 'Subito'], ['attesa', 'Dopo un po\''], ['mai', 'Mai']].forEach(function (m) { h += '<button class="chip" type="button" data-act="hintmode" data-mode="' + m[0] + '" aria-pressed="' + (hintMode() === m[0]) + '">' + m[1] + '</button>'; });
-    h += '</div><p>Con «Dopo un po\'» il pulsante Aiuto si sblocca dopo ' + HINT_FIRST.s + ' secondi sul livello o dopo ' + HINT_FIRST.moves + ' mosse, e dopo ogni aiuto usato l\'attesa ricomincia. L\'anello attorno al pulsante mostra quanto manca, senza bisogno di saper leggere.</p></section>';
-    h += '<section class="blk"><button class="switchrow" type="button" role="switch" data-act="sound" aria-checked="' + (store.sound && soundOn()) + '">Suoni<span class="switch"></span></button><p>Su iPhone i suoni seguono la modalità silenzioso: quando è attiva non si sentono.</p></section>';
-    if (!(navigator.standalone || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches))) h += '<section class="blk"><h3>Sulla schermata Home</h3><p style="margin-top:0">Apri questa pagina in Safari, tocca Condividi e scegli «Aggiungi alla schermata Home»: da lì il gioco si apre con un tocco, come un\'app.</p></section>';
-    h += '<section class="blk"><h3>Come si gioca</h3><ul><li>Il pezzo cremisi (l\'auto a strisce, la carrozza reale o il motoscafo, secondo lo stile) deve uscire dal varco a destra.</li><li>Ogni pezzo si muove solo avanti e indietro, lungo la propria corsia.</li><li>Ogni spostamento conta una mossa, di quante caselle vuoi.</li></ul></section>';
+    h += '<section class="blk"><h3>' + L('Aiuti', 'Help') + '</h3><div class="chips">';
+    [['subito', L('Subito', 'Right away')], ['attesa', L('Dopo un po\'', 'After a while')], ['mai', L('Mai', 'Never')]].forEach(function (m) { h += '<button class="chip" type="button" data-act="hintmode" data-mode="' + m[0] + '" aria-pressed="' + (hintMode() === m[0]) + '">' + m[1] + '</button>'; });
+    h += '</div><p>' + L('Con «Dopo un po\'» il pulsante Aiuto si sblocca dopo ' + HINT_FIRST.s + ' secondi sul livello o dopo ' + HINT_FIRST.moves + ' mosse, e dopo ogni aiuto usato l\'attesa ricomincia. L\'anello attorno al pulsante mostra quanto manca, senza bisogno di saper leggere.', 'With «After a while» the Help button unlocks after ' + HINT_FIRST.s + ' seconds on the level or after ' + HINT_FIRST.moves + ' moves, and the wait starts again after each hint. The ring around the button shows how long is left, no reading needed.') + '</p></section>';
+    h += '<section class="blk"><button class="switchrow" type="button" role="switch" data-act="sound" aria-checked="' + (store.sound && soundOn()) + '">' + L('Suoni', 'Sounds') + '<span class="switch"></span></button><p>' + L('Su iPhone i suoni seguono la modalità silenzioso: quando è attiva non si sentono.', 'On iPhone, sounds follow the silent switch: when it is on, they cannot be heard.') + '</p></section>';
+    if (!(navigator.standalone || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches))) h += '<section class="blk"><h3>' + L('Sulla schermata Home', 'On the Home Screen') + '</h3><p style="margin-top:0">' + L('Apri questa pagina in Safari, tocca Condividi e scegli «Aggiungi alla schermata Home»: da lì il gioco si apre con un tocco, come un\'app.', 'Open this page in Safari, tap Share and choose «Add to Home Screen»: from there the game opens with one tap, like an app.') + '</p></section>';
+    h += LANG === 'en' ? '<section class="blk"><h3>How to play</h3><ul><li>The crimson piece (the striped car, the royal coach or the speedboat, depending on the style) must leave through the gap on the right.</li><li>Each piece moves only forwards and backwards, along its own lane.</li><li>Each slide counts as one move, however many squares it covers.</li></ul></section>'
+      : '<section class="blk"><h3>Come si gioca</h3><ul><li>Il pezzo cremisi (l\'auto a strisce, la carrozza reale o il motoscafo, secondo lo stile) deve uscire dal varco a destra.</li><li>Ogni pezzo si muove solo avanti e indietro, lungo la propria corsia.</li><li>Ogni spostamento conta una mossa, di quante caselle vuoi.</li></ul></section>';
     $('menuBody').innerHTML = h;
-    $('menuSummary').textContent = 'Partita «' + s.name + '», ' + summary(s) + '.';
+    $('menuSummary').textContent = L('Partita «', 'Game «') + s.name + '», ' + summary(s) + '.';
   }
   function refreshOpenPanels() { if (menu.open) renderMenu(); if (sheet.open) refreshSheet(); if (statusDefault && !won) setStatus(''); updateStats(); }
   function openMenu() {
@@ -1504,8 +1540,8 @@ window.VL_LEVELS = ["ooooooooooBoooAABooooooooooooooooooo:g:2",
     var b = e.target.closest ? e.target.closest('[data-act]') : null; if (!b || b.disabled) return;
     var act = b.getAttribute('data-act'), id = b.getAttribute('data-id');
     if (act === 'rename' || act === 'saveas' || act === 'new') openName(act);
-    else if (act === 'load' && store.saves[id]) { snapshot(); activate(id, 'Partita «' + store.saves[id].name + '» caricata.'); closeDlg(menu); }
-    else if (act === 'delete' && store.saves[id]) { pendingDelete = id; $('confirmTitle').textContent = 'Eliminare «' + store.saves[id].name + '»?'; $('confirmText').textContent = 'I livelli risolti e i record di questa partita vengono cancellati.'; openDlg(confirmDlg); }
+    else if (act === 'load' && store.saves[id]) { snapshot(); activate(id, L('Partita «' + store.saves[id].name + '» caricata.', 'Game «' + store.saves[id].name + '» loaded.')); closeDlg(menu); }
+    else if (act === 'delete' && store.saves[id]) { pendingDelete = id; $('confirmTitle').textContent = L('Eliminare «' + store.saves[id].name + '»?', 'Delete «' + store.saves[id].name + '»?'); $('confirmText').textContent = L('I livelli risolti e i record di questa partita vengono cancellati.', 'The solved levels and the records of this game will be deleted.'); openDlg(confirmDlg); }
     else if (act === 'skin') { var k = b.getAttribute('data-skin-name'); if (SKINS[k] && k !== S().skin) { S().skin = k; touched = true; commitSave(true); paintBoard(); setStatus(''); renderMenu(); sfx('move'); } }
     else if (act === 'sound') { var v = !(store.sound && soundOn()); store.sound = v; if (window.OPZ) OPZ.set('suoni', v); saveLocal(); renderMenu(); if (v) { wakeAudio(); sfx('move'); } }
     else if (act === 'hintmode') { var m = b.getAttribute('data-mode'); if (HINT_MODES.indexOf(m) >= 0 && m !== hintMode()) { store.hintMode = m; if (window.OPZ) OPZ.set('aiuto', m); saveLocal(); gateReset(gate.need); renderMenu(); } }
@@ -1513,22 +1549,22 @@ window.VL_LEVELS = ["ooooooooooBoooAABooooooooooooooooooo:g:2",
 
   var nameMode = '';
   function nameTaken(n, exceptId) { n = n.toLowerCase(); return liveSaves().some(function (s) { return s.id !== exceptId && s.name.toLowerCase() === n; }); }
-  function suggestName() { for (var i = 1; i < 99; i++) if (!nameTaken('Partita ' + i)) return 'Partita ' + i; return 'Partita'; }
+  function suggestName() { var w = L('Partita', 'Game'); for (var i = 1; i < 99; i++) if (!nameTaken(w + ' ' + i)) return w + ' ' + i; return w; }
   function syncStart() { var n = clampInt($('startInput').value, 1, RAW.length); $('startInput').value = n; return n; }
   function openName(mode) {
     nameMode = mode;
-    $('nameTitle').textContent = mode === 'rename' ? 'Rinomina la partita' : mode === 'new' ? 'Nuova partita' : 'Salva con nome';
-    $('nameIntro').textContent = mode === 'saveas' ? 'Crea una copia della partita in corso, con i livelli risolti e il tabellone com\'è adesso, e continua da lì.' : mode === 'new' ? 'Riparte da zero: la partita in corso resta salvata.' : '';
+    $('nameTitle').textContent = mode === 'rename' ? L('Rinomina la partita', 'Rename the game') : mode === 'new' ? L('Nuova partita', 'New game') : L('Salva con nome', 'Save as');
+    $('nameIntro').textContent = mode === 'saveas' ? L('Crea una copia della partita in corso, con i livelli risolti e il tabellone com\'è adesso, e continua da lì.', 'Makes a copy of the current game, with its solved levels and the board as it is now, and carries on from there.') : mode === 'new' ? L('Riparte da zero: la partita in corso resta salvata.', 'Starts from scratch: the current game stays saved.') : '';
     $('nameIntro').hidden = mode === 'rename'; $('startField').hidden = mode !== 'new';
     $('nameInput').value = mode === 'rename' ? S().name : suggestName(); $('nameErr').textContent = ''; $('startInput').value = 1;
-    $('btnNameYes').textContent = mode === 'new' ? 'Inizia' : 'Salva';
+    $('btnNameYes').textContent = mode === 'new' ? L('Inizia', 'Start') : L('Salva', 'Save');
     openDlg(nameDlg);
     try { $('nameInput').focus(); $('nameInput').select(); } catch (e) {}
   }
   function confirmName() {
     var n = $('nameInput').value.replace(/\s+/g, ' ').trim().slice(0, 24), cur = S();
-    if (!n) { $('nameErr').textContent = 'Scrivi un nome per la partita.'; return; }
-    if (nameTaken(n, nameMode === 'rename' ? cur.id : '')) { $('nameErr').textContent = 'Esiste già una partita con questo nome.'; return; }
+    if (!n) { $('nameErr').textContent = L('Scrivi un nome per la partita.', 'Type a name for the game.'); return; }
+    if (nameTaken(n, nameMode === 'rename' ? cur.id : '')) { $('nameErr').textContent = L('Esiste già una partita con questo nome.', 'A game with this name already exists.'); return; }
     touched = true;
     if (nameMode === 'rename') { cur.name = n; commitSave(true); setStatus(''); }
     else {
@@ -1537,7 +1573,7 @@ window.VL_LEVELS = ["ooooooooooBoooAABooooooooooooooooooo:g:2",
       if (nameMode === 'saveas') { s.level = cur.level; s.best = JSON.parse(JSON.stringify(cur.best)); s.board = cur.board ? JSON.parse(JSON.stringify(cur.board)) : null; }
       else s.level = syncStart() - 1;
       s.updated = now() + 1; store.saves[s.id] = s; store.active = s.id; saveLocal(); cloudNow(s.id);
-      if (nameMode === 'saveas') setStatus('Partita salvata come «' + n + '».'); else applyActive('Partita «' + n + '» creata.');
+      if (nameMode === 'saveas') setStatus(L('Partita salvata come «' + n + '».', 'Game saved as «' + n + '».')); else applyActive(L('Partita «' + n + '» creata.', 'Game «' + n + '» created.'));
     }
     closeDlg(nameDlg);
     if (nameMode === 'new') closeDlg(menu); else renderMenu();
