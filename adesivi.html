@@ -185,7 +185,19 @@ a.round{color:inherit; text-decoration:none}
 .bar h1{position:static; flex:1; min-width:0; width:auto; height:auto; margin:0; clip:auto; clip-path:none; font-weight:900; font-size:1.375rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 .okbtn[hidden]{display:none}
 .modechip{flex:none; width:40px; height:40px; border-radius:50%; display:grid; place-items:center; background:var(--surface); box-shadow:0 0 0 2.5px var(--ink); color:var(--ink)}
-.modechip:empty{visibility:hidden}
+.modechip{border:0; padding:0; cursor:pointer}
+.modechip:active{transform:scale(.92)}
+.modesheet{position:fixed; inset:0; z-index:30; display:grid; place-items:end center; background:rgba(40,28,48,.5); padding:0 10px max(10px, env(safe-area-inset-bottom))}
+.modesheet[hidden]{display:none}
+.mscard{width:100%; max-width:520px; background:var(--page); border-radius:28px 28px 22px 22px; box-shadow:0 0 0 3px var(--ink); padding:14px 16px 16px; animation:msin .3s cubic-bezier(.2,1.3,.4,1)}
+@keyframes msin{from{transform:translateY(40px); opacity:0}to{transform:none; opacity:1}}
+.mshead{display:flex; align-items:center; justify-content:space-between; gap:10px}
+.mshead h2{margin:0; font-weight:900; font-size:1.375rem}
+.mscard h3{margin:14px 2px 8px; font-weight:900; font-size:1rem}
+.mschips{display:flex; flex-wrap:wrap; gap:8px}
+.mschips .chip{flex:1 1 auto; min-height:46px; padding:4px 14px 2px; border-radius:23px; border:0; background:var(--surface); color:inherit; box-shadow:0 0 0 2.5px var(--ink); font:inherit; font-weight:800; font-size:.9375rem}
+.mschips .chip[aria-pressed="true"]{background:var(--ink); color:var(--page)}
+.msnote{margin:14px 2px 0; color:var(--ink-2); font-size:.8125rem}
 .modechip svg{width:24px; height:24px}
 body.picking #btnBack{visibility:hidden}
 body.picking .task, body.picking .say, body.picking .stage, body.picking .traywrap{display:none}
@@ -253,7 +265,7 @@ body:not(.picking) .picker{display:none}
     <a class="round" href="index.html" aria-label="Tutti i giochi" data-en-aria="All games"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></a>
     <button class="round" id="btnBack" type="button" aria-label="Scegli la scena" data-en-aria="Choose the scene"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
     <h1 id="title">Adesivi</h1>
-    <span class="modechip" id="modeChip" role="img"></span>
+    <button class="modechip" id="modeChip" type="button" aria-label="Modo e difficoltà" data-en-aria="Mode and difficulty"></button>
   </header>
   <section class="picker" id="picker" aria-label="Scene" data-en-aria="Scenes"></section>
   <section class="task" id="task" aria-live="polite">
@@ -268,6 +280,27 @@ body:not(.picking) .picker{display:none}
     <button class="arrow" id="btnTrayNext" type="button" aria-label="Altri adesivi" data-en-aria="More stickers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
   </div>
 </main>
+<section class="modesheet" id="modeSheet" hidden aria-labelledby="msTitle">
+  <div class="mscard">
+    <div class="mshead"><h2 id="msTitle" data-en="How to play">Come si gioca</h2><button class="round" id="btnModeClose" type="button" aria-label="Chiudi" data-en-aria="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <h3 data-en="Kind of game">Tipo di gioco</h3>
+    <div class="mschips" data-k="mode">
+      <button class="chip" type="button" data-v="" data-en="A different one each round">Uno diverso a ogni turno</button>
+      <button class="chip" type="button" data-v="sagome" data-en="Shadows">Ombre</button>
+      <button class="chip" type="button" data-v="dove" data-en="Everything in its place">Ogni cosa al suo posto</button>
+      <button class="chip" type="button" data-v="conta" data-en="Count and place">Conta e metti</button>
+      <button class="chip" type="button" data-v="posti" data-en="On, under, inside">Sopra, sotto, dentro</button>
+    </div>
+    <h3 data-en="Difficulty">Difficoltà</h3>
+    <div class="mschips" data-k="diff">
+      <button class="chip" type="button" data-v="" data-en="Grows as you win">Cresce vincendo</button>
+      <button class="chip" type="button" data-v="0" data-en="Easy">Facile</button>
+      <button class="chip" type="button" data-v="1" data-en="Medium">Media</button>
+      <button class="chip" type="button" data-v="2" data-en="Hard">Difficile</button>
+    </div>
+    <p class="msnote" data-en="The scene is chosen from the list: the arrow at the top goes back to it.">La scena si sceglie dall'elenco: la freccia in alto ci riporta.</p>
+  </div>
+</section>
 <section class="result" id="result" hidden aria-live="polite">
   <h2 data-en="Well done!">Bravo!</h2>
   <p id="resText"></p>
@@ -993,10 +1026,12 @@ window.SFX = (function () {
      A sticker dropped in the wrong place goes back to the drawer with a soft «boing»; after two tries the right place lights up. */
   var VW = 1000, VH = 1320, sceneEl = $('scene'), tray = $('tray');
   var calm = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-  var KEY = 'adesivi.scene.v1', prog = { rounds: {} };
+  var KEY = 'adesivi.scene.v1', prog = { rounds: {}, mode: '', diff: '' };
   try {
     var sv = JSON.parse(localStorage.getItem(KEY) || 'null');
     if (sv && sv.rounds && typeof sv.rounds === 'object') Object.keys(sv.rounds).forEach(function (q) { var n = +sv.rounds[q]; if (n >= 0 && n < 1e6) prog.rounds[q] = Math.floor(n); });
+    if (sv && ['sagome', 'dove', 'conta', 'posti'].indexOf(sv.mode) >= 0) prog.mode = sv.mode;
+    if (sv && ['0', '1', '2'].indexOf(String(sv.diff)) >= 0) prog.diff = String(sv.diff);
   } catch (err) {}
   function saveProg() { try { localStorage.setItem(KEY, JSON.stringify(prog)); } catch (err) {} }
   function sfx(kind, n) { var X = window.SFX; if (X) X.play(kind, typeof n === 'number' ? { i: n } : {}); }
@@ -1061,7 +1096,7 @@ window.SFX = (function () {
   /* ---------- a new round ---------- */
   function newRound() {
     var MODES = SC.spots && SC.spots.length ? ['sagome', 'dove', 'conta', 'posti'] : ['sagome', 'dove', 'conta'];
-    var r = prog.rounds[SC.id] || 0, mode = MODES[r % MODES.length], lvl = Math.floor(r / MODES.length), pool = shuffle(SC.items.slice()), k, i, it, z, sl;
+    var r = prog.rounds[SC.id] || 0, mode = MODES.indexOf(prog.mode) >= 0 ? prog.mode : MODES[r % MODES.length], lvl = prog.diff !== '' ? +prog.diff : Math.floor(r / MODES.length), pool = shuffle(SC.items.slice()), k, i, it, z, sl;   // chosen by the grown-up, or taking turns and growing
     var others = []; SCENES.forEach(function (o) { if (o !== SC) o.items.forEach(function (q) { if (!homeOf(q[0]) && others.indexOf(q[0]) < 0) others.push(q[0]); }); });
     R = { mode: mode, lvl: lvl, used: {}, wrong: {}, targets: [], tray: [], req: [], steps: [], step: 0 }; placed = [];
     if (mode === 'sagome') {
@@ -1327,7 +1362,7 @@ window.SFX = (function () {
   /* ---------- choosing the scene ---------- */
   function showPicker() {
     SC = null; R = null; hideResult(); try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (err) {}
-    document.body.classList.add('picking'); $('title').textContent = L('Adesivi', 'Stickers'); $('modeChip').innerHTML = '';
+    document.body.classList.add('picking'); $('title').textContent = L('Adesivi', 'Stickers'); $('modeChip').innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2.4"/><circle cx="10" cy="17" r="2.4"/></svg>';
     $('picker').innerHTML = SCENES.map(function (s2) { var n = prog.rounds[s2.id] || 0; return '<button class="scn" type="button" data-s="' + s2.id + '"><span class="thumb"><svg viewBox="0 0 1000 1320" preserveAspectRatio="xMidYMid slice" aria-hidden="true">' + s2.bg() + '</svg></span>' + (s2.hero ? '<span class="hero">' + pic(s2.hero) + '</span>' : '') + '<span class="sname">' + L(s2.it, s2.en) + '</span>' + (n ? '<span class="stars" aria-label="' + n + '">★ ' + n + '</span>' : '') + '</button>'; }).join('');
   }
   $('picker').addEventListener('click', function (e2) {
@@ -1336,6 +1371,17 @@ window.SFX = (function () {
     document.body.classList.remove('picking'); $('picker').innerHTML = ''; sfx('tap'); newRound();
   });
   $('btnBack').addEventListener('click', showPicker);
+  function paintModes() { Array.prototype.forEach.call(document.querySelectorAll('.mschips'), function (grp) { var v = prog[grp.getAttribute('data-k')]; Array.prototype.forEach.call(grp.children, function (b2) { b2.setAttribute('aria-pressed', b2.getAttribute('data-v') === String(v) ? 'true' : 'false'); }); }); }
+  $('modeChip').addEventListener('click', function () { if (drag) return; paintModes(); $('modeSheet').hidden = false; sfx('tap'); });
+  function closeModes() { $('modeSheet').hidden = true; }
+  $('btnModeClose').addEventListener('click', closeModes);
+  $('modeSheet').addEventListener('click', function (e2) {
+    if (e2.target === $('modeSheet')) { closeModes(); return; }
+    var b2 = e2.target.closest ? e2.target.closest('.chip') : null; if (!b2) return;
+    var key = b2.parentNode.getAttribute('data-k'), v = b2.getAttribute('data-v'); if (prog[key] === v) { closeModes(); return; }
+    prog[key] = v; saveProg(); paintModes(); sfx('tap');
+    setTimeout(function () { closeModes(); if (SC) newRound(); }, 220);                      // the new choice starts a new round straight away
+  });
   showPicker();
   window.__AD = { state: function () { return { R: R, SC: SC, placed: placed }; } };   // read by the automatic tests only
 })();
