@@ -20,11 +20,12 @@ Sei giochi touch per un bambino di circa tre anni, pubblicati con GitHub Pages d
 | `src/labirinti/`, `src/acqua/`, `src/incastri/` | `logic.js` (regole e risolutore, senza DOM), `game.js` (scena SVG e gesti), `game.css`, `levels.json`, e il generatore dei livelli (`gen.py` o `gen.cpp`). |
 | `src/palline/` | Palline nei tubi: pagina completa (`head_body.html`), `logic.js`, `main.js`, `levels.json`, generatore `gen.cpp` + `pick.py`. |
 | `src/via-libera/` | Via libera (tipo Rush Hour): `head.html`, `body.html`, `logic.js`, `main.js`, `levels.json`, generatore `gen.cpp`. Ha cinque stili grafici e partite con nome. |
-| `src/adesivi/` | Adesivi e numeri: una sola pagina autonoma. In alto una tessera per ogni adesivo richiesto, con il numero grande e il disegno (prima un solo tipo da 1 a 10, poi due e tre tipi insieme con numeri fino a 5 e 4); il bambino attacca quegli adesivi, in quel numero, e preme il tasto verde; il gioco conta ad alta voce, tipo per tipo, solo gli adesivi richiesti (gli altri non contano e possono restare); un tipo contato giusto è chiuso: tessera verde con spunta, adesivo spento nel cassetto, quelli già messi non si spostano più; un tipo sbagliato si corregge e si riconferma; chiusi tutti i tipi si passa al livello successivo (sintesi vocale del dispositivo, `it-IT`) e, se il numero è giusto, blocca la scena e mostra la vittoria. Dopo un errore compaiono i pallini sotto il numero. Il tasto «123» passa al gioco libero. Gli adesivi che «stanno in piedi» (animali, razzo, trenino, pianta…) si agganciano al mobile vicino a cui vengono lasciati (letto, comodino, mensola, davanzale: tabella `SURF`), non finiscono mai uno esattamente sopra l'altro, e con un tocco sulla tessera trovano da soli un posto libero. Il cassetto si sfoglia con due frecce, non col dito. Tessere e schede inquadrano il disegno reale di ogni adesivo (tabella `FIT`, misurata con `getBBox()` escludendo gli aloni `.glow`, più 5 unità di margine): aggiungendo o ridisegnando un adesivo va aggiornata anche quella riga, altrimenti il disegno risulta fuori centro o tagliato. |
-| `src/home/` | La schermata iniziale con i sei riquadri. |
+| `src/adesivi/` | Adesivi a scene (stazione, fattoria, cantiere, preistoria, cameretta): vedi la sezione «Adesivi (versione a scene)» più sotto. Le tessere del cassetto inquadrano ogni adesivo misurandolo con `getBBox()` mentre la pagina gira, quindi un adesivo nuovo o ridisegnato non ha tabelle di misure da aggiornare. |
+| `src/home/` | La schermata iniziale con i sei riquadri, `privacy.html`, `info.html` e `autore.json` (nome, email, anno). |
+| `src/native/` | `prepara_www.py` (pagine per l'app iPhone) e una copia del flusso `iphone.yml`. |
+| `src/pwa/` | Icone e modello del service worker. |
 
 In Incastri le sagome sono disegnate a mano in `src/incastri/gen.py` (tabella `FORME`, in ASCII: razzo, gatto, castello, dinosauro…) e tagliate dal programma in pezzi da 3 a 6 caselle, con poche soluzioni possibili; il nome della sagoma sta nel livello (`n`) e la tabella `NOMI` in `game.js` lo trasforma in «Riempi il razzo» e «Razzo finito!». Per aggiungere una sagoma: una voce in `FORME`, una in `NOMI`, poi `python3 src/incastri/gen.py > src/incastri/levels.json`.
-| `src/pwa/` | Icone e modello del service worker. |
 
 Un gioco nuovo basato su `src/shared` fornisce a `Kit.start({...})`: `key`, `count`, `minOf(i)`, `load(i)`, `moves()`, `canUndo()`, `undo()`, `hint()`, `clearHint()`, più i testi. Va poi aggiunto a `build.py` e a `src/home/home.html`.
 
@@ -47,12 +48,12 @@ Un gioco nuovo basato su `src/shared` fornisce a `Kit.start({...})`: `key`, `cou
 - **Risolvere col minimo di mosse** fa partire l'applauso (`SFX.play('perfect')`, cioè fanfara più applauso; in Via libera la fanfara è la sua e l'applauso arriva da `window.SFX`, perché lì il nome `SFX` è già la tabella dei suoi suoni), una vibrazione più lunga e il salto della coccarda «Minimo di mosse».
 - **Il primo suono della pagina:** i browser tengono l'audio addormentato finché non c'è un tocco, e il risveglio è asincrono. Su iPhone l'audio si sblocca solo se un suono vero ci passa dentro: `sound.js` a ogni tocco chiama `resume()` e manda un blip silenzioso, e tiene in coda i suoni chiesti mentre dormiva, suonandoli appena il contesto diventa `running` (`statechange`). Programmarli subito li farebbe cadere nel passato e uscirebbero muti: era il bug dell'audio assente finché non si completava un livello.
 - **Suoni sintetizzati con Web Audio**, senza file audio, dal motore comune `src/shared/sound.js` (`SFX.play(nome, {i | note})`: strumenti marimba, campanella, pop, tonfo, fruscio, boing, bollicine, accordi; compressore e riverbero). I suoni positivi stanno su una scala pentatonica, così le azioni in fila fanno una melodia; l'errore è un «boing» morbido, mai un ronzio. Via libera ha in più i suoi suoni per stile grafico. Su iPhone seguono la modalità silenzioso.
-- **I progressi stanno in `localStorage`** (chiavi `via-libera.v2`, `palline.v1`, `labirinti.v1`, `acqua.v2`, `incastri.v1`, `adesivi.cameretta.v2`, `adesivi.numeri.v1`): non rinominarle, o i progressi si perdono.
-- Il repository è pubblico: nessun nome o dato personale nelle pagine o nei commit.
+- **I progressi stanno in `localStorage`** (chiavi `via-libera.v2`, `palline.v1`, `labirinti.v1`, `acqua.v2`, `incastri.v1`, `adesivi.scene.v1`; `adesivi.cameretta.v2` e `adesivi.numeri.v1` sono delle versioni vecchie e «Cancella tutti i progressi» le toglie): non rinominarle, o i progressi si perdono.
+- Il repository è pubblico: nessun dato personale nelle pagine o nei commit. Le sole eccezioni, volute dal genitore, sono il nome dell'autore e l'email pubblica di contatto in `src/home/autore.json`.
 
 ## Cosa manca (idee già discusse)
 
-- Adesivi ha una sola scena, la cameretta: mancano giardino, fattoria e spiaggia.
+- Altre scene degli Adesivi (giardino, spiaggia…): per ora il genitore ha scelto solo le cinque attuali.
 - Un settimo gioco possibile, «Guida tu»: mettere in fila delle frecce e poi far partire l'auto.
 
 ## Adesivi (versione a scene)
@@ -88,3 +89,9 @@ Il progetto Xcode è fuori da questo repository, nello zip `giocapensa-iphone` (
 - «Cancella tutti i progressi» azzera anche gli Adesivi (`adesivi.scene.v1`: via i turni vinti, restano tipo di gioco e difficoltà scelti) e le chiavi delle versioni vecchie.
 - Incastri: il titolo di vittoria concorda con il nome («Elle finita!», «Gradini finiti!»).
 - Il riquadro degli Adesivi nella schermata iniziale mostra un adesivo con una locomotiva (non più il «3» del vecchio gioco dei numeri).
+
+## Informazioni, diritti e licenze
+- `info.html` (da `src/home/info.html`, collegata dalle impostazioni): a chi è rivolta (dai 3 anni), autore e diritti (© anno + nome), contatti, dati personali (rimanda alla privacy), condizioni d'uso (gratuita, così com'è; sull'App Store vale l'EULA standard di Apple) e licenze di terze parti con il testo completo: carattere Overpass (SIL OFL 1.1, obbligatoria perché il carattere è incluso nell'app per iPhone) e Capacitor (MIT).
+- Nome dell'autore, email e anno stanno in `src/home/autore.json` e riempiono `{{AUTORE}}`, `{{EMAIL}}`, `{{ANNO}}` in `info.html` e `privacy.html`. Se mancano, `build.py` avvisa e la pagina mostra «(da completare)»: non inviare l'app ad Apple in quello stato.
+- `src/native/prepara_www.py` porta nell'app per iPhone tutte le pagine `.html` del sito, qualunque sia il loro numero.
+- In App Store Connect: campo Copyright «© anno nome», URL di assistenza `…/giocapensa/info.html`, URL privacy `…/giocapensa/privacy.html`.
