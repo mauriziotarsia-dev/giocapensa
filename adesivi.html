@@ -2,6 +2,7 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
+<meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#FDF3E3">
 <title>Adesivi</title>
@@ -53,6 +54,7 @@ body.free .numonly, body.free .task{display:none}
 .numcard.bad{background:#FFD9D2; animation:nono .4s ease-in-out}
 @keyframes nono{20%{transform:translateX(-8px)}50%{transform:translateX(8px)}80%{transform:translateX(-5px)}}
 .numcard.good{background:#C9F2C4}
+.numcard.good .zl,.numcard.bad .zl{color:#5E4E66}   /* the green and pink cards are light in the dark theme too */
 .say{flex:none; margin:0; min-height:2.5em; padding:0 4px; font-size:.875rem; line-height:1.25; color:var(--ink-2); text-wrap:balance}
 body.free .say{display:none}
 .okbtn{flex:none; width:68px; height:68px; margin-left:auto; border-radius:50%; background:#6CC46A; color:#fff; box-shadow:0 0 0 3px var(--ink), 0 5px 0 0 var(--ink); display:grid; place-items:center; transition:transform .1s, box-shadow .1s}
@@ -206,10 +208,10 @@ a.round{color:inherit; text-decoration:none}
 .modepick .mschips.pics .chip .ill svg{width:100%; max-width:62px; height:auto}
 .modepick .mschips.pics .chip .lbl{font-size:.625rem}
 .mschips.pics{display:grid; grid-template-columns:repeat(auto-fill, minmax(92px, 1fr)); gap:8px}
-.mschips.pics .chip{display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:2px; min-height:0; padding:8px 6px 7px; border-radius:20px; background:var(--surface)}
+.mschips.pics .chip{display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:2px; min-height:0; padding:8px 6px 7px; border-radius:20px; background:#FFFFFF; color:#4A3B52}   /* the drawings have plum outlines: like the home tiles, these cards stay light in the dark theme too */
 .mschips.pics .chip .ill svg{display:block; width:74px; height:52px}
 .mschips.pics .chip .lbl{font-size:.75rem; font-weight:800; line-height:1.15; text-align:center}
-.mschips.pics .chip[aria-pressed="true"]{background:#FFF1C9; color:inherit; box-shadow:0 0 0 4px var(--ink)}
+.mschips.pics .chip[aria-pressed="true"]{background:#FFF1C9; color:#4A3B52; box-shadow:0 0 0 4px var(--ink)}
 .mschips.pics .chip[aria-pressed="true"] .ill{animation:pickpop .35s cubic-bezier(.3,1.6,.5,1)}
 @keyframes pickpop{from{transform:scale(.7)}to{transform:none}}
 .modechip svg{width:24px; height:24px}
@@ -223,7 +225,7 @@ body:not(.picking) .picker{display:none}
 .scn .thumb svg{display:block; width:100%; height:100%}
 .scn .thumb *{animation:none !important}
 .scn .sname{display:block; padding:10px 12px 9px; font-weight:900; font-size:1.0625rem}
-.scn .stars{position:absolute; top:8px; right:8px; padding:3px 9px 1px; border-radius:14px; background:#FFD95A; box-shadow:0 0 0 2.5px var(--ink); font-weight:900; font-size:.875rem}
+.scn .stars{position:absolute; top:8px; right:8px; padding:3px 9px 1px; border-radius:14px; background:#FFD95A; color:#4A3B52; box-shadow:0 0 0 2.5px #4A3B52; font-weight:900; font-size:.875rem}
 .silh *{animation:none !important}
 .silh{transition:opacity .35s}
 .silh.filled{opacity:0}
@@ -260,7 +262,7 @@ body:not(.picking) .picker{display:none}
 @keyframes stepin{from{transform:scale(.9); opacity:0}to{transform:none; opacity:1}}
 .scn .hero{position:absolute; right:8px; bottom:44px; width:46%; aspect-ratio:1; display:grid; place-items:end center; filter:drop-shadow(0 6px 4px rgba(74,59,82,.28)); pointer-events:none}
 .scn .hero svg{width:100%; height:100%}
-.scn .sname{background:linear-gradient(#fff,#FFF6E6)}
+.scn .sname{background:linear-gradient(#fff,#FFF6E6); color:#4A3B52}   /* light label in both themes, so dark writing */
 .scn:nth-of-type(1) .sname{border-top:5px solid #5FA4F2} .scn:nth-of-type(2) .sname{border-top:5px solid #FFD23F} .scn:nth-of-type(3) .sname{border-top:5px solid #F7A8B8}
 .scn:nth-of-type(4) .sname{border-top:5px solid #8DD68A} .scn:nth-of-type(5) .sname{border-top:5px solid #F59A3A}
 #bgG{transform-box:view-box; transform-origin:500px 660px; animation:scenein .45s ease-out}
@@ -309,6 +311,8 @@ body:not(.picking) .picker{display:none}
   <p id="resText"></p>
   <div class="actions"><button class="btn" id="btnScenes" type="button" data-en="Scenes">Scene</button><button class="btn primary" id="btnNext" type="button" data-en="Next">Avanti</button></div>
 </section>
+
+<script id="testi">window.TESTI = {"es":{"tocco":"giro","Metti {lista}, poi premi il tasto verde.":"Pega {lista}, luego pulsa el botón verde.","Metti ogni adesivo sulla sua ombra!":"¡Pega cada sticker en su sombra!","Ogni cosa al suo posto!":"¡Cada cosa en su sitio!","Metti {x} {dove}.":"Pega {x} {dove}.","Richiesta {n} di {tot}":"Paso {n} de {tot}","Ombre":"Sombras","Ogni cosa al suo posto":"Cada cosa en su sitio","Sopra, sotto, dentro":"Encima, debajo, dentro","Conta e metti":"Cuenta y pega","Metti ogni adesivo sulla sua ombra.":"Pega cada sticker en su sombra.","Metti ogni adesivo nel posto giusto.":"Pega cada sticker en su sitio.","Attenzione: qualche adesivo non è di questa scena.":"Atención: algunos stickers no son de esta escena.","Sì!":"¡Sí!","{x}, {dove}!":"¡{x}, {dove}!","{x}!":"¡{x}!","Questo non è di questa scena.":"Este no es de esta escena.","Questo non serve.":"Este no hace falta.","Non questo.":"Este no.","Qui non c'è più posto.":"Aquí ya no hay sitio.","Guarda: va qui!":"¡Mira: va aquí!","{x}: ce n'è {n}, ne servono {q}.":"{x}: hay {n}, se necesitan {q}.","{x}: sono {n}, ne servono {q}.":"{x}: hay {n}, se necesitan {q}.","Togline qualcuno: trascinali nel cassetto.":"Quita algunos: arrástralos al cajón.","{x}: {n}. Ne servono {q}.":"{x}: {n}. Se necesitan {q}.","Bravo!":"¡Muy bien!","Hai ascoltato bene: ogni cosa dove l'hai sentita.":"Has escuchado bien: cada cosa donde la oíste.","Ogni ombra ha il suo adesivo.":"Cada sombra tiene su sticker.","Ogni cosa al suo posto.":"Cada cosa en su sitio.","Giusto: {lista}.":"Correcto: {lista}.","Adesivi":"Stickers","Come vuoi giocare?":"¿Cómo quieres jugar?","Scegli la scena":"Elige la escena","Modo e difficoltà":"Modo y dificultad","Scene":"Escenas","Fatto: conta gli adesivi":"Listo: cuenta los stickers","Scena":"Escena","Adesivi precedenti":"Stickers anteriores","Altri adesivi":"Más stickers","Come si gioca":"Cómo se juega","Chiudi":"Cerrar","Tipo di gioco":"Tipo de juego","Uno diverso a ogni turno":"Uno distinto en cada turno","Difficoltà":"Dificultad","Cresce vincendo":"Sube al ganar","Facile":"Fácil","Media":"Media","Difficile":"Difícil","Le figure mostrano ogni tipo di gioco, così può scegliere anche il bambino. La scena si sceglie dall'elenco: la freccia in alto ci riporta.":"Los dibujos muestran cada tipo de juego, así también puede elegir el niño. La escena se elige en la lista: la flecha de arriba vuelve a ella.","Avanti":"Siguiente","La stazione":"La estación","sui binari":"en las vías","sulla banchina":"en el andén","in cielo":"en el cielo","Il cantiere":"La obra","sulla strada":"en la carretera","nello scavo":"en el hoyo","sul ponteggio":"en el andamio","La cameretta":"El dormitorio","sul letto":"en la cama","sul comodino":"en la mesita de noche","sulla mensola":"en la repisa","sul davanzale":"en el alféizar","sulla parete":"en la pared","sul pavimento":"en el suelo","La fattoria":"La granja","nello stagno":"en el estanque","nel recinto":"en el corral","nell'aia":"en el patio de la granja","nel campo":"en el campo","La preistoria":"La prehistoria","nel nido":"en el nido","nel lago":"en el lago","sul prato":"en la hierba","sopra la pensilina":"encima de la marquesina","sotto la pensilina":"debajo de la marquesina","davanti alla porta":"delante de la puerta","sopra il ponteggio":"encima del andamio","sotto il ponteggio":"debajo del andamio","dentro lo scavo":"dentro del hoyo","sopra il letto":"encima de la cama","davanti al letto":"delante de la cama","sopra il comodino":"encima de la mesita de noche","sotto il comodino":"debajo de la mesita de noche","sopra la mensola":"encima de la repisa","sotto la mensola":"debajo de la repisa","dentro la stalla":"dentro del establo","sopra il tetto della stalla":"encima del tejado del establo","dentro il recinto":"dentro del corral","dentro lo stagno":"dentro del estanque","dentro il nido":"dentro del nido","sopra il vulcano":"encima del volcán","dentro il lago":"dentro del lago","davanti alla roccia":"delante de la roca","Fatto":"Hecho","passi":"pasos","livello {n} di {tot}":"nivel {n} de {tot}","Tutti i giochi":"Todos los juegos","in alto":"hacia arriba"},"pt":{"tocco":"giro","Metti {lista}, poi premi il tasto verde.":"Cole {lista}, depois aperte o botão verde.","Metti ogni adesivo sulla sua ombra!":"Cole cada adesivo na sua sombra!","Ogni cosa al suo posto!":"Cada coisa no seu lugar!","Metti {x} {dove}.":"Cole {x} {dove}.","Richiesta {n} di {tot}":"Pedido {n} de {tot}","Ombre":"Sombras","Ogni cosa al suo posto":"Cada coisa no seu lugar","Sopra, sotto, dentro":"Em cima, embaixo, dentro","Conta e metti":"Conte e cole","Metti ogni adesivo sulla sua ombra.":"Cole cada adesivo na sua sombra.","Metti ogni adesivo nel posto giusto.":"Cole cada adesivo no lugar certo.","Attenzione: qualche adesivo non è di questa scena.":"Atenção: alguns adesivos não são desta cena.","Sì!":"Isso!","{x}, {dove}!":"{x}, {dove}!","{x}!":"{x}!","Questo non è di questa scena.":"Este não é desta cena.","Questo non serve.":"Este não precisa.","Non questo.":"Esse não.","Qui non c'è più posto.":"Aqui não tem mais lugar.","Guarda: va qui!":"Olha: vai aqui!","{x}: ce n'è {n}, ne servono {q}.":"{x}: tem {n}, precisa de {q}.","{x}: sono {n}, ne servono {q}.":"{x}: tem {n}, precisa de {q}.","Togline qualcuno: trascinali nel cassetto.":"Tire alguns: arraste-os para a gaveta.","{x}: {n}. Ne servono {q}.":"{x}: {n}. Precisa de {q}.","Bravo!":"Muito bem!","Hai ascoltato bene: ogni cosa dove l'hai sentita.":"Você ouviu direitinho: cada coisa onde você escutou.","Ogni ombra ha il suo adesivo.":"Cada sombra tem o seu adesivo.","Ogni cosa al suo posto.":"Cada coisa no seu lugar.","Giusto: {lista}.":"Certo: {lista}.","Adesivi":"Adesivos","Come vuoi giocare?":"Como você quer jogar?","Scegli la scena":"Escolha a cena","Modo e difficoltà":"Modo e dificuldade","Scene":"Cenas","Fatto: conta gli adesivi":"Pronto: conte os adesivos","Scena":"Cena","Adesivi precedenti":"Adesivos anteriores","Altri adesivi":"Mais adesivos","Come si gioca":"Como jogar","Chiudi":"Fechar","Tipo di gioco":"Tipo de jogo","Uno diverso a ogni turno":"Um diferente a cada rodada","Difficoltà":"Dificuldade","Cresce vincendo":"Aumenta ao vencer","Facile":"Fácil","Media":"Média","Difficile":"Difícil","Le figure mostrano ogni tipo di gioco, così può scegliere anche il bambino. La scena si sceglie dall'elenco: la freccia in alto ci riporta.":"As figuras mostram cada tipo de jogo, assim a criança também pode escolher. A cena se escolhe na lista: a seta lá em cima volta para ela.","Avanti":"Próximo","La stazione":"A estação","sui binari":"nos trilhos","sulla banchina":"na plataforma","in cielo":"no céu","Il cantiere":"A obra","sulla strada":"na estrada","nello scavo":"no buraco","sul ponteggio":"no andaime","La cameretta":"O quarto","sul letto":"na cama","sul comodino":"na mesinha de cabeceira","sulla mensola":"na prateleira","sul davanzale":"no parapeito da janela","sulla parete":"na parede","sul pavimento":"no chão","La fattoria":"A fazenda","nello stagno":"no laguinho","nel recinto":"no cercado","nell'aia":"no terreiro","nel campo":"no campo","La preistoria":"A pré-história","nel nido":"no ninho","nel lago":"no lago","sul prato":"na grama","sopra la pensilina":"em cima da cobertura","sotto la pensilina":"embaixo da cobertura","davanti alla porta":"na frente da porta","sopra il ponteggio":"em cima do andaime","sotto il ponteggio":"embaixo do andaime","dentro lo scavo":"dentro do buraco","sopra il letto":"em cima da cama","davanti al letto":"na frente da cama","sopra il comodino":"em cima da mesinha de cabeceira","sotto il comodino":"embaixo da mesinha de cabeceira","sopra la mensola":"em cima da prateleira","sotto la mensola":"embaixo da prateleira","dentro la stalla":"dentro do estábulo","sopra il tetto della stalla":"em cima do telhado do estábulo","dentro il recinto":"dentro do cercado","dentro lo stagno":"dentro do laguinho","dentro il nido":"dentro do ninho","sopra il vulcano":"em cima do vulcão","dentro il lago":"dentro do lago","davanti alla roccia":"na frente da pedra","Fatto":"Pronto","passi":"passos","livello {n} di {tot}":"nível {n} de {tot}","Tutti i giochi":"Todos os jogos","in alto":"para cima"},"fr":{"tocco":"tour","Metti {lista}, poi premi il tasto verde.":"Colle {lista}, puis appuie sur le bouton vert.","Metti ogni adesivo sulla sua ombra!":"Colle chaque autocollant sur son ombre !","Ogni cosa al suo posto!":"Chaque chose à sa place !","Metti {x} {dove}.":"Colle {x} {dove}.","Richiesta {n} di {tot}":"Consigne {n} sur {tot}","Ombre":"Ombres","Ogni cosa al suo posto":"Chaque chose à sa place","Sopra, sotto, dentro":"Sur, sous, dans","Conta e metti":"Compte et colle","Metti ogni adesivo sulla sua ombra.":"Colle chaque autocollant sur son ombre.","Metti ogni adesivo nel posto giusto.":"Colle chaque autocollant à sa place.","Attenzione: qualche adesivo non è di questa scena.":"Attention : certains autocollants ne sont pas de cette scène.","Sì!":"Oui !","{x}, {dove}!":"{x}, {dove} !","{x}!":"{x} !","Questo non è di questa scena.":"Celui-ci n’est pas de cette scène.","Questo non serve.":"Celui-ci ne sert pas.","Non questo.":"Pas celui-là.","Qui non c'è più posto.":"Ici, il n’y a plus de place.","Guarda: va qui!":"Regarde : ça va ici !","{x}: ce n'è {n}, ne servono {q}.":"{x} : il y en a {n}, il en faut {q}.","{x}: sono {n}, ne servono {q}.":"{x} : il y en a {n}, il en faut {q}.","Togline qualcuno: trascinali nel cassetto.":"Enlèves-en quelques-uns : glisse-les dans le tiroir.","{x}: {n}. Ne servono {q}.":"{x} : {n}. Il en faut {q}.","Bravo!":"Bravo !","Hai ascoltato bene: ogni cosa dove l'hai sentita.":"Tu as bien écouté : tout est là où tu l’as entendu.","Ogni ombra ha il suo adesivo.":"Chaque ombre a son autocollant.","Ogni cosa al suo posto.":"Chaque chose à sa place.","Giusto: {lista}.":"Bravo : {lista}.","Adesivi":"Autocollants","Come vuoi giocare?":"Comment veux-tu jouer ?","Scegli la scena":"Choisis la scène","Modo e difficoltà":"Mode et difficulté","Scene":"Scènes","Fatto: conta gli adesivi":"Fini : compte les autocollants","Scena":"Scène","Adesivi precedenti":"Autocollants précédents","Altri adesivi":"Autres autocollants","Come si gioca":"Comment jouer","Chiudi":"Fermer","Tipo di gioco":"Type de jeu","Uno diverso a ogni turno":"Un différent à chaque tour","Difficoltà":"Difficulté","Cresce vincendo":"Augmente en gagnant","Facile":"Facile","Media":"Moyen","Difficile":"Difficile","Le figure mostrano ogni tipo di gioco, così può scegliere anche il bambino. La scena si sceglie dall'elenco: la freccia in alto ci riporta.":"Les images montrent chaque type de jeu, pour que l’enfant puisse choisir lui aussi. La scène se choisit dans la liste : la flèche en haut y ramène.","Avanti":"Suivant","La stazione":"La gare","sui binari":"sur les rails","sulla banchina":"sur le quai","in cielo":"dans le ciel","Il cantiere":"Le chantier","sulla strada":"sur la route","nello scavo":"dans le trou","sul ponteggio":"sur l’échafaudage","La cameretta":"La chambre","sul letto":"sur le lit","sul comodino":"sur la table de chevet","sulla mensola":"sur l’étagère","sul davanzale":"sur le rebord de la fenêtre","sulla parete":"sur le mur","sul pavimento":"par terre","La fattoria":"La ferme","nello stagno":"dans la mare","nel recinto":"dans l’enclos","nell'aia":"dans la cour de la ferme","nel campo":"dans le champ","La preistoria":"La préhistoire","nel nido":"dans le nid","nel lago":"dans le lac","sul prato":"sur l’herbe","sopra la pensilina":"sur l’auvent","sotto la pensilina":"sous l’auvent","davanti alla porta":"devant la porte","sopra il ponteggio":"sur l’échafaudage","sotto il ponteggio":"sous l’échafaudage","dentro lo scavo":"dans le trou","sopra il letto":"sur le lit","davanti al letto":"devant le lit","sopra il comodino":"sur la table de chevet","sotto il comodino":"sous la table de chevet","sopra la mensola":"sur l’étagère","sotto la mensola":"sous l’étagère","dentro la stalla":"dans l’étable","sopra il tetto della stalla":"sur le toit de l’étable","dentro il recinto":"dans l’enclos","dentro lo stagno":"dans la mare","dentro il nido":"dans le nid","sopra il vulcano":"au-dessus du volcan","dentro il lago":"dans le lac","davanti alla roccia":"devant le rocher","Fatto":"C’est fait","passi":"pas","livello {n} di {tot}":"niveau {n} sur {tot}","Tutti i giochi":"Tous les jeux","in alto":"vers le haut"},"de":{"tocco":"Drehung","Metti {lista}, poi premi il tasto verde.":"Kleb {lista}, dann drück den grünen Knopf.","Metti ogni adesivo sulla sua ombra!":"Kleb jeden Sticker auf seinen Schatten!","Ogni cosa al suo posto!":"Alles an seinen Platz!","Metti {x} {dove}.":"Kleb {x} {dove}.","Richiesta {n} di {tot}":"Aufgabe {n} von {tot}","Ombre":"Schatten","Ogni cosa al suo posto":"Alles an seinen Platz","Sopra, sotto, dentro":"Auf, unter, in","Conta e metti":"Zählen und kleben","Metti ogni adesivo sulla sua ombra.":"Kleb jeden Sticker auf seinen Schatten.","Metti ogni adesivo nel posto giusto.":"Kleb jeden Sticker an die richtige Stelle.","Attenzione: qualche adesivo non è di questa scena.":"Achtung: Ein paar Sticker gehören nicht in dieses Bild.","Sì!":"Ja!","{x}, {dove}!":"{x}, {dove}!","{x}!":"{x}!","Questo non è di questa scena.":"Der gehört nicht in dieses Bild.","Questo non serve.":"Den brauchen wir nicht.","Non questo.":"Nicht den.","Qui non c'è più posto.":"Hier ist kein Platz mehr.","Guarda: va qui!":"Schau: Der gehört hierhin!","{x}: ce n'è {n}, ne servono {q}.":"{x}: {n} ist da, {q} werden gebraucht.","{x}: sono {n}, ne servono {q}.":"{x}: {n} sind da, {q} werden gebraucht.","Togline qualcuno: trascinali nel cassetto.":"Nimm ein paar weg: Zieh sie in die Schublade.","{x}: {n}. Ne servono {q}.":"{x}: {n}. Du brauchst {q}.","Bravo!":"Super!","Hai ascoltato bene: ogni cosa dove l'hai sentita.":"Gut zugehört: Alles ist da, wo du es gehört hast.","Ogni ombra ha il suo adesivo.":"Jeder Schatten hat seinen Sticker.","Ogni cosa al suo posto.":"Alles an seinem Platz.","Giusto: {lista}.":"Richtig: {lista}.","Adesivi":"Sticker","Come vuoi giocare?":"Wie möchtest du spielen?","Scegli la scena":"Wähle das Bild","Modo e difficoltà":"Spielart und Schwierigkeit","Scene":"Bilder","Fatto: conta gli adesivi":"Fertig: Sticker zählen","Scena":"Bild","Adesivi precedenti":"Vorherige Sticker","Altri adesivi":"Weitere Sticker","Come si gioca":"So wird gespielt","Chiudi":"Schließen","Tipo di gioco":"Spielart","Uno diverso a ogni turno":"Jede Runde eine andere","Difficoltà":"Schwierigkeit","Cresce vincendo":"Steigt mit jedem Sieg","Facile":"Leicht","Media":"Mittel","Difficile":"Schwer","Le figure mostrano ogni tipo di gioco, così può scegliere anche il bambino. La scena si sceglie dall'elenco: la freccia in alto ci riporta.":"Die Bilder zeigen jede Spielart, so kann auch das Kind wählen. Das Bild wählt man in der Liste: Der Pfeil oben führt dorthin zurück.","Avanti":"Weiter","La stazione":"Der Bahnhof","sui binari":"auf die Schienen","sui binari#loc":"auf den Schienen","sulla banchina":"auf den Bahnsteig","sulla banchina#loc":"auf dem Bahnsteig","in cielo":"in den Himmel","in cielo#loc":"am Himmel","Il cantiere":"Die Baustelle","sulla strada":"auf die Straße","sulla strada#loc":"auf der Straße","nello scavo":"in die Grube","nello scavo#loc":"in der Grube","sul ponteggio":"aufs Gerüst","sul ponteggio#loc":"auf dem Gerüst","La cameretta":"Das Kinderzimmer","sul letto":"aufs Bett","sul letto#loc":"auf dem Bett","sul comodino":"auf den Nachttisch","sul comodino#loc":"auf dem Nachttisch","sulla mensola":"aufs Regal","sulla mensola#loc":"auf dem Regal","sul davanzale":"auf die Fensterbank","sul davanzale#loc":"auf der Fensterbank","sulla parete":"an die Wand","sulla parete#loc":"an der Wand","sul pavimento":"auf den Boden","sul pavimento#loc":"auf dem Boden","La fattoria":"Der Bauernhof","nello stagno":"in den Teich","nello stagno#loc":"im Teich","nel recinto":"ins Gehege","nel recinto#loc":"im Gehege","nell'aia":"auf den Hof","nell'aia#loc":"auf dem Hof","nel campo":"aufs Feld","nel campo#loc":"auf dem Feld","La preistoria":"Die Urzeit","nel nido":"ins Nest","nel nido#loc":"im Nest","nel lago":"in den See","nel lago#loc":"im See","sul prato":"auf die Wiese","sul prato#loc":"auf der Wiese","sopra la pensilina":"aufs Vordach","sopra la pensilina#loc":"auf dem Vordach","sotto la pensilina":"unter das Vordach","sotto la pensilina#loc":"unter dem Vordach","davanti alla porta":"vor die Tür","davanti alla porta#loc":"vor der Tür","sopra il ponteggio":"aufs Gerüst","sopra il ponteggio#loc":"auf dem Gerüst","sotto il ponteggio":"unter das Gerüst","sotto il ponteggio#loc":"unter dem Gerüst","dentro lo scavo":"in die Grube","dentro lo scavo#loc":"in der Grube","sopra il letto":"aufs Bett","sopra il letto#loc":"auf dem Bett","davanti al letto":"vor das Bett","davanti al letto#loc":"vor dem Bett","sopra il comodino":"auf den Nachttisch","sopra il comodino#loc":"auf dem Nachttisch","sotto il comodino":"unter den Nachttisch","sotto il comodino#loc":"unter dem Nachttisch","sopra la mensola":"aufs Regal","sopra la mensola#loc":"auf dem Regal","sotto la mensola":"unter das Regal","sotto la mensola#loc":"unter dem Regal","dentro la stalla":"in den Stall","dentro la stalla#loc":"im Stall","sopra il tetto della stalla":"aufs Stalldach","sopra il tetto della stalla#loc":"auf dem Stalldach","dentro il recinto":"ins Gehege","dentro il recinto#loc":"im Gehege","dentro lo stagno":"in den Teich","dentro lo stagno#loc":"im Teich","dentro il nido":"ins Nest","dentro il nido#loc":"im Nest","sopra il vulcano":"über den Vulkan","sopra il vulcano#loc":"über dem Vulkan","dentro il lago":"in den See","dentro il lago#loc":"im See","davanti alla roccia":"vor den Felsen","davanti alla roccia#loc":"vor dem Felsen","Fatto":"Erledigt","passi":"Schritte","livello {n} di {tot}":"Level {n} von {tot}","Tutti i giochi":"Alle Spiele","in alto":"nach oben"},"ja":{"tocco":"回","Metti {lista}, poi premi il tasto verde.":"{lista}はって、緑のボタンを押してね。","Metti ogni adesivo sulla sua ombra!":"シールをかげにぴったりはってね！","Ogni cosa al suo posto!":"ぜんぶ、あるべき場所に！","Metti {x} {dove}.":"{x}を{dove}にはってね。","Richiesta {n} di {tot}":"おねがい {n}/{tot}","Ombre":"かげ","Ogni cosa al suo posto":"あるべき場所に","Sopra, sotto, dentro":"上・下・中","Conta e metti":"かぞえてはる","Metti ogni adesivo sulla sua ombra.":"シールをかげにぴったりはってね。","Metti ogni adesivo nel posto giusto.":"シールを正しい場所にはってね。","Attenzione: qualche adesivo non è di questa scena.":"ちゅうい：この場面に合わないシールがまざっています。","Sì!":"そう！","{x}, {dove}!":"{x}、{dove}！","{x}!":"{x}！","Questo non è di questa scena.":"これはこの場面のものじゃないよ。","Questo non serve.":"これはいらないよ。","Non questo.":"それじゃないよ。","Qui non c'è più posto.":"ここはもういっぱいだよ。","Guarda: va qui!":"見て、ここだよ！","{x}: ce n'è {n}, ne servono {q}.":"{x}：いまは{n}。{q}ひつようです。","{x}: sono {n}, ne servono {q}.":"{x}：いまは{n}。{q}ひつようです。","Togline qualcuno: trascinali nel cassetto.":"いくつか取って、引き出しにもどしてね。","{x}: {n}. Ne servono {q}.":"{x}は{n}。{q}にしてね。","Bravo!":"よくできたね！","Hai ascoltato bene: ogni cosa dove l'hai sentita.":"よく聞けたね。ぜんぶ、言われた場所にあるよ。","Ogni ombra ha il suo adesivo.":"どのかげにも、ぴったりのシール。","Ogni cosa al suo posto.":"ぜんぶ、あるべき場所に。","Giusto: {lista}.":"せいかい！{lista}。","Adesivi":"シール","Come vuoi giocare?":"どうやってあそぶ？","Scegli la scena":"場面をえらぶ","Modo e difficoltà":"あそびかたとむずかしさ","Scene":"場面","Fatto: conta gli adesivi":"できた：シールをかぞえる","Scena":"場面","Adesivi precedenti":"前のシール","Altri adesivi":"ほかのシール","Come si gioca":"あそびかた","Chiudi":"閉じる","Tipo di gioco":"あそびの種類","Uno diverso a ogni turno":"毎回ちがうあそび","Difficoltà":"むずかしさ","Cresce vincendo":"クリアするほど上がる","Facile":"かんたん","Media":"ふつう","Difficile":"むずかしい","Le figure mostrano ogni tipo di gioco, così può scegliere anche il bambino. La scena si sceglie dall'elenco: la freccia in alto ci riporta.":"絵であそびの種類を見せているので、お子さまも自分でえらべます。場面は一覧からえらびます。上の矢印で一覧にもどれます。","Avanti":"次へ","La stazione":"駅","sui binari":"線路の上","sulla banchina":"ホーム","in cielo":"空","Il cantiere":"工事現場","sulla strada":"道路","nello scavo":"穴の中","sul ponteggio":"足場の上","La cameretta":"子ども部屋","sul letto":"ベッドの上","sul comodino":"ナイトテーブルの上","sulla mensola":"たなの上","sul davanzale":"まどべ","sulla parete":"かべ","sul pavimento":"ゆか","La fattoria":"牧場","nello stagno":"池","nel recinto":"さくの中","nell'aia":"牧場の庭","nel campo":"畑","La preistoria":"恐竜の時代","nel nido":"巣の中","nel lago":"湖","sul prato":"草の上","sopra la pensilina":"屋根の上","sotto la pensilina":"屋根の下","davanti alla porta":"ドアの前","sopra il ponteggio":"足場の上","sotto il ponteggio":"足場の下","dentro lo scavo":"穴の中","sopra il letto":"ベッドの上","davanti al letto":"ベッドの前","sopra il comodino":"ナイトテーブルの上","sotto il comodino":"ナイトテーブルの下","sopra la mensola":"たなの上","sotto la mensola":"たなの下","dentro la stalla":"牛小屋の中","sopra il tetto della stalla":"牛小屋の屋根の上","dentro il recinto":"さくの中","dentro lo stagno":"池の中","dentro il nido":"巣の中","sopra il vulcano":"火山の上","dentro il lago":"湖の中","davanti alla roccia":"岩の前","Fatto":"完了","passi":"歩","livello {n} di {tot}":"レベル {n}/{tot}","Tutti i giochi":"すべてのゲーム","in alto":"上"},"zh-Hant":{"tocco":"次","Metti {lista}, poi premi il tasto verde.":"{lista}，然後按綠色按鈕。","Metti ogni adesivo sulla sua ombra!":"把每張貼紙貼到它的影子上！","Ogni cosa al suo posto!":"每樣東西都放回原位！","Metti {x} {dove}.":"把{x}貼到{dove}。","Richiesta {n} di {tot}":"第{n}個，共{tot}個","Ombre":"影子","Ogni cosa al suo posto":"放回原位","Sopra, sotto, dentro":"上面、下面、裡面","Conta e metti":"數一數再貼","Metti ogni adesivo sulla sua ombra.":"把每張貼紙貼到它的影子上。","Metti ogni adesivo nel posto giusto.":"把每張貼紙貼到正確的地方。","Attenzione: qualche adesivo non è di questa scena.":"注意：有幾張貼紙不屬於這個場景。","Sì!":"對！","{x}, {dove}!":"{x}，在{dove}！","{x}!":"{x}！","Questo non è di questa scena.":"這個不屬於這裡喔。","Questo non serve.":"這個用不到喔。","Non questo.":"不是這個。","Qui non c'è più posto.":"這裡沒有位置了。","Guarda: va qui!":"你看：要貼在這裡！","{x}: ce n'è {n}, ne servono {q}.":"{x}：現在有{n}，需要{q}。","{x}: sono {n}, ne servono {q}.":"{x}：現在有{n}，需要{q}。","Togline qualcuno: trascinali nel cassetto.":"拿掉一些：把它們拖回抽屜。","{x}: {n}. Ne servono {q}.":"{x}有{n}，要{q}。","Bravo!":"好棒！","Hai ascoltato bene: ogni cosa dove l'hai sentita.":"你聽得很仔細：每樣東西都在說的地方。","Ogni ombra ha il suo adesivo.":"每個影子都有它的貼紙。","Ogni cosa al suo posto.":"每樣東西都在原位。","Giusto: {lista}.":"答對了：{lista}。","Adesivi":"貼紙","Come vuoi giocare?":"你想怎麼玩？","Scegli la scena":"選擇場景","Modo e difficoltà":"玩法和難度","Scene":"場景","Fatto: conta gli adesivi":"好了：數一數貼紙","Scena":"場景","Adesivi precedenti":"上一頁貼紙","Altri adesivi":"更多貼紙","Come si gioca":"怎麼玩","Chiudi":"關閉","Tipo di gioco":"玩法","Uno diverso a ogni turno":"每一輪都不一樣","Difficoltà":"難度","Cresce vincendo":"過關越多越難","Facile":"簡單","Media":"普通","Difficile":"困難","Le figure mostrano ogni tipo di gioco, così può scegliere anche il bambino. La scena si sceglie dall'elenco: la freccia in alto ci riporta.":"用圖片表示每種玩法，孩子也能自己選。場景在清單裡選擇：上方的箭頭可以回到清單。","Avanti":"下一頁","La stazione":"車站","sui binari":"鐵軌上","sulla banchina":"月台上","in cielo":"天空中","Il cantiere":"工地","sulla strada":"馬路上","nello scavo":"坑裡","sul ponteggio":"鷹架上","La cameretta":"兒童房","sul letto":"床上","sul comodino":"床頭櫃上","sulla mensola":"架子上","sul davanzale":"窗台上","sulla parete":"牆上","sul pavimento":"地板上","La fattoria":"農場","nello stagno":"池塘裡","nel recinto":"圍欄裡","nell'aia":"農場院子裡","nel campo":"田裡","La preistoria":"史前時代","nel nido":"巢裡","nel lago":"湖裡","sul prato":"草地上","sopra la pensilina":"雨棚上","sotto la pensilina":"雨棚下","davanti alla porta":"門前","sopra il ponteggio":"鷹架上","sotto il ponteggio":"鷹架下","dentro lo scavo":"坑裡","sopra il letto":"床上","davanti al letto":"床前","sopra il comodino":"床頭櫃上","sotto il comodino":"床頭櫃下","sopra la mensola":"架子上","sotto la mensola":"架子下","dentro la stalla":"穀倉裡","sopra il tetto della stalla":"穀倉屋頂上","dentro il recinto":"圍欄裡","dentro lo stagno":"池塘裡","dentro il nido":"巢裡","sopra il vulcano":"火山上方","dentro il lago":"湖裡","davanti alla roccia":"岩石前","Fatto":"完成","passi":"步","livello {n} di {tot}":"第{n}關，共{tot}關","Tutti i giochi":"所有遊戲","in alto":"上"},"zh-Hans":{"tocco":"次","Metti {lista}, poi premi il tasto verde.":"{lista}，然后按绿色按钮。","Metti ogni adesivo sulla sua ombra!":"把每张贴纸贴到它的影子上！","Ogni cosa al suo posto!":"每样东西都放回原位！","Metti {x} {dove}.":"把{x}贴到{dove}。","Richiesta {n} di {tot}":"第{n}个，共{tot}个","Ombre":"影子","Ogni cosa al suo posto":"放回原位","Sopra, sotto, dentro":"上面、下面、里面","Conta e metti":"数一数再贴","Metti ogni adesivo sulla sua ombra.":"把每张贴纸贴到它的影子上。","Metti ogni adesivo nel posto giusto.":"把每张贴纸贴到正确的地方。","Attenzione: qualche adesivo non è di questa scena.":"注意：有几张贴纸不属于这个场景。","Sì!":"对！","{x}, {dove}!":"{x}，在{dove}！","{x}!":"{x}！","Questo non è di questa scena.":"这个不属于这里哦。","Questo non serve.":"这个用不到哦。","Non questo.":"不是这个。","Qui non c'è più posto.":"这里没有位置了。","Guarda: va qui!":"你看：要贴在这里！","{x}: ce n'è {n}, ne servono {q}.":"{x}：现在有{n}，需要{q}。","{x}: sono {n}, ne servono {q}.":"{x}：现在有{n}，需要{q}。","Togline qualcuno: trascinali nel cassetto.":"拿掉一些：把它们拖回抽屉。","{x}: {n}. Ne servono {q}.":"{x}有{n}，要{q}。","Bravo!":"真棒！","Hai ascoltato bene: ogni cosa dove l'hai sentita.":"你听得很仔细：每样东西都在说的地方。","Ogni ombra ha il suo adesivo.":"每个影子都有它的贴纸。","Ogni cosa al suo posto.":"每样东西都在原位。","Giusto: {lista}.":"答对了：{lista}。","Adesivi":"贴纸","Come vuoi giocare?":"你想怎么玩？","Scegli la scena":"选择场景","Modo e difficoltà":"玩法和难度","Scene":"场景","Fatto: conta gli adesivi":"好了：数一数贴纸","Scena":"场景","Adesivi precedenti":"上一页贴纸","Altri adesivi":"更多贴纸","Come si gioca":"怎么玩","Chiudi":"关闭","Tipo di gioco":"玩法","Uno diverso a ogni turno":"每一轮都不一样","Difficoltà":"难度","Cresce vincendo":"过关越多越难","Facile":"简单","Media":"普通","Difficile":"困难","Le figure mostrano ogni tipo di gioco, così può scegliere anche il bambino. La scena si sceglie dall'elenco: la freccia in alto ci riporta.":"用图片表示每种玩法，孩子也能自己选。场景在列表里选择：上方的箭头可以回到列表。","Avanti":"下一页","La stazione":"车站","sui binari":"铁轨上","sulla banchina":"站台上","in cielo":"天空中","Il cantiere":"工地","sulla strada":"马路上","nello scavo":"坑里","sul ponteggio":"脚手架上","La cameretta":"儿童房","sul letto":"床上","sul comodino":"床头柜上","sulla mensola":"架子上","sul davanzale":"窗台上","sulla parete":"墙上","sul pavimento":"地板上","La fattoria":"农场","nello stagno":"池塘里","nel recinto":"围栏里","nell'aia":"农场院子里","nel campo":"田里","La preistoria":"史前时代","nel nido":"巢里","nel lago":"湖里","sul prato":"草地上","sopra la pensilina":"雨棚上","sotto la pensilina":"雨棚下","davanti alla porta":"门前","sopra il ponteggio":"脚手架上","sotto il ponteggio":"脚手架下","dentro lo scavo":"坑里","sopra il letto":"床上","davanti al letto":"床前","sopra il comodino":"床头柜上","sotto il comodino":"床头柜下","sopra la mensola":"架子上","sotto la mensola":"架子下","dentro la stalla":"谷仓里","sopra il tetto della stalla":"谷仓屋顶上","dentro il recinto":"围栏里","dentro lo stagno":"池塘里","dentro il nido":"巢里","sopra il vulcano":"火山上方","dentro il lago":"湖里","davanti alla roccia":"岩石前","Fatto":"完成","passi":"步","livello {n} di {tot}":"第{n}关，共{tot}关","Tutti i giochi":"所有游戏","in alto":"上"}};</script>
 <script id="opzioni">
 /* Settings shared by the home screen and all six games, kept in localStorage under one key.
    Games read them at every use, so a change on the home screen reaches a game as soon as it is opened. */
@@ -316,14 +320,15 @@ window.OPZ = (function () {
   'use strict';
   var KEY = 'giocapensa.opzioni';
   var DEF = { musica: true, suoni: true, voce: true, ui: 'auto', lingua: 'app', aiuto: 'attesa' };
+  var CODES = ['it', 'en', 'es', 'pt', 'fr', 'de', 'ja', 'zh-Hant', 'zh-Hans'];        // the same list as LINGUE in lingua.js
   var val = {}, k;
   for (k in DEF) val[k] = DEF[k];
   try {
     var raw = JSON.parse(localStorage.getItem(KEY) || 'null');
     if (raw && typeof raw === 'object') {
       ['musica', 'suoni', 'voce'].forEach(function (n) { if (typeof raw[n] === 'boolean') val[n] = raw[n]; });
-      if (['app', 'it', 'en'].indexOf(raw.lingua) >= 0) val.lingua = raw.lingua;
-      if (['auto', 'it', 'en'].indexOf(raw.ui) >= 0) val.ui = raw.ui;
+      if (['app'].concat(CODES).indexOf(raw.lingua) >= 0) val.lingua = raw.lingua;
+      if (['auto'].concat(CODES).indexOf(raw.ui) >= 0) val.ui = raw.ui;
       if (['subito', 'attesa', 'mai'].indexOf(raw.aiuto) >= 0) val.aiuto = raw.aiuto;
     } else if (localStorage.getItem('giocapensa.musica') === '0') val.musica = false;      // the old music-only switch
   } catch (e) {}
@@ -338,25 +343,64 @@ window.OPZ = (function () {
 
 </script>
 <script id="lingua">
-/* Interface language. «auto» follows the phone; the setting lives in OPZ ('ui': auto | it | en).
-   In the code every visible text is written as L('italiano', 'English'); in the markup an element with
-   data-en="…" gets that English text, data-en-aria / data-en-title do the same for aria-label and title. */
+/* Interface language. «auto» follows the phone; the setting lives in OPZ ('ui': auto | one of LINGUE).
+   Nine languages: Italian (the source), English, Spanish, Portuguese, French, German, Japanese, Chinese (traditional and simplified).
+   In the code every visible text is written as L('italiano', 'English'), with placeholders {n} filled from a third argument:
+   L('livello {n} di {tot}', 'level {n} of {tot}', { n: 3, tot: 120 }). The other languages come from window.TESTI[lang][italian text],
+   which src/build.py puts in each page from src/lingue/<lang>.json (only the texts that page uses). In the markup an element with
+   data-en="…" gets the text of the current language; data-en-aria / data-en-title do the same for aria-label and title. */
 (function () {
   'use strict';
-  function pick() {
-    var v = window.OPZ ? OPZ.get('ui') : 'auto';
-    if (v === 'it' || v === 'en') return v;
-    var langs = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'it']);
-    return /^it/i.test(langs[0] || '') ? 'it' : (/^en/i.test(langs[0] || '') ? 'en' : 'en');      // Italian phones get Italian, everyone else English
+  var LINGUE = ['it', 'en', 'es', 'pt', 'fr', 'de', 'ja', 'zh-Hant', 'zh-Hans'];
+  var NOMI = { it: 'Italiano', en: 'English', es: 'Español', pt: 'Português', fr: 'Français', de: 'Deutsch', ja: '日本語', 'zh-Hant': '繁體中文', 'zh-Hans': '简体中文' };
+  var LOCALI = { it: 'it-IT', en: 'en-GB', es: 'es-ES', pt: 'pt-BR', fr: 'fr-FR', de: 'de-DE', ja: 'ja-JP', 'zh-Hant': 'zh-TW', 'zh-Hans': 'zh-CN' };
+  function fromTag(t) {                                     // 'pt-BR' → 'pt', 'zh-TW' → 'zh-Hant', 'nl' → null
+    t = String(t || '').toLowerCase();
+    if (/^zh/.test(t)) return /^zh[-_](hant|tw|hk|mo)/.test(t) ? 'zh-Hant' : 'zh-Hans';
+    var b = t.split(/[-_]/)[0];
+    return LINGUE.indexOf(b) >= 0 ? b : null;
   }
+  function phone() {                                        // the first language of the phone that the app speaks, otherwise English
+    var langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'en'];
+    for (var i = 0; i < langs.length; i++) { var l = fromTag(langs[i]); if (l) return l; }
+    return 'en';
+  }
+  function pick() { var v = window.OPZ ? OPZ.get('ui') : 'auto'; return LINGUE.indexOf(v) >= 0 ? v : phone(); }
+  window.LINGUE = LINGUE; window.LINGUA_NOME = NOMI; window.LINGUA_TEL = phone; window.LINGUA_DA = fromTag;
   window.LANG = pick();
-  window.L = function (it, en) { return window.LANG === 'en' && en != null ? en : it; };
+  window.LOCALE = LOCALI[window.LANG];
+  window.LOCALE_DI = function (lang) { return LOCALI[lang] || 'en-GB'; };
+  var T = window.TESTI || {}, miss = window.__mancanti = {};
+  function tr(lang, it, en) {
+    if (it == null || lang === 'it') return it;
+    if (lang === 'en') return en != null ? en : it;
+    var d = T[lang], t = d ? d[it] : null;
+    if (t != null) return t;
+    miss[lang + ' | ' + it] = 1;                            // the automatic check reads this
+    return en != null ? en : it;
+  }
+  function fill(s, v) { return v && s ? String(s).replace(/\{(\w+)\}/g, function (m, k) { return v[k] != null ? v[k] : m; }) : s; }
+  window.L = function (it, en, v) { return fill(tr(window.LANG, it, en), v); };
+  window.LT = function (lang, it, en, v) { return fill(tr(lang, it, en), v); };            // a given language (the voice of Stickers)
+  window.LP = function (o, lang) { return tr(lang || window.LANG, o.it, o.en); };          // an {it, en} pair from a table
+  window.TROVA = function (lang, key) { var d = T[lang]; return d && d[key] != null ? d[key] : null; };   // an optional entry, such as the German «auf dem Bett» ('sul letto#loc')
+  window.FRASI = function () {                              // sentences one after the other: with a space, without one in Japanese and Chinese
+    return Array.prototype.filter.call(arguments, Boolean).join(/^(ja|zh)/.test(window.LANG) ? '' : ' ');
+  };
+  window.PICK = function (o, lang) {                        // a value per language from a table {it: …, en: …, es: …}
+    lang = lang || window.LANG;
+    if (o[lang] != null) return o[lang];
+    if (/^zh/.test(lang) && o.zh != null) return o.zh;
+    return o.en != null ? o.en : o.it;
+  };
   window.applyLang = function (root) {
-    if (window.LANG !== 'en') return;
+    if (window.LANG === 'it') return;
     root = root || document;
-    Array.prototype.forEach.call(root.querySelectorAll('[data-en]'), function (el) { el.textContent = el.getAttribute('data-en'); });
-    Array.prototype.forEach.call(root.querySelectorAll('[data-en-aria]'), function (el) { el.setAttribute('aria-label', el.getAttribute('data-en-aria')); });
-    Array.prototype.forEach.call(root.querySelectorAll('[data-en-title]'), function (el) { el.setAttribute('title', el.getAttribute('data-en-title')); });
+    function each(sel, f) { Array.prototype.forEach.call(root.querySelectorAll(sel), f); }
+    function keep(el, attr, now) { var k = el.getAttribute(attr); if (k == null) { k = now == null ? '' : now; el.setAttribute(attr, k); } return k; }   // the Italian original, so a second pass translates from it again
+    each('[data-en]', function (el) { el.textContent = tr(window.LANG, keep(el, 'data-it', el.textContent.trim()), el.getAttribute('data-en')); });
+    each('[data-en-aria]', function (el) { el.setAttribute('aria-label', tr(window.LANG, keep(el, 'data-it-aria', el.getAttribute('aria-label')), el.getAttribute('data-en-aria'))); });
+    each('[data-en-title]', function (el) { el.setAttribute('title', tr(window.LANG, keep(el, 'data-it-title', el.getAttribute('title')), el.getAttribute('data-en-title'))); });
   };
   document.documentElement.lang = window.LANG;
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { window.applyLang(document); });
@@ -1078,6 +1122,92 @@ window.SFX = (function () {
       { id: 'p-roccia', it: 'davanti alla roccia', en: 'in front of the rock', base: true, rects: [[600, 890, 400, 160]], slots: [[700, 1010], [880, 1010]], movers: ['dinosauro', 'stegosauro', 'cucciolo', 'triceratopo'] }]
   };
   SCENES.forEach(function (s3) { s3.spots = SPOTS[s3.id] || []; });
+  /* Sticker names in the languages other than Italian and English (those two live in NAMES).
+     es, pt, fr: [with article, plural, gender m | f, «one» when it is not article + name]
+     de: [with article (nominative), plural, gender m | f | n, «one» (accusative) when it is not «einen/eine/ein» + name]
+     ja: [name, counter]   zh-Hant, zh-Hans: [name, measure word]
+     The voice says these, so they are the words a child of three would use. */
+  var NOMI_L = {
+    es: {
+      locomotiva: ['la locomotora', 'locomotoras', 'f'], vagone: ['el vagón', 'vagones', 'm'], carromerci: ['el vagón de carga', 'vagones de carga', 'm'], valigia: ['la maleta', 'maletas', 'f'],
+      carrello: ['el carrito', 'carritos', 'm'], mongolfiera: ['el globo aerostático', 'globos aerostáticos', 'm'], escavatore: ['la excavadora', 'excavadoras', 'f'], camion: ['el camión', 'camiones', 'm'],
+      betoniera: ['la hormigonera', 'hormigoneras', 'f'], rullo: ['la apisonadora', 'apisonadoras', 'f'], carriola: ['la carretilla', 'carretillas', 'f'], mattoni: ['los ladrillos', 'montones de ladrillos', 'm', 'un montón de ladrillos'],
+      secchio: ['el cubo', 'cubos', 'm'], cono: ['el cono', 'conos', 'm'], elicottero: ['el helicóptero', 'helicópteros', 'm'], uccellino: ['el pajarito', 'pajaritos', 'm'], nuvola: ['la nube', 'nubes', 'f'],
+      sole: ['el sol', 'soles', 'm'], aereo: ['el avión', 'aviones', 'm'], orsetto: ['el osito', 'ositos', 'm'], gatto: ['el gato', 'gatos', 'm'], cane: ['el perro', 'perros', 'm'], palla: ['la pelota', 'pelotas', 'f'],
+      macchinina: ['el cochecito', 'cochecitos', 'm'], trenino: ['el trencito', 'trencitos', 'm'], dinosauro: ['el dinosaurio', 'dinosaurios', 'm'], lampada: ['la lámpara', 'lámparas', 'f'],
+      libri: ['los libros', 'pilas de libros', 'f', 'una pila de libros'], pianta: ['la planta', 'plantas', 'f'], quadro: ['el cuadro', 'cuadros', 'm'], stella: ['la estrella', 'estrellas', 'f'], luna: ['la luna', 'lunas', 'f'],
+      arcobaleno: ['el arcoíris', 'arcoíris', 'm'], razzo: ['el cohete', 'cohetes', 'm'], palloncino: ['el globo', 'globos', 'm'], tappeto: ['la alfombra', 'alfombras', 'f'], mucca: ['la vaca', 'vacas', 'f'],
+      maiale: ['el cerdo', 'cerdos', 'm'], pecora: ['la oveja', 'ovejas', 'f'], gallina: ['la gallina', 'gallinas', 'f'], pulcino: ['el pollito', 'pollitos', 'm'], anatra: ['el pato', 'patos', 'm'], rana: ['la rana', 'ranas', 'f'],
+      trattore: ['el tractor', 'tractores', 'm'], fieno: ['la paca de heno', 'pacas de heno', 'f'], pterodattilo: ['el pterodáctilo', 'pterodáctilos', 'm'], triceratopo: ['el triceratops', 'triceratops', 'm'],
+      stegosauro: ['el estegosaurio', 'estegosaurios', 'm'], collolungo: ['el dinosaurio de cuello largo', 'dinosaurios de cuello largo', 'm'], uovo: ['el huevo', 'huevos', 'm'], cucciolo: ['el dinosaurio bebé', 'dinosaurios bebé', 'm']
+    },
+    pt: {
+      locomotiva: ['a locomotiva', 'locomotivas', 'f'], vagone: ['o vagão', 'vagões', 'm'], carromerci: ['o vagão de carga', 'vagões de carga', 'm'], valigia: ['a mala', 'malas', 'f'],
+      carrello: ['o carrinho de malas', 'carrinhos de malas', 'm'], mongolfiera: ['o balão de ar quente', 'balões de ar quente', 'm'], escavatore: ['a escavadeira', 'escavadeiras', 'f'], camion: ['o caminhão', 'caminhões', 'm'],
+      betoniera: ['a betoneira', 'betoneiras', 'f'], rullo: ['o rolo compressor', 'rolos compressores', 'm'], carriola: ['o carrinho de mão', 'carrinhos de mão', 'm'], mattoni: ['os tijolos', 'pilhas de tijolos', 'f', 'uma pilha de tijolos'],
+      secchio: ['o balde', 'baldes', 'm'], cono: ['o cone', 'cones', 'm'], elicottero: ['o helicóptero', 'helicópteros', 'm'], uccellino: ['o passarinho', 'passarinhos', 'm'], nuvola: ['a nuvem', 'nuvens', 'f'],
+      sole: ['o sol', 'sóis', 'm'], aereo: ['o avião', 'aviões', 'm'], orsetto: ['o ursinho', 'ursinhos', 'm'], gatto: ['o gato', 'gatos', 'm'], cane: ['o cachorro', 'cachorros', 'm'], palla: ['a bola', 'bolas', 'f'],
+      macchinina: ['o carrinho', 'carrinhos', 'm'], trenino: ['o trenzinho', 'trenzinhos', 'm'], dinosauro: ['o dinossauro', 'dinossauros', 'm'], lampada: ['o abajur', 'abajures', 'm'],
+      libri: ['os livros', 'pilhas de livros', 'f', 'uma pilha de livros'], pianta: ['a planta', 'plantas', 'f'], quadro: ['o quadro', 'quadros', 'm'], stella: ['a estrela', 'estrelas', 'f'], luna: ['a lua', 'luas', 'f'],
+      arcobaleno: ['o arco-íris', 'arco-íris', 'm'], razzo: ['o foguete', 'foguetes', 'm'], palloncino: ['o balão de festa', 'balões de festa', 'm'], tappeto: ['o tapete', 'tapetes', 'm'], mucca: ['a vaca', 'vacas', 'f'],
+      maiale: ['o porco', 'porcos', 'm'], pecora: ['a ovelha', 'ovelhas', 'f'], gallina: ['a galinha', 'galinhas', 'f'], pulcino: ['o pintinho', 'pintinhos', 'm'], anatra: ['o pato', 'patos', 'm'], rana: ['o sapo', 'sapos', 'm'],
+      trattore: ['o trator', 'tratores', 'm'], fieno: ['o fardo de feno', 'fardos de feno', 'm'], pterodattilo: ['o pterodáctilo', 'pterodáctilos', 'm'], triceratopo: ['o tricerátops', 'tricerátops', 'm'],
+      stegosauro: ['o estegossauro', 'estegossauros', 'm'], collolungo: ['o dinossauro pescoçudo', 'dinossauros pescoçudos', 'm'], uovo: ['o ovo', 'ovos', 'm'], cucciolo: ['o filhote de dinossauro', 'filhotes de dinossauro', 'm']
+    },
+    fr: {
+      locomotiva: ['la locomotive', 'locomotives', 'f'], vagone: ['le wagon', 'wagons', 'm'], carromerci: ['le wagon de marchandises', 'wagons de marchandises', 'm'], valigia: ['la valise', 'valises', 'f'],
+      carrello: ['le chariot', 'chariots', 'm'], mongolfiera: ['la montgolfière', 'montgolfières', 'f'], escavatore: ['la pelleteuse', 'pelleteuses', 'f'], camion: ['le camion', 'camions', 'm'],
+      betoniera: ['la bétonnière', 'bétonnières', 'f'], rullo: ['le rouleau compresseur', 'rouleaux compresseurs', 'm'], carriola: ['la brouette', 'brouettes', 'f'], mattoni: ['les briques', 'tas de briques', 'm', 'un tas de briques'],
+      secchio: ['le seau', 'seaux', 'm'], cono: ['le cône', 'cônes', 'm'], elicottero: ["l'hélicoptère", 'hélicoptères', 'm'], uccellino: ["l'oiseau", 'oiseaux', 'm'], nuvola: ['le nuage', 'nuages', 'm'],
+      sole: ['le soleil', 'soleils', 'm'], aereo: ["l'avion", 'avions', 'm'], orsetto: ["l'ourson", 'oursons', 'm'], gatto: ['le chat', 'chats', 'm'], cane: ['le chien', 'chiens', 'm'], palla: ['le ballon', 'ballons', 'm'],
+      macchinina: ['la petite voiture', 'petites voitures', 'f'], trenino: ['le petit train', 'petits trains', 'm'], dinosauro: ['le dinosaure', 'dinosaures', 'm'], lampada: ['la lampe', 'lampes', 'f'],
+      libri: ['les livres', 'piles de livres', 'f', 'une pile de livres'], pianta: ['la plante', 'plantes', 'f'], quadro: ['le tableau', 'tableaux', 'm'], stella: ["l'étoile", 'étoiles', 'f'], luna: ['la lune', 'lunes', 'f'],
+      arcobaleno: ["l'arc-en-ciel", 'arcs-en-ciel', 'm'], razzo: ['la fusée', 'fusées', 'f'], palloncino: ['le ballon de baudruche', 'ballons de baudruche', 'm'], tappeto: ['le tapis', 'tapis', 'm'], mucca: ['la vache', 'vaches', 'f'],
+      maiale: ['le cochon', 'cochons', 'm'], pecora: ['le mouton', 'moutons', 'm'], gallina: ['la poule', 'poules', 'f'], pulcino: ['le poussin', 'poussins', 'm'], anatra: ['le canard', 'canards', 'm'], rana: ['la grenouille', 'grenouilles', 'f'],
+      trattore: ['le tracteur', 'tracteurs', 'm'], fieno: ['la botte de foin', 'bottes de foin', 'f'], pterodattilo: ['le ptérodactyle', 'ptérodactyles', 'm'], triceratopo: ['le tricératops', 'tricératops', 'm'],
+      stegosauro: ['le stégosaure', 'stégosaures', 'm'], collolungo: ['le dinosaure au long cou', 'dinosaures au long cou', 'm'], uovo: ["l'œuf", 'œufs', 'm'], cucciolo: ['le bébé dinosaure', 'bébés dinosaures', 'm']
+    },
+    de: {
+      locomotiva: ['die Lokomotive', 'Lokomotiven', 'f'], vagone: ['der Waggon', 'Waggons', 'm'], carromerci: ['der Güterwagen', 'Güterwagen', 'm'], valigia: ['der Koffer', 'Koffer', 'm'],
+      carrello: ['der Gepäckwagen', 'Gepäckwagen', 'm'], mongolfiera: ['der Heißluftballon', 'Heißluftballons', 'm'], escavatore: ['der Bagger', 'Bagger', 'm'], camion: ['der Kipplaster', 'Kipplaster', 'm'],
+      betoniera: ['der Betonmischer', 'Betonmischer', 'm'], rullo: ['die Straßenwalze', 'Straßenwalzen', 'f'], carriola: ['die Schubkarre', 'Schubkarren', 'f'], mattoni: ['der Ziegelstapel', 'Ziegelstapel', 'm'],
+      secchio: ['der Eimer', 'Eimer', 'm'], cono: ['das Hütchen', 'Hütchen', 'n'], elicottero: ['der Hubschrauber', 'Hubschrauber', 'm'], uccellino: ['der Vogel', 'Vögel', 'm'], nuvola: ['die Wolke', 'Wolken', 'f'],
+      sole: ['die Sonne', 'Sonnen', 'f'], aereo: ['das Flugzeug', 'Flugzeuge', 'n'], orsetto: ['der Teddybär', 'Teddybären', 'm'], gatto: ['die Katze', 'Katzen', 'f'], cane: ['der Hund', 'Hunde', 'm'], palla: ['der Ball', 'Bälle', 'm'],
+      macchinina: ['das Spielzeugauto', 'Spielzeugautos', 'n'], trenino: ['die Spielzeugeisenbahn', 'Spielzeugeisenbahnen', 'f'], dinosauro: ['der Dinosaurier', 'Dinosaurier', 'm'], lampada: ['die Lampe', 'Lampen', 'f'],
+      libri: ['der Bücherstapel', 'Bücherstapel', 'm'], pianta: ['die Pflanze', 'Pflanzen', 'f'], quadro: ['das Bild', 'Bilder', 'n'], stella: ['der Stern', 'Sterne', 'm'], luna: ['der Mond', 'Monde', 'm'],
+      arcobaleno: ['der Regenbogen', 'Regenbogen', 'm'], razzo: ['die Rakete', 'Raketen', 'f'], palloncino: ['der Luftballon', 'Luftballons', 'm'], tappeto: ['der Teppich', 'Teppiche', 'm'], mucca: ['die Kuh', 'Kühe', 'f'],
+      maiale: ['das Schwein', 'Schweine', 'n'], pecora: ['das Schaf', 'Schafe', 'n'], gallina: ['das Huhn', 'Hühner', 'n'], pulcino: ['das Küken', 'Küken', 'n'], anatra: ['die Ente', 'Enten', 'f'], rana: ['der Frosch', 'Frösche', 'm'],
+      trattore: ['der Traktor', 'Traktoren', 'm'], fieno: ['der Heuballen', 'Heuballen', 'm'], pterodattilo: ['der Flugsaurier', 'Flugsaurier', 'm'], triceratopo: ['der Triceratops', 'Triceratopse', 'm'],
+      stegosauro: ['der Stegosaurus', 'Stegosaurier', 'm'], collolungo: ['der Langhals', 'Langhälse', 'm'], uovo: ['das Ei', 'Eier', 'n'], cucciolo: ['das Dinobaby', 'Dinobabys', 'n']
+    },
+    ja: {
+      locomotiva: ['機関車', '台'], vagone: ['客車', '両'], carromerci: ['貨車', '両'], valigia: ['スーツケース', '個'], carrello: ['カート', '台'], mongolfiera: ['気球', '個'], escavatore: ['ショベルカー', '台'],
+      camion: ['ダンプカー', '台'], betoniera: ['ミキサー車', '台'], rullo: ['ロードローラー', '台'], carriola: ['一輪車', '台'], mattoni: ['レンガの山', 'つ'], secchio: ['バケツ', '個'], cono: ['コーン', '個'],
+      elicottero: ['ヘリコプター', '機'], uccellino: ['小鳥', '羽'], nuvola: ['雲', 'つ'], sole: ['太陽', 'つ'], aereo: ['飛行機', '機'], orsetto: ['テディベア', '個'], gatto: ['ねこ', '匹'], cane: ['いぬ', '匹'],
+      palla: ['ボール', '個'], macchinina: ['ミニカー', '台'], trenino: ['おもちゃの電車', '台'], dinosauro: ['恐竜', '匹'], lampada: ['ランプ', '個'], libri: ['本の山', 'つ'], pianta: ['植木', 'つ'], quadro: ['絵', '枚'],
+      stella: ['星', 'つ'], luna: ['月', 'つ'], arcobaleno: ['にじ', '本'], razzo: ['ロケット', '機'], palloncino: ['風船', '個'], tappeto: ['じゅうたん', '枚'], mucca: ['うし', '頭'], maiale: ['ぶた', '匹'],
+      pecora: ['ひつじ', '匹'], gallina: ['にわとり', '羽'], pulcino: ['ひよこ', '羽'], anatra: ['アヒル', '羽'], rana: ['カエル', '匹'], trattore: ['トラクター', '台'], fieno: ['干し草', '個'],
+      pterodattilo: ['プテラノドン', '匹'], triceratopo: ['トリケラトプス', '匹'], stegosauro: ['ステゴサウルス', '匹'], collolungo: ['首長竜', '匹'], uovo: ['たまご', '個'], cucciolo: ['恐竜の赤ちゃん', '匹']
+    },
+    'zh-Hant': {
+      locomotiva: ['火車頭', '輛'], vagone: ['車廂', '節'], carromerci: ['貨車廂', '節'], valigia: ['行李箱', '個'], carrello: ['行李推車', '台'], mongolfiera: ['熱氣球', '顆'], escavatore: ['挖土機', '台'],
+      camion: ['砂石車', '輛'], betoniera: ['水泥攪拌車', '輛'], rullo: ['壓路機', '台'], carriola: ['手推車', '台'], mattoni: ['磚塊', '堆'], secchio: ['水桶', '個'], cono: ['三角錐', '個'],
+      elicottero: ['直升機', '架'], uccellino: ['小鳥', '隻'], nuvola: ['雲', '朵'], sole: ['太陽', '個'], aereo: ['飛機', '架'], orsetto: ['小熊', '隻'], gatto: ['貓', '隻'], cane: ['狗', '隻'],
+      palla: ['球', '顆'], macchinina: ['玩具車', '輛'], trenino: ['玩具火車', '列'], dinosauro: ['恐龍', '隻'], lampada: ['檯燈', '盞'], libri: ['書', '疊'], pianta: ['盆栽', '盆'], quadro: ['畫', '幅'],
+      stella: ['星星', '顆'], luna: ['月亮', '個'], arcobaleno: ['彩虹', '道'], razzo: ['火箭', '枚'], palloncino: ['氣球', '顆'], tappeto: ['地毯', '塊'], mucca: ['乳牛', '頭'], maiale: ['豬', '隻'],
+      pecora: ['綿羊', '隻'], gallina: ['母雞', '隻'], pulcino: ['小雞', '隻'], anatra: ['鴨子', '隻'], rana: ['青蛙', '隻'], trattore: ['拖拉機', '台'], fieno: ['乾草', '捆'],
+      pterodattilo: ['翼龍', '隻'], triceratopo: ['三角龍', '隻'], stegosauro: ['劍龍', '隻'], collolungo: ['長脖子恐龍', '隻'], uovo: ['蛋', '顆'], cucciolo: ['恐龍寶寶', '隻']
+    },
+    'zh-Hans': {
+      locomotiva: ['火车头', '辆'], vagone: ['车厢', '节'], carromerci: ['货车厢', '节'], valigia: ['行李箱', '个'], carrello: ['行李推车', '辆'], mongolfiera: ['热气球', '个'], escavatore: ['挖掘机', '台'],
+      camion: ['翻斗车', '辆'], betoniera: ['水泥搅拌车', '辆'], rullo: ['压路机', '台'], carriola: ['手推车', '辆'], mattoni: ['砖块', '堆'], secchio: ['水桶', '个'], cono: ['路锥', '个'],
+      elicottero: ['直升机', '架'], uccellino: ['小鸟', '只'], nuvola: ['云', '朵'], sole: ['太阳', '个'], aereo: ['飞机', '架'], orsetto: ['小熊', '只'], gatto: ['猫', '只'], cane: ['狗', '只'],
+      palla: ['球', '个'], macchinina: ['玩具车', '辆'], trenino: ['玩具火车', '列'], dinosauro: ['恐龙', '只'], lampada: ['台灯', '盏'], libri: ['书', '叠'], pianta: ['盆栽', '盆'], quadro: ['画', '幅'],
+      stella: ['星星', '颗'], luna: ['月亮', '个'], arcobaleno: ['彩虹', '道'], razzo: ['火箭', '枚'], palloncino: ['气球', '个'], tappeto: ['地毯', '块'], mucca: ['奶牛', '头'], maiale: ['猪', '头'],
+      pecora: ['绵羊', '只'], gallina: ['母鸡', '只'], pulcino: ['小鸡', '只'], anatra: ['鸭子', '只'], rana: ['青蛙', '只'], trattore: ['拖拉机', '台'], fieno: ['干草', '捆'],
+      pterodattilo: ['翼龙', '只'], triceratopo: ['三角龙', '只'], stegosauro: ['剑龙', '只'], collolungo: ['长脖子恐龙', '只'], uovo: ['蛋', '个'], cucciolo: ['恐龙宝宝', '只']
+    }
+  };
   /* ====== The game: pick a scene, then rounds of three kinds ======
      sagome — every sticker on its own shadow;  dove — everything where it belongs;  conta — that many of each, then the green button.
      A sticker dropped in the wrong place goes back to the drawer with a soft «boing»; after two tries the right place lights up. */
@@ -1095,30 +1225,95 @@ window.SFX = (function () {
   function buzz(ms) { try { if (navigator.vibrate) navigator.vibrate(ms); } catch (err) {} }
   function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
 
-  /* ---------- words, written and spoken ---------- */
-  var WORDS = ['zero', 'uno', 'due', 'tre', 'quattro', 'cinque', 'sei', 'sette', 'otto', 'nove', 'dieci'];
-  var WORDS_EN = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
-  function eng() { return window.OPZ ? OPZ.get('lingua') === 'en' : LANG === 'en'; }                       // the voice
-  function en(spoken) { return spoken ? eng() : LANG === 'en'; }
-  function name1(id, spoken) { var n = NAMES[id]; return en(spoken) ? n[2] : n[0]; }
-  function bare(id, spoken) { return name1(id, spoken).replace(/^(il |lo |la |i |gli |le |the )/, '').replace(/^l'/, ''); }
-  function many(id, spoken) { var n = NAMES[id]; return en(spoken) ? n[3] : n[1]; }
-  function numWord(n, spoken) { return (en(spoken) ? WORDS_EN : WORDS)[n] || String(n); }
+  /* ---------- words, written and spoken, in nine languages ----------
+     Italian and English names are in NAMES ([it with article, it plural, en with article, en plural]), the other languages in NOMI_L (nomi.js).
+     The voice has its own language (OPZ 'lingua'; «app» follows the interface), what is written follows LANG. Whole sentences with gaps come
+     from the dictionaries in src/lingue («Metti {x} {dove}.»); here are only the pieces that change with the sticker and the language. */
+  var NUM = { it: ['zero', 'uno', 'due', 'tre', 'quattro', 'cinque', 'sei', 'sette', 'otto', 'nove', 'dieci'], en: ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'],
+    es: ['cero', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve', 'diez'], pt: ['zero', 'um', 'dois', 'três', 'quatro', 'cinco', 'seis', 'sete', 'oito', 'nove', 'dez'],
+    fr: ['zéro', 'un', 'deux', 'trois', 'quatre', 'cinq', 'six', 'sept', 'huit', 'neuf', 'dix'], de: ['null', 'eins', 'zwei', 'drei', 'vier', 'fünf', 'sechs', 'sieben', 'acht', 'neun', 'zehn'],
+    ja: ['ゼロ', 'いち', 'に', 'さん', 'よん', 'ご', 'ろく', 'なな', 'はち', 'きゅう', 'じゅう'], zh: ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'] };
+  var QTY = { 'zh-Hant': ['零', '一', '兩', '三', '四', '五', '六', '七', '八', '九', '十'], 'zh-Hans': ['零', '一', '两', '三', '四', '五', '六', '七', '八', '九', '十'] };   // «兩隻» for things, «二» when counting aloud
+  var AND = { it: ' e ', en: ' and ', es: ' y ', pt: ' e ', fr: ' et ', de: ' und ', ja: '、', zh: '，' };
   var UNA_APOS = { anatra: 1 };
-  function one(id) { var a = NAMES[id][0]; return UNA_APOS[id] ? "un'" : /^la /.test(a) ? 'una ' : /^lo /.test(a) ? 'uno ' : 'un '; }
-  function howmany(id, n, spoken) { return n === 1 ? (en(spoken) ? 'one ' + bare(id, true) : one(id) + bare(id, true)) : numWord(n, spoken) + ' ' + many(id, spoken); }
-  function written(id, n) { return n + ' ' + (n === 1 ? bare(id) : many(id)); }
-  function ztext(z, spoken) { return en(spoken) ? z.en : z.it; }
+  function vlang() { return window.OPZ ? OPZ.get('lingua') : LANG; }                               // the voice
+  function zh(l) { return /^zh/.test(l); }
+  function pick(o, l) { return o[l] != null ? o[l] : o[l.slice(0, 2)] != null ? o[l.slice(0, 2)] : o.en; }
+  function row(id, l) { return (NOMI_L[l] || {})[id] || null; }
+  function the(id, l) { var r = row(id, l); return l === 'it' ? NAMES[id][0] : r ? r[0] : NAMES[id][2]; }       // the sticker on its own: «il gatto», «die Katze», «ねこ»
+  function obj(id, l) { var r = row(id, l); return l === 'de' && r && r[2] === 'm' ? r[0].replace(/^der /, 'den ') : the(id, l); }   // after «metti»: German says «den Hund»
+  function many(id, l) { var r = row(id, l); return l === 'it' ? NAMES[id][1] : !r ? NAMES[id][3] : l === 'ja' || zh(l) ? r[0] : r[1]; }   // Japanese and Chinese have no plural
+  function bare(id, l) {                                          // singular without article, for «1 gatto»
+    var r = row(id, l);
+    if (l === 'it') return NAMES[id][0].replace(/^(il |lo |la |i |gli |le )/, '').replace(/^l'/, '');
+    if (!r) return NAMES[id][2].replace(/^the /, '');
+    if (r[3]) return r[3].replace(/^(un |una |um |uma |une |einen |eine |ein )/, '');
+    return r[0].replace(/^(el |la |los |las |o |a |os |as |le |les |der |die |das )/, '').replace(/^l'/, '');
+  }
+  function one(id, l) {                                           // «un gatto», «una mucca», «einen Hund», «one cat»
+    var r = row(id, l), a = NAMES[id][0];
+    if (l === 'it') return (UNA_APOS[id] ? "un'" : /^la /.test(a) ? 'una ' : /^lo /.test(a) ? 'uno ' : 'un ') + bare(id, l);
+    if (!r) return 'one ' + bare(id, 'en');
+    if (r[3]) return r[3];
+    var art = { es: { m: 'un ', f: 'una ' }, pt: { m: 'um ', f: 'uma ' }, fr: { m: 'un ', f: 'une ' }, de: { m: 'einen ', f: 'eine ', n: 'ein ' } }[l];
+    return (art ? art[r[2]] || '' : '') + bare(id, l);
+  }
+  function aloud(n, l) { return pick(NUM, l)[n] || String(n); }   // counting aloud: «uno, due, tre», «いち、に、さん»
+  function numFor(id, n, l) {                                     // how many of this sticker, said: «una», «duas», «3匹», «兩隻»
+    var r = row(id, l), g = r ? r[2] : '';
+    if (l === 'ja') return n + (r ? r[1] : '');
+    if (zh(l)) return QTY[l][n] + (r ? r[1] : '');
+    if (n === 1 && (l === 'es' || l === 'pt' || l === 'fr')) return { es: { m: 'uno', f: 'una' }, pt: { m: 'um', f: 'uma' }, fr: { m: 'un', f: 'une' } }[l][g] || aloud(1, l);
+    if (n === 2 && l === 'pt') return g === 'f' ? 'duas' : 'dois';
+    return aloud(n, l);
+  }
+  function numW(id, n, l) { var r = row(id, l); return l === 'ja' || zh(l) ? n + (r ? r[1] : '') : String(n); }   // the same, written: «3», «3匹»
+  function amount(id, n, l, spoken) {                             // «tre gatti» (said) or «3 gatti» (written); in Japanese and Chinese only the number with its counter
+    if (l === 'ja' || zh(l)) return spoken ? numFor(id, n, l) : numW(id, n, l);
+    if (spoken) return n === 1 ? one(id, l) : numFor(id, n, l) + ' ' + many(id, l);
+    return n + ' ' + (n === 1 ? bare(id, l) : many(id, l));
+  }
+  function where(z, l, still) {                                   // «sul letto»; German has «aufs Bett» for going there and «auf dem Bett» (still) for being there
+    var t = still && l === 'de' ? TROVA(l, z.it + '#loc') : null;
+    return t || LT(l, z.it, z.en);
+  }
+  function request(q, l, spoken, done) {                          // one request of «conta e metti»: «tre gatti sul letto»; done: told as a fact, not as an order
+    var a = amount(q.id, q.n, l, spoken), p = where(zone(q.z), l, done);
+    if (l === 'ja') return done ? p + 'に' + the(q.id, l) + a : the(q.id, l) + 'を' + a + p + 'に';
+    if (zh(l)) return done ? p + '有' + a + the(q.id, l) : '把' + a + the(q.id, l) + (l === 'zh-Hant' ? '貼到' : '贴到') + p;     // stickers are stuck: «貼到», «はって»
+    return a + ' ' + p;
+  }
+  function list(reqs, l, spoken, done) { return reqs.map(function (q) { return request(q, l, spoken, done); }).join(pick(AND, l)); }
+  function order(reqs, spoken) {                                  // said: «tre gatti sul letto e due cani sul tappeto»; written: «Metti 3 gatti …, poi premi il tasto verde.»
+    var l = spoken ? vlang() : LANG, s = list(reqs, l, spoken, false);
+    if (spoken) return l === 'ja' ? s + 'はってね。' : zh(l) ? s + '。' : s;
+    return LT(l, 'Metti {lista}, poi premi il tasto verde.', 'Put {lista}, then press the green button.', { lista: s });
+  }
+  var VOCE = { it: 'it-IT', en: 'en-GB', es: 'es-ES', pt: 'pt-BR', fr: 'fr-FR', de: 'de-DE', ja: 'ja-JP', 'zh-Hant': 'zh-TW', 'zh-Hans': 'zh-CN' };
+  function voiceTag(l) {                                          // the phone's own variety of that language when it has one (es-MX, fr-CA, pt-PT, zh-HK), otherwise the usual one
+    var mine = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ''], i, t;
+    for (i = 0; i < mine.length; i++) {
+      t = String(mine[i]).replace('_', '-');
+      if (LINGUA_DA(t) !== l) continue;
+      if (zh(l)) return /HK|MO/i.test(t) ? 'zh-HK' : l === 'zh-Hant' ? 'zh-TW' : 'zh-CN';
+      if (/^es-419/i.test(t)) return 'es-MX';
+      if (/^[a-z]{2}-[A-Z]{2}$/.test(t)) return t;
+    }
+    return VOCE[l] || 'en-GB';
+  }
   function voiceOn() { return !window.OPZ || OPZ.get('voce'); }
   function speak(text) {
     if (!voiceOn() || !text) return;
     try {
       var ss = window.speechSynthesis; if (!ss) return; ss.cancel();
-      var want = eng() ? /^en/i : /^it/i, u = new SpeechSynthesisUtterance(text), vs = (ss.getVoices() || []).filter(function (v) { return want.test(v.lang); });
-      u.lang = eng() ? 'en-GB' : 'it-IT'; u.rate = 0.9; u.pitch = 1.1; if (vs.length) u.voice = vs[0]; ss.speak(u);
+      var l = vlang(), tag = voiceTag(l), lo = tag.toLowerCase(), vs = ss.getVoices() || [], v = null, i, x;
+      for (i = 0; i < vs.length && !v; i++) if (String(vs[i].lang).replace('_', '-').toLowerCase() === lo) v = vs[i];
+      for (i = 0; i < vs.length && !v; i++) { x = String(vs[i].lang).replace('_', '-').toLowerCase(); if (zh(l) ? (l === 'zh-Hant' ? /^zh-(tw|hk|mo)/.test(x) : /^zh-(cn|sg)/.test(x)) : x.slice(0, 2) === lo.slice(0, 2)) v = vs[i]; }
+      var u = new SpeechSynthesisUtterance(text); u.lang = v ? v.lang : tag; u.rate = 0.9; u.pitch = 1.1; if (v) u.voice = v; ss.speak(u);
+      window.__voce = { text: text, lang: u.lang };               // for the automatic checks
     } catch (err) {}
   }
-  function say(it, enText) { speak(eng() ? enText : it); }
+  function say(it, enText) { speak(LT(vlang(), it, enText)); }
 
   /* ---------- geometry ---------- */
   function box(id) { var a = ART[id], s = a.size / a.w; return { w: a.w * s, h: a.h * s, s: s }; }
@@ -1167,10 +1362,11 @@ window.SFX = (function () {
       k = Math.min(pool.length, 4 + Math.min(lvl, 3));
       R.tray = pool.slice(0, k).map(function (q) { return { id: q[0], once: true }; });
     } else if (mode === 'posti') {
-      var used = {}, spots = shuffle(SC.spots.slice()), want = Math.min(3 + Math.min(lvl, 1), 4);
+      var used = {}, asked = {}, spots = shuffle(SC.spots.slice()), want = Math.min(3 + Math.min(lvl, 1), 4);
       for (i = 0; R.steps.length < want && i < spots.length * 3; i++) {
         var sp = spots[i % spots.length], cand = shuffle(sp.movers.slice()).filter(function (m) { return !used[m]; });
-        if (!cand.length) continue; used[cand[0]] = 1; R.steps.push({ id: cand[0], spot: sp.id });
+        if (!cand.length || (asked[sp.id] || 0) >= sp.slots.length) continue;   // never ask for more than the place can hold: the round could not be finished
+        used[cand[0]] = 1; asked[sp.id] = (asked[sp.id] || 0) + 1; R.steps.push({ id: cand[0], spot: sp.id });
       }
       R.tray = R.steps.map(function (q) { return { id: q.id, once: true }; });
       var extra = []; SC.spots.forEach(function (sp2) { sp2.movers.forEach(function (m) { if (!used[m] && extra.indexOf(m) < 0) extra.push(m); }); });
@@ -1193,17 +1389,17 @@ window.SFX = (function () {
     if (mode === 'sagome') say('Metti ogni adesivo sulla sua ombra!', 'Put each sticker on its shadow!');
     else if (mode === 'dove') say('Ogni cosa al suo posto!', 'Everything in its place!');
     else if (mode === 'posti') speak(stepText(true));
-    else speak(R.req.map(function (q) { return howmany(q.id, q.n, true) + ' ' + ztext(zone(q.z), true); }).join(eng() ? ' and ' : ' e '));
+    else speak(order(R.req, true));
   }
 
   function stepText(spoken) {                                     // «Metti il gatto sotto il letto.»
-    var s = R.steps[R.step]; if (!s) return ''; var z = zone(s.spot);
-    return en(spoken) ? 'Put ' + name1(s.id, spoken) + ' ' + z.en + '.' : 'Metti ' + name1(s.id, spoken) + ' ' + z.it + '.';
+    var s = R.steps[R.step]; if (!s) return ''; var l = spoken ? vlang() : LANG;
+    return LT(l, 'Metti {x} {dove}.', 'Put {x} {dove}.', { x: obj(s.id, l), dove: where(zone(s.spot), l) });
   }
   function showStep() {
     var s = R.steps[R.step]; if (!s) return;
     $('cards').innerHTML = '<button class="taskcard m-posti" type="button" id="stepCard"><span class="spic">' + pic(s.id) + '</span><span class="big">' + stepText(false) + '</span></button>';
-    $('say').textContent = R.steps.length > 1 ? L('Richiesta ' + (R.step + 1) + ' di ' + R.steps.length, 'Request ' + (R.step + 1) + ' of ' + R.steps.length) : '';
+    $('say').textContent = R.steps.length > 1 ? L('Richiesta {n} di {tot}', 'Request {n} of {tot}', { n: R.step + 1, tot: R.steps.length }) : '';
   }
 
   /* ---------- drawing ---------- */
@@ -1221,16 +1417,16 @@ window.SFX = (function () {
   }
   function render() {
     sceneEl.innerHTML = '<defs><filter id="silF"><feColorMatrix type="matrix" values="0 0 0 0 0.29  0 0 0 0 0.23  0 0 0 0 0.32  0 0 0 0.38 0"/></filter></defs><g id="bgG">' + SC.bg() + '</g><g id="silG"></g><g id="hintG"></g><g id="layer"></g><g id="fx"></g>';
-    sceneEl.setAttribute('aria-label', L(SC.it, SC.en));
+    sceneEl.setAttribute('aria-label', LP(SC));
     silG = sceneEl.querySelector('#silG'); hintG = sceneEl.querySelector('#hintG'); layer = sceneEl.querySelector('#layer'); fx = sceneEl.querySelector('#fx');
     if (R.mode === 'sagome') silG.innerHTML = R.targets.map(function (t, i) { var b = box(t.id); return '<ellipse class="halo" data-h="' + i + '" cx="' + t.x.toFixed(0) + '" cy="' + t.y.toFixed(0) + '" rx="' + (b.w * 0.56).toFixed(0) + '" ry="' + (b.h * 0.54).toFixed(0) + '" style="--d:' + (-i * 0.4) + 's"/>' + '<g class="silh" data-t="' + i + '" data-id="' + t.id + '" transform="translate(' + (t.x - b.w / 2).toFixed(1) + ',' + (t.y - b.h / 2).toFixed(1) + ') scale(' + b.s.toFixed(3) + ')" filter="url(#silF)">' + ART[t.id].d() + '</g>'; }).join('');
-    $('title').textContent = L(SC.it, SC.en); $('modeChip').innerHTML = MODE_ICON[R.mode];
+    setTitle(LP(SC)); $('modeChip').innerHTML = MODE_ICON[R.mode];
     $('modeChip').setAttribute('aria-label', R.mode === 'sagome' ? L('Ombre', 'Shadows') : R.mode === 'dove' ? L('Ogni cosa al suo posto', 'Everything in its place') : R.mode === 'posti' ? L('Sopra, sotto, dentro', 'On, under, inside') : L('Conta e metti', 'Count and place'));
     var t = $('task');
     if (R.mode === 'conta') {
       t.className = 'task conta';
-      $('cards').innerHTML = R.req.map(function (q, i) { return '<button class="numcard" type="button" data-r="' + i + '" aria-label="' + written(q.id, q.n) + ' ' + ztext(zone(q.z)) + '"><span class="num">' + q.n + '</span><span class="pic">' + pic(q.id) + '</span><span class="zl">' + ztext(zone(q.z)) + '</span></button>'; }).join('');
-      $('say').textContent = L('Metti ' + R.req.map(function (q) { return written(q.id, q.n) + ' ' + ztext(zone(q.z)); }).join(' e ') + ', poi premi il tasto verde.', 'Put ' + R.req.map(function (q) { return written(q.id, q.n) + ' ' + ztext(zone(q.z)); }).join(' and ') + ', then press the green button.');
+      $('cards').innerHTML = R.req.map(function (q, i) { return '<button class="numcard" type="button" data-r="' + i + '" aria-label="' + request(q, LANG, false, true) + '"><span class="num">' + q.n + '</span><span class="pic">' + pic(q.id) + '</span><span class="zl">' + where(zone(q.z), LANG, true) + '</span></button>'; }).join('');
+      $('say').textContent = order(R.req, false);
       $('btnOk').hidden = false; $('btnOk').disabled = false;
     } else if (R.mode === 'posti') {
       t.className = 'task'; $('btnOk').hidden = true; showStep();
@@ -1275,7 +1471,14 @@ window.SFX = (function () {
   }
   $('btnTrayPrev').addEventListener('click', function () { goPage(page - 1); sfx('page'); });
   $('btnTrayNext').addEventListener('click', function () { goPage(page + 1); sfx('page'); });
-  window.addEventListener('resize', function () { if (SC) layoutTray(); });
+  /* A long scene name (German, at 320 px) shrinks before it is cut with «…». */
+  function fitTitle() {
+    var h = $('title'); h.style.fontSize = '';
+    for (var px = parseFloat(getComputedStyle(h).fontSize); h.scrollWidth > h.clientWidth + 1 && px > 15; px -= 1) h.style.fontSize = (px - 1) + 'px';
+  }
+  function setTitle(t) { $('title').textContent = t; fitTitle(); }
+  window.addEventListener('resize', function () { fitTitle(); if (SC) layoutTray(); });
+  try { document.fonts.ready.then(fitTitle); } catch (err) {}
 
   /* ---------- dragging ---------- */
   function overTray(y) { return y > $('traywrap').getBoundingClientRect().top + 6; }
@@ -1331,9 +1534,10 @@ window.SFX = (function () {
     if (res.target != null) { R.targets[res.target].done = true; var sh = silG.querySelector('[data-t="' + res.target + '"]'); if (sh) sh.classList.add('filled'); var hl = silG.querySelector('[data-h="' + res.target + '"]'); if (hl) hl.classList.add('done'); }
     layer.insertAdjacentHTML('beforeend', markup(it, true)); sparkle(it.x, it.y); if (res.z.base) dust(it); sfx('place', placed.length - 1); buzz(12);
     if (d.tileI != null && R.tray[d.tileI].once) { R.tray[d.tileI].used = true; var tile = tray.querySelector('[data-i="' + d.tileI + '"]'); if (tile) tile.classList.add('gone'); }
-    if (R.mode === 'posti') { R.step++; if (R.step >= R.steps.length) { setTimeout(win, 450); return; } setTimeout(function () { showStep(); speak(stepText(true)); }, calm ? 50 : 650); speak(eng() ? 'Yes!' : 'Sì!'); return; }
-    if (R.mode === 'conta') speak(numWord(placed.filter(function (p) { return p.id === id; }).length, true));
-    else speak(name1(id, true) + (R.mode === 'dove' ? ', ' + ztext(res.z, true) : '') + '!');
+    if (R.mode === 'posti') { R.step++; if (R.step >= R.steps.length) { setTimeout(win, 450); return; } setTimeout(function () { showStep(); speak(stepText(true)); }, calm ? 50 : 650); say('Sì!', 'Yes!'); return; }
+    var vl = vlang();
+    if (R.mode === 'conta') speak(aloud(placed.filter(function (p) { return p.id === id; }).length, vl));
+    else speak(R.mode === 'dove' ? LT(vl, '{x}, {dove}!', '{x}, {dove}!', { x: the(id, vl), dove: where(res.z, vl, true) }) : LT(vl, '{x}!', '{x}!', { x: the(id, vl) }));
     if (R.mode === 'sagome' && R.targets.every(function (t) { return t.done; })) setTimeout(win, 450);
     if (R.mode === 'dove' && R.tray.every(function (q) { return q.used || q.stranger; })) setTimeout(win, 450);
   }
@@ -1346,14 +1550,14 @@ window.SFX = (function () {
     var tile = d.tileI != null ? tray.querySelector('[data-i="' + d.tileI + '"]') : null;
     if (res.why === 'stranger') { say('Questo non è di questa scena.', 'This one does not belong here.'); if (tile) { tile.classList.remove('nope'); void tile.offsetWidth; tile.classList.add('nope'); } return; }
     if (res.why === 'unwanted') { say('Questo non serve.', 'This one is not needed.'); return; }
-    if (res.why === 'other') { var s0 = R.steps[R.step]; speak(eng() ? 'Not this one. ' + stepText(true) : 'Non questo. ' + stepText(true)); return; }
+    if (res.why === 'other') { var vl = vlang(); speak(LT(vl, 'Non questo.', 'Not this one.') + (vl === 'ja' || zh(vl) ? '' : ' ') + stepText(true)); return; }
     if (res.why === 'full') { say('Qui non c\'è più posto.', 'There is no more room here.'); return; }
     R.wrong[d.id] = (R.wrong[d.id] || 0) + 1;
     if (R.wrong[d.id] >= 2) { hint(d.id); say('Guarda: va qui!', 'Look: it goes here!'); }
   }
   function drop(x, y) {
     var d = drag; drag = null; tray.classList.remove('bin');
-    if (!d.moved) { d.el.remove(); speak(name1(d.id, true)); var tile = tray.querySelector('[data-i="' + d.tileI + '"]'); if (tile) { tile.classList.remove('nope'); void tile.offsetWidth; tile.classList.add('nope'); } return; }   // a tap names it
+    if (!d.moved) { d.el.remove(); speak(the(d.id, vlang())); var tile = tray.querySelector('[data-i="' + d.tileI + '"]'); if (tile) { tile.classList.remove('nope'); void tile.offsetWidth; tile.classList.add('nope'); } return; }   // a tap names it
     if (overTray(y)) { flyHome(d); if (d.from) sfx('back'); return; }                                   // back in the drawer (a placed one is taken away)
     var res = judge(d.id, toScene(x, y - 26));
     if (res.ok) { d.el.remove(); place(d.id, res, d); return; }
@@ -1378,7 +1582,7 @@ window.SFX = (function () {
     if (drag && ev.pointerId === drag.pid) { if (Math.abs(ev.clientX - drag.sx) + Math.abs(ev.clientY - drag.sy) > 6) drag.moved = true; follow(ev.clientX, ev.clientY); }
   }, true);
   function onUp(ev) {
-    if (pend && ev.pointerId === pend.pid) { var n = pend.n; pend = null; var it = null; placed.forEach(function (p) { if (p.n === n) it = p; }); if (it) { hop(n); speak(name1(it.id, true)); sfx('react'); } return; }
+    if (pend && ev.pointerId === pend.pid) { var n = pend.n; pend = null; var it = null; placed.forEach(function (p) { if (p.n === n) it = p; }); if (it) { hop(n); speak(the(it.id, vlang())); sfx('react'); } return; }
     if (!drag || ev.pointerId !== drag.pid) return; drop(drag.x, drag.y);
   }
   window.addEventListener('pointerup', onUp, true); window.addEventListener('pointercancel', onUp, true);
@@ -1392,20 +1596,25 @@ window.SFX = (function () {
     R.req.forEach(function (q, ri) {
       var mine = placed.filter(function (p) { return p.id === q.id; });
       steps.push(function () { cards[ri].classList.remove('good', 'bad'); cards[ri].classList.add('now'); return gap * 0.4; });
-      mine.forEach(function (it, k2) { steps.push(function () { hop(it.n); bubble(it, k2 + 1); speak(numWord(k2 + 1, true)); sfx('count', k2 + 1); return gap; }); });
+      mine.forEach(function (it, k2) { steps.push(function () { hop(it.n); bubble(it, k2 + 1); speak(aloud(k2 + 1, vlang())); sfx('count', k2 + 1); return gap; }); });
       steps.push(function () { var ok = mine.length === q.n; cards[ri].classList.remove('now'); cards[ri].classList.add(ok ? 'good' : 'bad'); if (!ok) bad.push({ q: q, n: mine.length }); sfx(ok ? 'done' : 'no'); return gap * 0.7; });
     });
     (function run() {
       if (steps.length) { setTimeout(run, steps.shift()()); return; }
       if (!bad.length) { win(); return; }
       var w = bad[0];
-      $('say').textContent = bad.map(function (b2) { var m = many(b2.q.id); m = m.charAt(0).toUpperCase() + m.slice(1); return L(m + ': ' + (b2.n === 1 ? 'ce n\'è 1' : 'sono ' + b2.n) + ', ne servono ' + b2.q.n + '.' + (b2.n > b2.q.n ? ' Togline qualcuno: trascinali nel cassetto.' : ''), m + ': there ' + (b2.n === 1 ? 'is 1' : 'are ' + b2.n) + ', ' + b2.q.n + ' needed.' + (b2.n > b2.q.n ? ' Take some away: drag them to the drawer.' : '')); }).join(' ');
-      speak(eng() ? many(w.q.id, true) + ': ' + numWord(w.n, true) + '. You need ' + numWord(w.q.n, true) + '.' : many(w.q.id, true) + ': ' + numWord(w.n, true) + '. Ne servono ' + numWord(w.q.n, true) + '.');
+      $('say').textContent = FRASI.apply(null, bad.map(function (b2) {          // «Gatti: sono 2, ne servono 3.»
+        var m = many(b2.q.id, LANG), v = { x: m.charAt(0).toUpperCase() + m.slice(1), n: numW(b2.q.id, b2.n, LANG), q: numW(b2.q.id, b2.q.n, LANG) };
+        return FRASI(b2.n === 1 ? L('{x}: ce n\'è {n}, ne servono {q}.', '{x}: there is {n}, {q} needed.', v) : L('{x}: sono {n}, ne servono {q}.', '{x}: there are {n}, {q} needed.', v),
+          b2.n > b2.q.n ? L('Togline qualcuno: trascinali nel cassetto.', 'Take some away: drag them to the drawer.') : '');
+      }));
+      var vl = vlang();
+      speak(LT(vl, '{x}: {n}. Ne servono {q}.', '{x}: {n}. You need {q}.', { x: many(w.q.id, vl), n: numFor(w.q.id, w.n, vl), q: numFor(w.q.id, w.q.n, vl) }));
       setTimeout(function () { fx.innerHTML = ''; locked = false; $('btnOk').disabled = false; Array.prototype.forEach.call(cards, function (c2) { c2.classList.remove('bad', 'good'); }); }, calm ? 300 : 2200);
     })();
   }
   $('btnOk').addEventListener('click', check);
-  $('cards').addEventListener('click', function (e2) { if (R && R.mode === 'posti' && e2.target.closest && e2.target.closest('#stepCard')) { speak(stepText(true)); return; } var c2 = e2.target.closest ? e2.target.closest('.numcard') : null; if (!c2 || locked) return; var q = R.req[+c2.getAttribute('data-r')]; speak(howmany(q.id, q.n, true) + ' ' + ztext(zone(q.z), true)); });
+  $('cards').addEventListener('click', function (e2) { if (R && R.mode === 'posti' && e2.target.closest && e2.target.closest('#stepCard')) { speak(stepText(true)); return; } var c2 = e2.target.closest ? e2.target.closest('.numcard') : null; if (!c2 || locked) return; var q = R.req[+c2.getAttribute('data-r')]; speak(order([q], true)); });
 
   /* ---------- winning ---------- */
   function confetti() {
@@ -1417,7 +1626,7 @@ window.SFX = (function () {
     locked = true; prog.rounds[SC.id] = (prog.rounds[SC.id] || 0) + 1; saveProg();
     confetti(); sfx('win'); buzz([12, 60, 18]); placed.forEach(function (p, i) { setTimeout(function () { hop(p.n); }, 90 * i); });
     setTimeout(function () { say('Bravo!', 'Well done!'); }, 450);
-    $('resText').textContent = R.mode === 'posti' ? L('Hai ascoltato bene: ogni cosa dove l\'hai sentita.', 'You listened well: everything where you heard it.') : R.mode === 'sagome' ? L('Ogni ombra ha il suo adesivo.', 'Every shadow has its sticker.') : R.mode === 'dove' ? L('Ogni cosa al suo posto.', 'Everything in its place.') : L('Giusto: ', 'Right: ') + R.req.map(function (q) { return written(q.id, q.n) + ' ' + ztext(zone(q.z)); }).join(L(' e ', ' and ')) + '.';
+    $('resText').textContent = R.mode === 'posti' ? L('Hai ascoltato bene: ogni cosa dove l\'hai sentita.', 'You listened well: everything where you heard it.') : R.mode === 'sagome' ? L('Ogni ombra ha il suo adesivo.', 'Every shadow has its sticker.') : R.mode === 'dove' ? L('Ogni cosa al suo posto.', 'Everything in its place.') : L('Giusto: {lista}.', 'Right: {lista}.', { lista: list(R.req, LANG, false, true) });
     $('say').textContent = '';
     setTimeout(function () { var r2 = $('result'); r2.hidden = false; void r2.offsetWidth; r2.classList.add('show'); }, calm ? 100 : 1000);
   }
@@ -1428,14 +1637,14 @@ window.SFX = (function () {
   /* ---------- choosing the scene ---------- */
   function showPicker() {
     SC = null; R = null; hideResult(); try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (err) {}
-    document.body.classList.add('picking'); $('title').textContent = L('Adesivi', 'Stickers'); $('modeChip').innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2.4"/><circle cx="10" cy="17" r="2.4"/></svg>';
+    document.body.classList.add('picking'); setTitle(L('Adesivi', 'Stickers')); $('modeChip').innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2.4"/><circle cx="10" cy="17" r="2.4"/></svg>';
     var mp = document.querySelector('.mschips[data-k="mode"]');
-    $('picker').innerHTML = '<section class="modepick" aria-label="' + L('Come vuoi giocare?', 'How do you want to play?') + '"><h2>' + L('Come vuoi giocare?', 'How do you want to play?') + '</h2><div class="mschips pics" data-k="mode">' + (mp ? mp.innerHTML : '') + '</div></section>' + SCENES.map(function (s2) { var n = prog.rounds[s2.id] || 0; return '<button class="scn" type="button" data-s="' + s2.id + '"><span class="thumb"><svg viewBox="0 0 1000 1320" preserveAspectRatio="xMidYMid slice" aria-hidden="true">' + s2.bg() + '</svg></span>' + (s2.hero ? '<span class="hero">' + pic(s2.hero) + '</span>' : '') + '<span class="sname">' + L(s2.it, s2.en) + '</span>' + (n ? '<span class="stars" aria-label="' + n + '">★ ' + n + '</span>' : '') + '</button>'; }).join('');
+    $('picker').innerHTML = '<section class="modepick" aria-label="' + L('Come vuoi giocare?', 'How do you want to play?') + '"><h2>' + L('Come vuoi giocare?', 'How do you want to play?') + '</h2><div class="mschips pics" data-k="mode">' + (mp ? mp.innerHTML : '') + '</div></section>' + SCENES.map(function (s2) { var n = prog.rounds[s2.id] || 0; return '<button class="scn" type="button" data-s="' + s2.id + '"><span class="thumb"><svg viewBox="0 0 1000 1320" preserveAspectRatio="xMidYMid slice" aria-hidden="true">' + s2.bg() + '</svg></span>' + (s2.hero ? '<span class="hero">' + pic(s2.hero) + '</span>' : '') + '<span class="sname">' + LP(s2) + '</span>' + (n ? '<span class="stars" aria-label="' + n + '">★ ' + n + '</span>' : '') + '</button>'; }).join('');
     paintModes();
   }
   $('picker').addEventListener('click', function (e2) {
     var ch = e2.target.closest ? e2.target.closest('.modepick .chip') : null;
-    if (ch) { prog.mode = ch.getAttribute('data-v'); saveProg(); paintModes(); sfx('tap'); var lb = ch.querySelector('.lbl'); if (lb) speak(lb.textContent); return; }
+    if (ch) { prog.mode = ch.getAttribute('data-v'); saveProg(); paintModes(); sfx('tap'); var lb = ch.querySelector('.lbl'); if (lb) speak(LT(vlang(), lb.getAttribute('data-it') || lb.textContent, lb.getAttribute('data-en'))); return; }
     var b2 = e2.target.closest ? e2.target.closest('.scn') : null; if (!b2) return;
     SCENES.forEach(function (s2) { if (s2.id === b2.getAttribute('data-s')) SC = s2; });
     document.body.classList.remove('picking'); $('picker').innerHTML = ''; sfx('tap'); newRound();
@@ -1453,7 +1662,24 @@ window.SFX = (function () {
     setTimeout(function () { closeModes(); if (SC) newRound(); }, 220);                      // the new choice starts a new round straight away
   });
   showPicker();
-  window.__AD = { state: function () { return { R: R, SC: SC, placed: placed }; } };   // read by the automatic tests only
+  window.__AD = {                                                 // read by the automatic tests only: nothing here is said or shown
+    state: function () { return { R: R, SC: SC, placed: placed }; },
+    frasi: function () {                                          // every sentence this round can produce, in the voice and in the writing
+      var vl = vlang(), out = { voce: vl, scritte: LANG, ordine: '', scritto: '', passi: [], conferme: [], conteggio: '', giusto: '', nomi: [] }, q, m;
+      if (R.mode === 'conta') {
+        out.ordine = order(R.req, true); out.scritto = order(R.req, false); out.giusto = L('Giusto: {lista}.', 'Right: {lista}.', { lista: list(R.req, LANG, false, true) });
+        q = R.req[0]; m = many(q.id, LANG);
+        out.conteggio = L('{x}: sono {n}, ne servono {q}.', '{x}: there are {n}, {q} needed.', { x: m.charAt(0).toUpperCase() + m.slice(1), n: numW(q.id, q.n + 1, LANG), q: numW(q.id, q.n, LANG) }) +
+          ' | ' + LT(vl, '{x}: {n}. Ne servono {q}.', '{x}: {n}. You need {q}.', { x: many(q.id, vl), n: numFor(q.id, 1, vl), q: numFor(q.id, q.n, vl) });
+      }
+      if (R.mode === 'posti') { var s0 = R.step; R.steps.forEach(function (s, i) { R.step = i; out.passi.push(stepText(true) + ' | ' + stepText(false)); }); R.step = s0; }
+      R.tray.forEach(function (t) {
+        out.nomi.push([the(t.id, vl), obj(t.id, vl), one(t.id, vl), many(t.id, vl), amount(t.id, 2, vl, true), amount(t.id, 1, LANG, false)].join(' / '));
+        var z = t.stranger ? null : zone(homeOf(t.id)); if (z) out.conferme.push(LT(vl, '{x}, {dove}!', '{x}, {dove}!', { x: the(t.id, vl), dove: where(z, vl, true) }));
+      });
+      return out;
+    }
+  };
 })();
 </script>
 

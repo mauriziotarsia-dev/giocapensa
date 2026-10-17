@@ -2,6 +2,7 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
+<meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Acqua ai fiori</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -31,7 +32,7 @@ button:focus-visible{outline:3px solid var(--joy); outline-offset:2px}
 
 .app{max-width:560px; height:100vh; height:100dvh; margin:0 auto; padding:max(8px,env(safe-area-inset-top)) 12px max(10px,env(safe-area-inset-bottom)); display:flex; flex-direction:column; gap:8px}
 .bar{display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:8px; flex:none}
-.pill{justify-self:start; display:inline-flex; align-items:center; gap:8px; height:40px; padding:2px 15px 0 12px; border-radius:20px; border:0; box-shadow:0 0 0 2.5px var(--ink); background:var(--surface); font-weight:800; font-size:.9375rem}
+.pill{justify-self:start; display:inline-flex; align-items:center; gap:8px; height:40px; padding:2px 15px 0 12px; border-radius:20px; border:0; box-shadow:0 0 0 2.5px var(--ink); background:var(--surface); font-weight:800; font-size:.9375rem; white-space:nowrap; flex:none}
 .pill svg{width:19px; height:19px; margin-top:-2px}
 .where{display:flex; align-items:center; gap:10px}
 .badge{min-width:40px; height:40px; padding:2px 7px 0; border-radius:20px; display:grid; place-items:center; background:var(--tier); color:var(--tier-ink); box-shadow:0 0 0 2.5px var(--ink); font-weight:900; font-size:1.0625rem; font-variant-numeric:tabular-nums}
@@ -85,10 +86,11 @@ button:focus-visible{outline:3px solid var(--joy); outline-offset:2px}
 .sign.waiting .ring{display:block}
 
 .kinds{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:4px 0 18px}
-.kind{display:flex; flex-direction:column; align-items:center; gap:4px; padding:10px 8px 8px; border:0; border-radius:22px; background:var(--kc,#fff); color:inherit; font:inherit; box-shadow:0 0 0 3px var(--ink), 0 5px 0 0 rgba(74,59,82,.25)}
+.kind{display:flex; flex-direction:column; align-items:center; gap:4px; padding:10px 8px 8px; border:0; border-radius:22px; background:var(--kc,#fff); color:#4A3B52; font:inherit; box-shadow:0 0 0 3px var(--ink), 0 5px 0 0 rgba(74,59,82,.25)}   /* pastel card in both themes, so its writing stays dark */
 .kind:active{transform:translateY(3px); box-shadow:0 0 0 3px var(--ink), 0 2px 0 0 rgba(74,59,82,.25)}
 .kind svg{width:100%; max-width:150px; height:auto}
 .kind span{font-weight:800; font-size:.875rem}
+#lvOf{white-space:nowrap}
 @media (max-width:370px){ .bar{gap:5px} .bar .pill span{display:none} .bar .pill{padding-left:12px; padding-right:12px} #lvOf{display:none} }
 .result{position:fixed; z-index:20; left:0; right:0; bottom:0; max-width:560px; margin:0 auto; background:var(--surface); border-radius:26px 26px 0 0; padding:22px 20px max(20px,env(safe-area-inset-bottom)); text-align:center; box-shadow:0 0 0 3px var(--ink); transform:translateY(108%); transition:transform .36s cubic-bezier(.2,.9,.25,1)}
 .result.show{transform:none}
@@ -224,6 +226,8 @@ a.round{color:inherit; text-decoration:none}
 </dialog>
 
 <script>window.KIT_HOME = 'index.html';</script>
+
+<script id="testi">window.TESTI = {"es":{"Tocchi":"Giros","tocco":"giro","tocchi":"giros","Tutti i fiori bevono!":"¡Todas las flores tienen agua!","I fiori pallidi hanno sete. Tocca i tubi, e anche la pompa blu, per girarli: l'acqua deve arrivare a tutti i fiori.":"Las flores pálidas tienen sed. Toca los tubos, y también la bomba azul, para girarlos: el agua tiene que llegar a todas las flores.","Ogni tocco gira un tubo di un quarto di giro, sempre nello stesso verso.":"Cada toque gira un tubo un cuarto de vuelta, siempre en el mismo sentido.","L'acqua parte dalla pompa blu e scorre solo dove i tubi combaciano.":"El agua sale de la bomba azul y solo corre donde los tubos encajan.","Il livello è risolto quando tutti i fiori sono sbocciati.":"El nivel está resuelto cuando todas las flores han florecido.","Anche la pompa blu si gira; i fiori no. Dove un tubo resta aperto l'acqua gocciola fuori. I tubi che non servono si possono lasciare come sono.":"La bomba azul también gira; las flores no. Donde un tubo queda abierto, el agua gotea. Los tubos que no hacen falta se pueden dejar como están.","Tocca il tubo cerchiato una volta.":"Toca una vez el tubo marcado con el círculo.","Tocca il tubo cerchiato due volte.":"Toca dos veces el tubo marcado con el círculo.","Tocca il tubo cerchiato {n} volte.":"Toca {n} veces el tubo marcado con el círculo.","In tutto mancano {n} tocchi.":"En total faltan {n} giros.","Come si gioca":"Cómo se juega","Chiudi":"Cerrar","Media":"Media","sul letto":"en la cama","Acqua ai fiori":"Agua para las flores","Mosse":"Movimientos","mossa":"movimiento","mosse":"movimientos","passi":"pasos","Livelli":"Niveles","Minimo":"Mínimo","Record":"Récord","Comandi":"Controles","Annulla":"Deshacer","Ricomincia":"Reiniciar","Aiuto":"Ayuda","Rigioca":"Jugar otra vez","Livello successivo":"Siguiente nivel","Principiante":"Principiante","Intermedio":"Intermedio","Avanzato":"Avanzado","Esperto":"Experto","Maestro":"Maestro","livello {n} di {tot}":"nivel {n} de {tot}","Risolto in {n} {w}: meno di così non si può.":"Resuelto en {n} {w}: imposible con menos.","Risolto in {n} {w}. Il minimo è {min}.":"Resuelto en {n} {w}. El mínimo es {min}.","Risolto in {n} {w}, nuovo record. Il minimo è {min}.":"Resuelto en {n} {w}, nuevo récord. El mínimo es {min}.","Risolto in {n} {w}. Il tuo record è {rec}, il minimo è {min}.":"Resuelto en {n} {w}. Tu récord es {rec}, el mínimo es {min}.","Era l'ultimo livello.":"Era el último nivel.","Scegli un livello":"Elige un nivel","Livello {n}":"Nivel {n}","{a} su {b}":"{a} de {b}","Scegli da quale livello partire: sono tutti aperti.":"Elige por qué nivel empezar: están todos abiertos.","Tutti i giochi":"Todos los juegos","Minimo di {w}":"Mínimo de {w}","Livello {n}, risolto":"Nivel {n}, resuelto","{n} di {tot} risolti, {p} con il minimo.":"{n} de {tot} resueltos, {p} con el mínimo."},"pt":{"Tocchi":"Giros","tocco":"giro","tocchi":"giros","Tutti i fiori bevono!":"Todas as flores têm água!","I fiori pallidi hanno sete. Tocca i tubi, e anche la pompa blu, per girarli: l'acqua deve arrivare a tutti i fiori.":"As flores pálidas estão com sede. Toque nos canos, e também na bomba azul, para girá-los: a água tem que chegar a todas as flores.","Ogni tocco gira un tubo di un quarto di giro, sempre nello stesso verso.":"Cada toque gira um cano um quarto de volta, sempre no mesmo sentido.","L'acqua parte dalla pompa blu e scorre solo dove i tubi combaciano.":"A água sai da bomba azul e só corre onde os canos se encaixam.","Il livello è risolto quando tutti i fiori sono sbocciati.":"O nível está resolvido quando todas as flores desabrocham.","Anche la pompa blu si gira; i fiori no. Dove un tubo resta aperto l'acqua gocciola fuori. I tubi che non servono si possono lasciare come sono.":"A bomba azul também gira; as flores não. Onde um cano fica aberto, a água pinga para fora. Os canos que não são necessários podem ficar como estão.","Tocca il tubo cerchiato una volta.":"Toque uma vez no cano marcado com o círculo.","Tocca il tubo cerchiato due volte.":"Toque duas vezes no cano marcado com o círculo.","Tocca il tubo cerchiato {n} volte.":"Toque {n} vezes no cano marcado com o círculo.","In tutto mancano {n} tocchi.":"No total faltam {n} giros.","Come si gioca":"Como jogar","Chiudi":"Fechar","Media":"Média","sul letto":"na cama","Acqua ai fiori":"Água para as flores","Mosse":"Jogadas","mossa":"jogada","mosse":"jogadas","passi":"passos","Livelli":"Níveis","Minimo":"Mínimo","Record":"Recorde","Comandi":"Controles","Annulla":"Desfazer","Ricomincia":"Reiniciar","Aiuto":"Ajuda","Rigioca":"Jogar de novo","Livello successivo":"Próximo nível","Principiante":"Iniciante","Intermedio":"Intermediário","Avanzato":"Avançado","Esperto":"Especialista","Maestro":"Mestre","livello {n} di {tot}":"nível {n} de {tot}","Risolto in {n} {w}: meno di così non si può.":"Resolvido em {n} {w}: com menos não dá.","Risolto in {n} {w}. Il minimo è {min}.":"Resolvido em {n} {w}. O mínimo é {min}.","Risolto in {n} {w}, nuovo record. Il minimo è {min}.":"Resolvido em {n} {w}, novo recorde. O mínimo é {min}.","Risolto in {n} {w}. Il tuo record è {rec}, il minimo è {min}.":"Resolvido em {n} {w}. Seu recorde é {rec}, o mínimo é {min}.","Era l'ultimo livello.":"Era o último nível.","Scegli un livello":"Escolha um nível","Livello {n}":"Nível {n}","{a} su {b}":"{a} de {b}","Scegli da quale livello partire: sono tutti aperti.":"Escolha por qual nível começar: estão todos liberados.","Tutti i giochi":"Todos os jogos","Minimo di {w}":"Mínimo de {w}","Livello {n}, risolto":"Nível {n}, resolvido","{n} di {tot} risolti, {p} con il minimo.":"{n} de {tot} resolvidos, {p} com o mínimo."},"fr":{"Tocchi":"Tours","tocco":"tour","tocchi":"tours","Tutti i fiori bevono!":"Toutes les fleurs ont de l’eau !","I fiori pallidi hanno sete. Tocca i tubi, e anche la pompa blu, per girarli: l'acqua deve arrivare a tutti i fiori.":"Les fleurs pâles ont soif. Touche les tuyaux, et aussi la pompe bleue, pour les tourner : l’eau doit arriver à toutes les fleurs.","Ogni tocco gira un tubo di un quarto di giro, sempre nello stesso verso.":"Chaque toucher fait tourner un tuyau d’un quart de tour, toujours dans le même sens.","L'acqua parte dalla pompa blu e scorre solo dove i tubi combaciano.":"L’eau part de la pompe bleue et ne coule que là où les tuyaux se rejoignent.","Il livello è risolto quando tutti i fiori sono sbocciati.":"Le niveau est réussi quand toutes les fleurs sont écloses.","Anche la pompa blu si gira; i fiori no. Dove un tubo resta aperto l'acqua gocciola fuori. I tubi che non servono si possono lasciare come sono.":"La pompe bleue tourne aussi, les fleurs non. Là où un tuyau reste ouvert, l’eau goutte dehors. Les tuyaux inutiles peuvent rester comme ils sont.","Tocca il tubo cerchiato una volta.":"Touche une fois le tuyau entouré.","Tocca il tubo cerchiato due volte.":"Touche deux fois le tuyau entouré.","Tocca il tubo cerchiato {n} volte.":"Touche {n} fois le tuyau entouré.","In tutto mancano {n} tocchi.":"En tout, il reste {n} tours.","Come si gioca":"Comment jouer","Chiudi":"Fermer","Media":"Moyen","sul letto":"sur le lit","Acqua ai fiori":"De l’eau pour les fleurs","Mosse":"Coups","mossa":"coup","mosse":"coups","passi":"pas","Livelli":"Niveaux","Minimo":"Minimum","Record":"Record","Comandi":"Commandes","Annulla":"Annuler","Ricomincia":"Recommencer","Aiuto":"Aide","Rigioca":"Rejouer","Livello successivo":"Niveau suivant","Principiante":"Débutant","Intermedio":"Intermédiaire","Avanzato":"Avancé","Esperto":"Expert","Maestro":"Maître","livello {n} di {tot}":"niveau {n} sur {tot}","Risolto in {n} {w}: meno di così non si può.":"Réussi en {n} {w} : impossible de faire moins.","Risolto in {n} {w}. Il minimo è {min}.":"Réussi en {n} {w}. Le minimum est {min}.","Risolto in {n} {w}, nuovo record. Il minimo è {min}.":"Réussi en {n} {w}, nouveau record. Le minimum est {min}.","Risolto in {n} {w}. Il tuo record è {rec}, il minimo è {min}.":"Réussi en {n} {w}. Ton record est {rec}, le minimum est {min}.","Era l'ultimo livello.":"C’était le dernier niveau.","Scegli un livello":"Choisis un niveau","Livello {n}":"Niveau {n}","{a} su {b}":"{a} sur {b}","Scegli da quale livello partire: sono tutti aperti.":"Choisis par quel niveau commencer : ils sont tous ouverts.","Tutti i giochi":"Tous les jeux","Minimo di {w}":"Minimum de {w}","Livello {n}, risolto":"Niveau {n}, réussi","{n} di {tot} risolti, {p} con il minimo.":"{n} sur {tot} réussis, {p} avec le minimum."},"de":{"Tocchi":"Drehungen","tocco":"Drehung","tocchi":"Drehungen","Tutti i fiori bevono!":"Alle Blumen haben Wasser!","I fiori pallidi hanno sete. Tocca i tubi, e anche la pompa blu, per girarli: l'acqua deve arrivare a tutti i fiori.":"Die blassen Blumen haben Durst. Tippe auf die Rohre und auch auf die blaue Pumpe, um sie zu drehen: Das Wasser muss zu allen Blumen kommen.","Ogni tocco gira un tubo di un quarto di giro, sempre nello stesso verso.":"Jedes Tippen dreht ein Rohr um eine Vierteldrehung, immer in dieselbe Richtung.","L'acqua parte dalla pompa blu e scorre solo dove i tubi combaciano.":"Das Wasser kommt aus der blauen Pumpe und fließt nur dort, wo die Rohre zusammenpassen.","Il livello è risolto quando tutti i fiori sono sbocciati.":"Das Level ist gelöst, wenn alle Blumen blühen.","Anche la pompa blu si gira; i fiori no. Dove un tubo resta aperto l'acqua gocciola fuori. I tubi che non servono si possono lasciare come sono.":"Auch die blaue Pumpe lässt sich drehen, die Blumen nicht. Wo ein Rohr offen bleibt, tropft das Wasser heraus. Rohre, die nicht gebraucht werden, können bleiben, wie sie sind.","Tocca il tubo cerchiato una volta.":"Tippe einmal auf das eingekreiste Rohr.","Tocca il tubo cerchiato due volte.":"Tippe zweimal auf das eingekreiste Rohr.","Tocca il tubo cerchiato {n} volte.":"Tippe {n}-mal auf das eingekreiste Rohr.","In tutto mancano {n} tocchi.":"Insgesamt fehlen noch {n} Drehungen.","Come si gioca":"So wird gespielt","Chiudi":"Schließen","Media":"Mittel","sul letto":"aufs Bett","sul letto#loc":"auf dem Bett","Acqua ai fiori":"Wasser für die Blumen","Mosse":"Züge","mossa":"Zug","mosse":"Züge","passi":"Schritte","Livelli":"Level","Minimo":"Minimum","Record":"Rekord","Comandi":"Steuerung","Annulla":"Zurück","Ricomincia":"Neu starten","Aiuto":"Hilfe","Rigioca":"Nochmal spielen","Livello successivo":"Nächstes Level","Principiante":"Anfänger","Intermedio":"Mittel","Avanzato":"Fortgeschritten","Esperto":"Experte","Maestro":"Meister","livello {n} di {tot}":"Level {n} von {tot}","Risolto in {n} {w}: meno di così non si può.":"Geschafft: {n} {w}. Weniger geht nicht.","Risolto in {n} {w}. Il minimo è {min}.":"Geschafft: {n} {w}. Das Minimum ist {min}.","Risolto in {n} {w}, nuovo record. Il minimo è {min}.":"Geschafft: {n} {w}, neuer Rekord. Das Minimum ist {min}.","Risolto in {n} {w}. Il tuo record è {rec}, il minimo è {min}.":"Geschafft: {n} {w}. Dein Rekord ist {rec}, das Minimum ist {min}.","Era l'ultimo livello.":"Das war das letzte Level.","Scegli un livello":"Wähle ein Level","Livello {n}":"Level {n}","{a} su {b}":"{a} von {b}","Scegli da quale livello partire: sono tutti aperti.":"Wähle, mit welchem Level du anfängst: Alle sind offen.","Tutti i giochi":"Alle Spiele","Minimo di {w}":"Wenigste {w}","Livello {n}, risolto":"Level {n}, gelöst","{n} di {tot} risolti, {p} con il minimo.":"{n} von {tot} gelöst, {p} mit dem Minimum."},"ja":{"Tocchi":"タップ","tocco":"回","tocchi":"回","Tutti i fiori bevono!":"ぜんぶのお花に水がとどいた！","I fiori pallidi hanno sete. Tocca i tubi, e anche la pompa blu, per girarli: l'acqua deve arrivare a tutti i fiori.":"色のうすいお花はのどがかわいています。パイプや青いポンプをタップして回し、すべてのお花に水をとどけましょう。","Ogni tocco gira un tubo di un quarto di giro, sempre nello stesso verso.":"1回タップするごとに、パイプが同じ向きに4分の1回転します。","L'acqua parte dalla pompa blu e scorre solo dove i tubi combaciano.":"水は青いポンプから出て、パイプがつながっているところだけを流れます。","Il livello è risolto quando tutti i fiori sono sbocciati.":"すべてのお花がさいたら、レベルクリアです。","Anche la pompa blu si gira; i fiori no. Dove un tubo resta aperto l'acqua gocciola fuori. I tubi che non servono si possono lasciare come sono.":"青いポンプも回せますが、お花は回せません。パイプのはしが開いていると水がこぼれます。使わないパイプはそのままでかまいません。","Tocca il tubo cerchiato una volta.":"丸で囲んだパイプを1回タップしてね。","Tocca il tubo cerchiato due volte.":"丸で囲んだパイプを2回タップしてね。","Tocca il tubo cerchiato {n} volte.":"丸で囲んだパイプを{n}回タップしてね。","In tutto mancano {n} tocchi.":"ぜんぶであと{n}回。","Come si gioca":"あそびかた","Chiudi":"閉じる","Media":"ふつう","sul letto":"ベッドの上","Acqua ai fiori":"お花に水を","Mosse":"手数","mossa":"手","mosse":"手","passi":"歩","Livelli":"レベル","Minimo":"最少","Record":"記録","Comandi":"操作","Annulla":"もどす","Ricomincia":"やり直す","Aiuto":"ヒント","Rigioca":"もう一度","Livello successivo":"次のレベル","Principiante":"初級","Intermedio":"中級","Avanzato":"上級","Esperto":"エキスパート","Maestro":"マスター","livello {n} di {tot}":"レベル {n}/{tot}","Risolto in {n} {w}: meno di così non si può.":"{n}{w}でクリア！これより少なくはできません。","Risolto in {n} {w}. Il minimo è {min}.":"{n}{w}でクリア。最少は{min}です。","Risolto in {n} {w}, nuovo record. Il minimo è {min}.":"{n}{w}でクリア、新記録！最少は{min}です。","Risolto in {n} {w}. Il tuo record è {rec}, il minimo è {min}.":"{n}{w}でクリア。自己ベストは{rec}、最少は{min}です。","Era l'ultimo livello.":"これが最後のレベルでした。","Scegli un livello":"レベルをえらぶ","Livello {n}":"レベル{n}","{a} su {b}":"{a}/{b}","Scegli da quale livello partire: sono tutti aperti.":"好きなレベルから始められます。すべてのレベルが開いています。","Tutti i giochi":"すべてのゲーム","Minimo di {w}":"最少{w}数","Livello {n}, risolto":"レベル{n}、クリア","{n} di {tot} risolti, {p} con il minimo.":"{tot}レベル中{n}レベルをクリア（うち{p}レベルはパーフェクト）。"},"zh-Hant":{"Tocchi":"點擊","tocco":"次","tocchi":"次","Tutti i fiori bevono!":"每朵花都喝到水了！","I fiori pallidi hanno sete. Tocca i tubi, e anche la pompa blu, per girarli: l'acqua deve arrivare a tutti i fiori.":"顏色淡淡的花口渴了。點一下水管和藍色的幫浦就能轉動它們：要讓水流到每一朵花。","Ogni tocco gira un tubo di un quarto di giro, sempre nello stesso verso.":"每點一下，水管就朝同一個方向轉四分之一圈。","L'acqua parte dalla pompa blu e scorre solo dove i tubi combaciano.":"水從藍色幫浦流出，只會流過接得上的水管。","Il livello è risolto quando tutti i fiori sono sbocciati.":"所有的花都開了，就過關了。","Anche la pompa blu si gira; i fiori no. Dove un tubo resta aperto l'acqua gocciola fuori. I tubi che non servono si possono lasciare come sono.":"藍色幫浦也能轉，花不能轉。水管沒接好的地方，水會滴出來。用不到的水管可以不管它。","Tocca il tubo cerchiato una volta.":"點一下圈起來的水管。","Tocca il tubo cerchiato due volte.":"點兩下圈起來的水管。","Tocca il tubo cerchiato {n} volte.":"圈起來的水管點{n}下。","In tutto mancano {n} tocchi.":"總共還差{n}下。","Come si gioca":"怎麼玩","Chiudi":"關閉","Media":"普通","sul letto":"床上","Acqua ai fiori":"給花澆水","Mosse":"步數","mossa":"步","mosse":"步","passi":"步","Livelli":"關卡","Minimo":"最少","Record":"紀錄","Comandi":"操作","Annulla":"復原","Ricomincia":"重來","Aiuto":"提示","Rigioca":"再玩一次","Livello successivo":"下一關","Principiante":"初級","Intermedio":"中級","Avanzato":"高級","Esperto":"專家","Maestro":"大師","livello {n} di {tot}":"第{n}關，共{tot}關","Risolto in {n} {w}: meno di così non si può.":"{n}{w}完成：不可能更少了。","Risolto in {n} {w}. Il minimo è {min}.":"{n}{w}完成。最少是{min}。","Risolto in {n} {w}, nuovo record. Il minimo è {min}.":"{n}{w}完成，新紀錄！最少是{min}。","Risolto in {n} {w}. Il tuo record è {rec}, il minimo è {min}.":"{n}{w}完成。你的紀錄是{rec}，最少是{min}。","Era l'ultimo livello.":"這是最後一關。","Scegli un livello":"選擇關卡","Livello {n}":"第{n}關","{a} su {b}":"{a}/{b}","Scegli da quale livello partire: sono tutti aperti.":"選擇從哪一關開始：所有關卡都開放。","Tutti i giochi":"所有遊戲","Minimo di {w}":"最少{w}數","Livello {n}, risolto":"第{n}關，已完成","{n} di {tot} risolti, {p} con il minimo.":"已完成{tot}關中的{n}關，其中{p}關完美過關。"},"zh-Hans":{"Tocchi":"点击","tocco":"次","tocchi":"次","Tutti i fiori bevono!":"每朵花都喝到水了！","I fiori pallidi hanno sete. Tocca i tubi, e anche la pompa blu, per girarli: l'acqua deve arrivare a tutti i fiori.":"颜色淡淡的花口渴了。点一下水管和蓝色的水泵就能转动它们：要让水流到每一朵花。","Ogni tocco gira un tubo di un quarto di giro, sempre nello stesso verso.":"每点一下，水管就朝同一个方向转四分之一圈。","L'acqua parte dalla pompa blu e scorre solo dove i tubi combaciano.":"水从蓝色水泵流出，只会流过接得上的水管。","Il livello è risolto quando tutti i fiori sono sbocciati.":"所有的花都开了，就过关了。","Anche la pompa blu si gira; i fiori no. Dove un tubo resta aperto l'acqua gocciola fuori. I tubi che non servono si possono lasciare come sono.":"蓝色水泵也能转，花不能转。水管没接好的地方，水会滴出来。用不到的水管可以不管它。","Tocca il tubo cerchiato una volta.":"点一下圈起来的水管。","Tocca il tubo cerchiato due volte.":"点两下圈起来的水管。","Tocca il tubo cerchiato {n} volte.":"圈起来的水管点{n}下。","In tutto mancano {n} tocchi.":"总共还差{n}下。","Come si gioca":"怎么玩","Chiudi":"关闭","Media":"普通","sul letto":"床上","Acqua ai fiori":"给花浇水","Mosse":"步数","mossa":"步","mosse":"步","passi":"步","Livelli":"关卡","Minimo":"最少","Record":"纪录","Comandi":"操作","Annulla":"撤销","Ricomincia":"重来","Aiuto":"提示","Rigioca":"再玩一次","Livello successivo":"下一关","Principiante":"初级","Intermedio":"中级","Avanzato":"高级","Esperto":"专家","Maestro":"大师","livello {n} di {tot}":"第{n}关，共{tot}关","Risolto in {n} {w}: meno di così non si può.":"{n}{w}完成：不可能更少了。","Risolto in {n} {w}. Il minimo è {min}.":"{n}{w}完成。最少是{min}。","Risolto in {n} {w}, nuovo record. Il minimo è {min}.":"{n}{w}完成，新纪录！最少是{min}。","Risolto in {n} {w}. Il tuo record è {rec}, il minimo è {min}.":"{n}{w}完成。你的纪录是{rec}，最少是{min}。","Era l'ultimo livello.":"这是最后一关。","Scegli un livello":"选择关卡","Livello {n}":"第{n}关","{a} su {b}":"{a}/{b}","Scegli da quale livello partire: sono tutti aperti.":"选择从哪一关开始：所有关卡都开放。","Tutti i giochi":"所有游戏","Minimo di {w}":"最少{w}数","Livello {n}, risolto":"第{n}关，已完成","{n} di {tot} risolti, {p} con il minimo.":"已完成{tot}关中的{n}关，其中{p}关完美通关。"}};</script>
 <script id="opzioni">
 /* Settings shared by the home screen and all six games, kept in localStorage under one key.
    Games read them at every use, so a change on the home screen reaches a game as soon as it is opened. */
@@ -231,14 +235,15 @@ window.OPZ = (function () {
   'use strict';
   var KEY = 'giocapensa.opzioni';
   var DEF = { musica: true, suoni: true, voce: true, ui: 'auto', lingua: 'app', aiuto: 'attesa' };
+  var CODES = ['it', 'en', 'es', 'pt', 'fr', 'de', 'ja', 'zh-Hant', 'zh-Hans'];        // the same list as LINGUE in lingua.js
   var val = {}, k;
   for (k in DEF) val[k] = DEF[k];
   try {
     var raw = JSON.parse(localStorage.getItem(KEY) || 'null');
     if (raw && typeof raw === 'object') {
       ['musica', 'suoni', 'voce'].forEach(function (n) { if (typeof raw[n] === 'boolean') val[n] = raw[n]; });
-      if (['app', 'it', 'en'].indexOf(raw.lingua) >= 0) val.lingua = raw.lingua;
-      if (['auto', 'it', 'en'].indexOf(raw.ui) >= 0) val.ui = raw.ui;
+      if (['app'].concat(CODES).indexOf(raw.lingua) >= 0) val.lingua = raw.lingua;
+      if (['auto'].concat(CODES).indexOf(raw.ui) >= 0) val.ui = raw.ui;
       if (['subito', 'attesa', 'mai'].indexOf(raw.aiuto) >= 0) val.aiuto = raw.aiuto;
     } else if (localStorage.getItem('giocapensa.musica') === '0') val.musica = false;      // the old music-only switch
   } catch (e) {}
@@ -253,25 +258,64 @@ window.OPZ = (function () {
 
 </script>
 <script id="lingua">
-/* Interface language. «auto» follows the phone; the setting lives in OPZ ('ui': auto | it | en).
-   In the code every visible text is written as L('italiano', 'English'); in the markup an element with
-   data-en="…" gets that English text, data-en-aria / data-en-title do the same for aria-label and title. */
+/* Interface language. «auto» follows the phone; the setting lives in OPZ ('ui': auto | one of LINGUE).
+   Nine languages: Italian (the source), English, Spanish, Portuguese, French, German, Japanese, Chinese (traditional and simplified).
+   In the code every visible text is written as L('italiano', 'English'), with placeholders {n} filled from a third argument:
+   L('livello {n} di {tot}', 'level {n} of {tot}', { n: 3, tot: 120 }). The other languages come from window.TESTI[lang][italian text],
+   which src/build.py puts in each page from src/lingue/<lang>.json (only the texts that page uses). In the markup an element with
+   data-en="…" gets the text of the current language; data-en-aria / data-en-title do the same for aria-label and title. */
 (function () {
   'use strict';
-  function pick() {
-    var v = window.OPZ ? OPZ.get('ui') : 'auto';
-    if (v === 'it' || v === 'en') return v;
-    var langs = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'it']);
-    return /^it/i.test(langs[0] || '') ? 'it' : (/^en/i.test(langs[0] || '') ? 'en' : 'en');      // Italian phones get Italian, everyone else English
+  var LINGUE = ['it', 'en', 'es', 'pt', 'fr', 'de', 'ja', 'zh-Hant', 'zh-Hans'];
+  var NOMI = { it: 'Italiano', en: 'English', es: 'Español', pt: 'Português', fr: 'Français', de: 'Deutsch', ja: '日本語', 'zh-Hant': '繁體中文', 'zh-Hans': '简体中文' };
+  var LOCALI = { it: 'it-IT', en: 'en-GB', es: 'es-ES', pt: 'pt-BR', fr: 'fr-FR', de: 'de-DE', ja: 'ja-JP', 'zh-Hant': 'zh-TW', 'zh-Hans': 'zh-CN' };
+  function fromTag(t) {                                     // 'pt-BR' → 'pt', 'zh-TW' → 'zh-Hant', 'nl' → null
+    t = String(t || '').toLowerCase();
+    if (/^zh/.test(t)) return /^zh[-_](hant|tw|hk|mo)/.test(t) ? 'zh-Hant' : 'zh-Hans';
+    var b = t.split(/[-_]/)[0];
+    return LINGUE.indexOf(b) >= 0 ? b : null;
   }
+  function phone() {                                        // the first language of the phone that the app speaks, otherwise English
+    var langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'en'];
+    for (var i = 0; i < langs.length; i++) { var l = fromTag(langs[i]); if (l) return l; }
+    return 'en';
+  }
+  function pick() { var v = window.OPZ ? OPZ.get('ui') : 'auto'; return LINGUE.indexOf(v) >= 0 ? v : phone(); }
+  window.LINGUE = LINGUE; window.LINGUA_NOME = NOMI; window.LINGUA_TEL = phone; window.LINGUA_DA = fromTag;
   window.LANG = pick();
-  window.L = function (it, en) { return window.LANG === 'en' && en != null ? en : it; };
+  window.LOCALE = LOCALI[window.LANG];
+  window.LOCALE_DI = function (lang) { return LOCALI[lang] || 'en-GB'; };
+  var T = window.TESTI || {}, miss = window.__mancanti = {};
+  function tr(lang, it, en) {
+    if (it == null || lang === 'it') return it;
+    if (lang === 'en') return en != null ? en : it;
+    var d = T[lang], t = d ? d[it] : null;
+    if (t != null) return t;
+    miss[lang + ' | ' + it] = 1;                            // the automatic check reads this
+    return en != null ? en : it;
+  }
+  function fill(s, v) { return v && s ? String(s).replace(/\{(\w+)\}/g, function (m, k) { return v[k] != null ? v[k] : m; }) : s; }
+  window.L = function (it, en, v) { return fill(tr(window.LANG, it, en), v); };
+  window.LT = function (lang, it, en, v) { return fill(tr(lang, it, en), v); };            // a given language (the voice of Stickers)
+  window.LP = function (o, lang) { return tr(lang || window.LANG, o.it, o.en); };          // an {it, en} pair from a table
+  window.TROVA = function (lang, key) { var d = T[lang]; return d && d[key] != null ? d[key] : null; };   // an optional entry, such as the German «auf dem Bett» ('sul letto#loc')
+  window.FRASI = function () {                              // sentences one after the other: with a space, without one in Japanese and Chinese
+    return Array.prototype.filter.call(arguments, Boolean).join(/^(ja|zh)/.test(window.LANG) ? '' : ' ');
+  };
+  window.PICK = function (o, lang) {                        // a value per language from a table {it: …, en: …, es: …}
+    lang = lang || window.LANG;
+    if (o[lang] != null) return o[lang];
+    if (/^zh/.test(lang) && o.zh != null) return o.zh;
+    return o.en != null ? o.en : o.it;
+  };
   window.applyLang = function (root) {
-    if (window.LANG !== 'en') return;
+    if (window.LANG === 'it') return;
     root = root || document;
-    Array.prototype.forEach.call(root.querySelectorAll('[data-en]'), function (el) { el.textContent = el.getAttribute('data-en'); });
-    Array.prototype.forEach.call(root.querySelectorAll('[data-en-aria]'), function (el) { el.setAttribute('aria-label', el.getAttribute('data-en-aria')); });
-    Array.prototype.forEach.call(root.querySelectorAll('[data-en-title]'), function (el) { el.setAttribute('title', el.getAttribute('data-en-title')); });
+    function each(sel, f) { Array.prototype.forEach.call(root.querySelectorAll(sel), f); }
+    function keep(el, attr, now) { var k = el.getAttribute(attr); if (k == null) { k = now == null ? '' : now; el.setAttribute(attr, k); } return k; }   // the Italian original, so a second pass translates from it again
+    each('[data-en]', function (el) { el.textContent = tr(window.LANG, keep(el, 'data-it', el.textContent.trim()), el.getAttribute('data-en')); });
+    each('[data-en-aria]', function (el) { el.setAttribute('aria-label', tr(window.LANG, keep(el, 'data-it-aria', el.getAttribute('aria-label')), el.getAttribute('data-en-aria'))); });
+    each('[data-en-title]', function (el) { el.setAttribute('title', tr(window.LANG, keep(el, 'data-it-title', el.getAttribute('title')), el.getAttribute('data-en-title'))); });
   };
   document.documentElement.lang = window.LANG;
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { window.applyLang(document); });
@@ -509,7 +553,7 @@ window.Kit = (function () {
   function load(i) {
     level = Math.max(0, Math.min(N - 1, i)); data.last = level; persist(); won = false; hideResult();
     var t = tierOf(level), app = $('app'); app.style.setProperty('--tier', t.color); app.style.setProperty('--tier-ink', INK);
-    $('badge').textContent = level + 1; $('tierName').textContent = t.name; $('lvOf').textContent = L('livello ' + (level + 1) + ' di ' + N, 'level ' + (level + 1) + ' of ' + N);
+    $('badge').textContent = level + 1; $('tierName').textContent = t.name; $('lvOf').textContent = L('livello {n} di {tot}', 'level {n} of {tot}', { n: level + 1, tot: N });
     var msg = cfg.load(level); setStatus(msg || ''); gateReset(FIRST); changed();   // a game may greet the level with its own hint text
   }
 
@@ -533,13 +577,14 @@ window.Kit = (function () {
     data.last = Math.min(N - 1, level + 1); persist(); changed(true);
     var perfect = moves <= min, text;
     sfx(perfect ? 'perfect' : 'win'); buzz(perfect ? [12, 60, 18, 60, 22] : [12, 60, 18]);
-    var mw = moves === 1 ? w[0] : w[1];
-    if (perfect) text = L('Risolto in ' + moves + ' ' + mw + ': meno di così non si può.', 'Solved in ' + moves + ' ' + mw + ': it cannot be done in fewer.');
-    else if (!prev || moves < prev) text = L('Risolto in ' + moves + ' ' + mw + (prev ? ', nuovo record' : '') + '. Il minimo è ' + min + '.', 'Solved in ' + moves + ' ' + mw + (prev ? ', a new record' : '') + '. The best possible is ' + min + '.');
-    else text = L('Risolto in ' + moves + ' ' + mw + '. Il tuo record è ' + prev + ', il minimo è ' + min + '.', 'Solved in ' + moves + ' ' + mw + '. Your record is ' + prev + ', the best possible is ' + min + '.');
+    var v = { n: moves, w: moves === 1 ? w[0] : w[1], min: min, rec: prev };
+    if (perfect) text = L('Risolto in {n} {w}: meno di così non si può.', 'Solved in {n} {w}: it cannot be done in fewer.', v);
+    else if (!prev) text = L('Risolto in {n} {w}. Il minimo è {min}.', 'Solved in {n} {w}. The best possible is {min}.', v);
+    else if (moves < prev) text = L('Risolto in {n} {w}, nuovo record. Il minimo è {min}.', 'Solved in {n} {w}, a new record. The best possible is {min}.', v);
+    else text = L('Risolto in {n} {w}. Il tuo record è {rec}, il minimo è {min}.', 'Solved in {n} {w}. Your record is {rec}, the best possible is {min}.', v);
     var last = level >= N - 1;
-    $('resTitle').textContent = cfg.winTitle; $('resPerfect').hidden = !perfect; $('resPerfectTxt').textContent = L('Minimo di ' + w[1], 'Fewest ' + w[1]);
-    $('resText').textContent = text + (last ? L(" Era l'ultimo livello.", ' That was the last level.') : ''); $('btnNext').textContent = last ? L('Scegli un livello', 'Choose a level') : L('Livello successivo', 'Next level');
+    $('resTitle').textContent = cfg.winTitle; $('resPerfect').hidden = !perfect; $('resPerfectTxt').textContent = L('Minimo di {w}', 'Fewest {w}', { w: w[1] });
+    $('resText').textContent = FRASI(text, last ? L("Era l'ultimo livello.", 'That was the last level.') : ''); $('btnNext').textContent = last ? L('Scegli un livello', 'Choose a level') : L('Livello successivo', 'Next level');
     statusDefault = false; $('status').textContent = '';
     setTimeout(function () { if (won) { var r = $('result'); r.hidden = false; void r.offsetWidth; r.classList.add('show'); $('controls').style.visibility = 'hidden'; } }, calm ? 200 : (cfg.winDelay || 1200));
   }
@@ -570,11 +615,11 @@ window.Kit = (function () {
       var i = +b.getAttribute('data-level'), mine = data.best[i + 1], min = cfg.minOf(i), ti = Math.floor(i / PER);
       b.classList.toggle('done', !!mine); b.classList.toggle('perfect', !!mine && mine <= min); b.classList.toggle('current', i === level);
       if (mine) { counts[ti] = (counts[ti] || 0) + 1; if (mine <= min) perfect++; }
-      b.setAttribute('aria-label', L('Livello ', 'Level ') + (i + 1) + (mine ? L(', risolto', ', solved') : ''));
+      b.setAttribute('aria-label', mine ? L('Livello {n}, risolto', 'Level {n}, solved', { n: i + 1 }) : L('Livello {n}', 'Level {n}', { n: i + 1 }));
     });
-    Array.prototype.forEach.call(sh.querySelectorAll('[data-count]'), function (el) { var ti = +el.getAttribute('data-count'); el.textContent = (counts[ti] || 0) + L(' su ', ' of ') + Math.min(PER, N - ti * PER); });
+    Array.prototype.forEach.call(sh.querySelectorAll('[data-count]'), function (el) { var ti = +el.getAttribute('data-count'); el.textContent = L('{a} su {b}', '{a} of {b}', { a: counts[ti] || 0, b: Math.min(PER, N - ti * PER) }); });
     var n = solvedCount();
-    $('sheetSummary').textContent = n === 0 ? L('Scegli da quale livello partire: sono tutti aperti.', 'Pick any level to start: they are all open.') : L(n + ' di ' + N + ' risolti, ' + perfect + ' con il minimo.', n + ' of ' + N + ' solved, ' + perfect + ' in the fewest moves.');
+    $('sheetSummary').textContent = n === 0 ? L('Scegli da quale livello partire: sono tutti aperti.', 'Pick any level to start: they are all open.') : L('{n} di {tot} risolti, {p} con il minimo.', '{n} of {tot} solved, {p} in the fewest moves.', { n: n, tot: N, p: perfect });
     openDlg(sh); var cur = sh.querySelector('.lv.current'); if (cur) { try { cur.scrollIntoView({ block: 'center' }); } catch (e) {} }
   }
 
@@ -745,8 +790,7 @@ window.GAME_LEVELS = [{"w":3,"h":3,"t":".0F1L2.0L3S2.0.0.0","g":"..2..0...","m":
   K.start({
     key: 'acqua.v2', count: RAW.length, perTier: 24, moveLabel: L('Tocchi', 'Taps'), word: [L('tocco', 'tap'), L('tocchi', 'taps')], winTitle: L('Tutti i fiori bevono!', 'Every flower has water!'), winDelay: 1300,
     intro: L("I fiori pallidi hanno sete. Tocca i tubi, e anche la pompa blu, per girarli: l'acqua deve arrivare a tutti i fiori.", 'The pale flowers are thirsty. Tap the pipes, and the blue pump too, to turn them: the water must reach every flower.'),
-    rules: LANG === 'en' ? ['Each tap turns a pipe a quarter turn, always the same way.', 'The water starts from the blue pump and flows only where the pipes meet.', 'The level is solved when every flower has bloomed.', 'The blue pump turns too; the flowers do not. Where a pipe is left open the water drips out. Pipes that are not needed can be left as they are.']
-      : ["Ogni tocco gira un tubo di un quarto di giro, sempre nello stesso verso.", "L'acqua parte dalla pompa blu e scorre solo dove i tubi combaciano.", 'Il livello è risolto quando tutti i fiori sono sbocciati.', 'Anche la pompa blu si gira; i fiori no. Dove un tubo resta aperto l\'acqua gocciola fuori. I tubi che non servono si possono lasciare come sono.'],
+    rules: [L('Ogni tocco gira un tubo di un quarto di giro, sempre nello stesso verso.', 'Each tap turns a pipe a quarter turn, always the same way.'), L('L\'acqua parte dalla pompa blu e scorre solo dove i tubi combaciano.', 'The water starts from the blue pump and flows only where the pipes meet.'), L('Il livello è risolto quando tutti i fiori sono sbocciati.', 'The level is solved when every flower has bloomed.'), L('Anche la pompa blu si gira; i fiori no. Dove un tubo resta aperto l\'acqua gocciola fuori. I tubi che non servono si possono lasciare come sono.', 'The blue pump turns too; the flowers do not. Where a pipe is left open the water drips out. Pipes that are not needed can be left as they are.')],
     minOf: function (i) { return RAW[i].m; }, load: load, moves: function () { return hist ? hist.length : 0; }, canUndo: function () { return hist && hist.length > 0; },
     undo: function () { var c = hist.pop(); turn(c, -1); K.sfx('back'); setTimeout(function () { refresh(true); }, K.calm ? 0 : 170); K.changed(); },
     clearHint: clearHint,
@@ -755,7 +799,8 @@ window.GAME_LEVELS = [{"w":3,"h":3,"t":".0F1L2.0L3S2.0.0.0","g":"..2..0...","m":
       for (c = 0; c < G.n; c++) { var n = AQ.need(G, rot, c); if (!n) continue; left += n; var d = Math.abs(c % G.w - G.src % G.w) + Math.abs(Math.floor(c / G.w) - Math.floor(G.src / G.w)); if (d < bd) { bd = d; best = c; } }
       if (best < 0) return null; var k = AQ.need(G, rot, best);
       hintG.innerHTML = '<circle class="ring2" cx="' + cx(best) + '" cy="' + cy(best) + '" r="66"/>';
-      return L('Tocca il tubo cerchiato ' + (k === 1 ? 'una volta' : k + ' volte') + '.' + (left > k ? ' In tutto mancano ' + left + ' tocchi.' : ''), 'Tap the circled pipe ' + (k === 1 ? 'once' : k === 2 ? 'twice' : k + ' times') + '.' + (left > k ? ' ' + left + ' taps to go in all.' : ''));
+      return FRASI(k === 1 ? L('Tocca il tubo cerchiato una volta.', 'Tap the circled pipe once.') : k === 2 ? L('Tocca il tubo cerchiato due volte.', 'Tap the circled pipe twice.') : L('Tocca il tubo cerchiato {n} volte.', 'Tap the circled pipe {n} times.', { n: k }),
+        left > k ? L('In tutto mancano {n} tocchi.', '{n} taps to go in all.', { n: left }) : '');
     }
   });
 })();

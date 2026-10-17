@@ -1,0 +1,101 @@
+name: App per iPhone
+on:
+  workflow_dispatch:
+    inputs:
+      versione:
+        description: "Versione dell'app: 1.0 la prima volta, poi 1.1, 1.2..."
+        required: true
+        default: "1.0"
+jobs:
+  carica:
+    runs-on: macos-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: Controlla i segreti
+        # a missing or mistyped secret stops here with a plain message, instead of a long build failing later
+        env:
+          TEAM: ${{ secrets.APPLE_TEAM_ID }}
+          KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
+          ISSUER: ${{ secrets.APPSTORE_ISSUER_ID }}
+          P8: ${{ secrets.APPSTORE_P8 }}
+        run: |
+          ok=1
+          for n in TEAM:APPLE_TEAM_ID:B1 KEY_ID:APPSTORE_KEY_ID:B7 ISSUER:APPSTORE_ISSUER_ID:B7 P8:APPSTORE_P8:B8; do
+            IFS=: read -r v s step <<< "$n"
+            [ -n "${!v}" ] || { echo "::error title=Segreti::Manca il segreto $s: aggiungilo come al passo C1 (il valore viene dal passo $step)."; ok=0; }
+          done
+          [ -z "$TEAM" ] || [[ "$TEAM" =~ ^[A-Z0-9]{10}$ ]] || { echo "::error title=Segreti::APPLE_TEAM_ID deve essere di 10 caratteri, lettere maiuscole e numeri, senza spazi (passo B1)."; ok=0; }
+          [ -z "$KEY_ID" ] || [[ "$KEY_ID" =~ ^[A-Z0-9]{10}$ ]] || { echo "::error title=Segreti::APPSTORE_KEY_ID deve essere di 10 caratteri, senza spazi (passo B7)."; ok=0; }
+          [ -z "$P8" ] || { [[ "$P8" == *"BEGIN PRIVATE KEY"* ]] && [[ "$P8" == *"END PRIVATE KEY"* ]]; } || { echo "::error title=Segreti::APPSTORE_P8 deve contenere tutto il testo della chiave, comprese le righe BEGIN e END (passo B8)."; ok=0; }
+          [ "$ok" = 1 ]
+      - name: Xcode
+        # the runner's default Xcode: always a released version (a beta cannot send apps to the App Store)
+        run: |
+          xcodebuild -version
+          v=$(xcodebuild -version | head -1 | awk '{print $2}' | cut -d. -f1)
+          [ "$v" -ge 26 ] || { echo "::error title=Xcode::Il Mac di GitHub ha Xcode $v: serve Xcode 26 o successivo. Riprova tra qualche giorno."; exit 1; }
+      - name: Prepara il progetto con le pagine del sito
+        run: |
+          mkdir -p build && unzip -q giocapensa-ios.zip -d build
+          python3 build/ios-progetto/prepara_www.py . build/ios-progetto/ios/App/App/public build/ios-progetto/fonts
+      - name: Chiave di App Store Connect
+        env:
+          P8: ${{ secrets.APPSTORE_P8 }}
+          KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/keys"
+          printf '%s\n' "$P8" > "$RUNNER_TEMP/keys/AuthKey_$KEY_ID.p8"
+      - name: Compila e firma
+        env:
+          KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
+          ISSUER: ${{ secrets.APPSTORE_ISSUER_ID }}
+          TEAM: ${{ secrets.APPLE_TEAM_ID }}
+          VERSIONE: ${{ inputs.versione }}
+        run: |
+          set -o pipefail
+          [[ "$VERSIONE" =~ ^[0-9]+(\.[0-9]+){0,2}$ ]] || { echo "::error title=Versione::Versione non valida: «$VERSIONE». Usa numeri e punti, per esempio 1.1"; exit 1; }
+          cd build/ios-progetto/ios/App
+          xcodebuild -project App.xcodeproj -scheme App -configuration Release \
+            -destination 'generic/platform=iOS' -archivePath "$RUNNER_TEMP/App.xcarchive" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$RUNNER_TEMP/keys/AuthKey_$KEY_ID.p8" \
+            -authenticationKeyID "$KEY_ID" -authenticationKeyIssuerID "$ISSUER" \
+            DEVELOPMENT_TEAM="$TEAM" CODE_SIGN_STYLE=Automatic \
+            CODE_SIGN_IDENTITY=- AD_HOC_CODE_SIGNING_ALLOWED=YES \
+            MARKETING_VERSION="$VERSIONE" CURRENT_PROJECT_VERSION=${{ github.run_number }}.${{ github.run_attempt }} \
+            archive 2>&1 | tee "$RUNNER_TEMP/compila.log"
+      - name: Invia ad App Store Connect
+        env:
+          KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
+          ISSUER: ${{ secrets.APPSTORE_ISSUER_ID }}
+          TEAM: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          set -o pipefail
+          cat > "$RUNNER_TEMP/export.plist" <<PLIST
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0"><dict>
+          <key>method</key><string>app-store-connect</string>
+          <key>destination</key><string>upload</string>
+          <key>teamID</key><string>$TEAM</string>
+          <key>signingStyle</key><string>automatic</string>
+          <key>manageAppVersionAndBuildNumber</key><false/>
+          </dict></plist>
+          PLIST
+          xcodebuild -exportArchive -archivePath "$RUNNER_TEMP/App.xcarchive" \
+            -exportOptionsPlist "$RUNNER_TEMP/export.plist" -exportPath "$RUNNER_TEMP/export" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$RUNNER_TEMP/keys/AuthKey_$KEY_ID.p8" \
+            -authenticationKeyID "$KEY_ID" -authenticationKeyIssuerID "$ISSUER" 2>&1 | tee "$RUNNER_TEMP/invia.log"
+      - name: Spiega l'errore
+        # the lines that say why it failed become annotations: they show on the run page and can be read from the GitHub API
+        if: failure()
+        run: |
+          for f in compila invia; do
+            [ -f "$RUNNER_TEMP/$f.log" ] || continue
+            grep -E "error:|ITMS-[0-9]+|Error Domain=|Validation failed|Upload failed|No suitable application records|ARCHIVE FAILED|EXPORT FAILED" "$RUNNER_TEMP/$f.log" \
+              | sed -E 's/^[[:space:]]+//' | awk '!seen[$0]++' | head -n 8 | while IFS= read -r l; do
+                l=${l//%/%25}; echo "::error title=$f::${l:0:700}"
+              done
+          done

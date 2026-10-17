@@ -7,11 +7,11 @@ GIOCAPENSA - come aggiornare l'app
     Dopo due o tre minuti l'app e' su  mauriziotarsia-dev.github.io/giocapensa/
 
 A) A MANO, DAL TELEFONO (cinque minuti)
- 1. Decomprimi questo zip nell'app File: si crea una cartella con 15 file.
+ 1. Decomprimi questo zip nell'app File: si crea una cartella con 17 file.
  2. Apri SAFARI (non l'app GitHub) all'indirizzo
       github.com/mauriziotarsia-dev/giocapensa/upload/main
     e accedi a GitHub se te lo chiede.
- 3. Tocca "choose your files", vai nella cartella, seleziona TUTTI i 15 file e conferma.
+ 3. Tocca "choose your files", vai nella cartella, seleziona TUTTI i 17 file e conferma.
  4. Aspetta che compaiano tutti nell'elenco, scorri in fondo e premi il tasto verde "Commit changes".
  5. Dopo due o tre minuti apri l'app dalla Home. Se vedi ancora la versione vecchia, chiudila e riaprila.
  I file con lo stesso nome vengono sostituiti da soli: non c'e' niente da cancellare.

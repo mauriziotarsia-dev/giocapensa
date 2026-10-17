@@ -2,6 +2,7 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
+<meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Giocapensa — Informazioni</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;800;900&display=swap">
@@ -9,7 +10,9 @@
 :root{ color-scheme:light; --page:#FDF3E3; --ink:#4A3B52; --ink-2:#7A6B80; --surface:#fff; --font:"Overpass","Helvetica Neue",Helvetica,Arial,sans-serif }
 @media (prefers-color-scheme: dark){ :root{ color-scheme:dark; --page:#241E28; --ink:#F2E8DC; --ink-2:#B3A6B8; --surface:#332B38 } }
 *{box-sizing:border-box}
-body{margin:0; background:var(--page); color:var(--ink); font-family:var(--font); line-height:1.5}
+/* In the iPhone app the web view itself does not scroll (Capacitor scrollEnabled: false): the page scrolls inside body. */
+html{height:100%; overflow:hidden; background:var(--page)}
+body{margin:0; height:100%; overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior-y:contain; background:var(--page); color:var(--ink); font-family:var(--font); line-height:1.5}
 main{max-width:720px; margin:0 auto; padding:max(20px,env(safe-area-inset-top)) 18px max(40px,env(safe-area-inset-bottom))}
 a.back{display:inline-flex; align-items:center; gap:8px; margin-bottom:18px; padding:9px 16px 7px; border-radius:20px; background:var(--surface); box-shadow:0 0 0 2.5px var(--ink); color:inherit; text-decoration:none; font-weight:800; font-size:.9375rem}
 h1{font-weight:900; font-size:1.875rem; letter-spacing:-.02em; margin:0 0 4px}
@@ -28,143 +31,106 @@ pre{white-space:pre-wrap; font-size:.75rem; line-height:1.4; color:var(--ink-2);
 <body>
 <main>
   <a class="back" href="index.html">← Giocapensa</a>
-<article lang="it">
+<article lang="it" data-title="Giocapensa — Informazioni" data-footer="Giocapensa">
   <h1>Informazioni</h1>
   <p class="ver">Giocapensa · versione 1.0</p>
   <div class="box"><p><strong>Giocapensa</strong> — giochi di logica per bambini, da giocare da soli o con un adulto.</p></div>
   <h2>Per chi è</h2><p>Pensata per bambini dai 3 anni. Non serve saper leggere: ogni gioco si capisce guardando e provando. Per i più piccoli consigliamo di giocare insieme a un adulto.</p>
   <h2>Autore e diritti</h2><p>© 2026 Maurizio Tarsia. Tutti i diritti riservati. Giochi, livelli, disegni, animazioni, suoni e musica sono originali, creati appositamente per Giocapensa.</p>
-  <h2>Contatti</h2><p>Per domande, segnalazioni o richieste di assistenza scrivi a <strong>(da completare)</strong>.</p>
+  <h2>Contatti</h2><p>Per domande, segnalazioni o richieste di assistenza scrivi a <strong>xenotars.studio@gmail.com</strong>.</p>
   <h2>Dati personali</h2><p>Giocapensa non raccoglie alcun dato: niente account, niente pubblicità, niente tracciamento. I progressi restano sul dispositivo. Dettagli nell'<a href="privacy.html">informativa sulla privacy</a>.</p>
-  <h2>Condizioni d'uso</h2><p>Giocapensa è gratuita, senza pubblicità, acquisti o abbonamenti, e senza collegamenti a siti esterni o social. Viene offerta così com'è. Nella versione scaricata dall'App Store vale il contratto di licenza standard di Apple per le app (EULA).</p>
-  <h2>Licenze di terze parti</h2>
-  <p>Giocapensa usa il carattere tipografico Overpass e, nella versione per iPhone, il framework Capacitor. Le loro licenze, che ne permettono l'uso e la distribuzione, sono riportate qui sotto.</p>
-  <details><summary>Overpass — SIL Open Font License 1.1</summary><pre>Copyright 2021 The Overpass Project Authors (https://github.com/RedHatOfficial/Overpass) Overpass-Italic[wght].ttf: Copyright 2021 The Overpass Project Authors (https://github.com/RedHatOfficial/Overpass)
-
-This Font Software is licensed under the SIL Open Font License, Version 1.1.
-This license is copied below, and is also available with a FAQ at:
-http://scripts.sil.org/OFL
-
-
------------------------------------------------------------
-SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
------------------------------------------------------------
-
-PREAMBLE
-The goals of the Open Font License (OFL) are to stimulate worldwide
-development of collaborative font projects, to support the font creation
-efforts of academic and linguistic communities, and to provide a free and
-open framework in which fonts may be shared and improved in partnership
-with others.
-
-The OFL allows the licensed fonts to be used, studied, modified and
-redistributed freely as long as they are not sold by themselves. The
-fonts, including any derivative works, can be bundled, embedded,
-redistributed and/or sold with any software provided that any reserved
-names are not used by derivative works. The fonts and derivatives,
-however, cannot be released under any other type of license. The
-requirement for fonts to remain under this license does not apply
-to any document created using the fonts or their derivatives.
-
-DEFINITIONS
-&quot;Font Software&quot; refers to the set of files released by the Copyright
-Holder(s) under this license and clearly marked as such. This may
-include source files, build scripts and documentation.
-
-&quot;Reserved Font Name&quot; refers to any names specified as such after the
-copyright statement(s).
-
-&quot;Original Version&quot; refers to the collection of Font Software components as
-distributed by the Copyright Holder(s).
-
-&quot;Modified Version&quot; refers to any derivative made by adding to, deleting,
-or substituting -- in part or in whole -- any of the components of the
-Original Version, by changing formats or by porting the Font Software to a
-new environment.
-
-&quot;Author&quot; refers to any designer, engineer, programmer, technical
-writer or other person who contributed to the Font Software.
-
-PERMISSION &amp; CONDITIONS
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of the Font Software, to use, study, copy, merge, embed, modify,
-redistribute, and sell modified and unmodified copies of the Font
-Software, subject to the following conditions:
-
-1) Neither the Font Software nor any of its individual components,
-in Original or Modified Versions, may be sold by itself.
-
-2) Original or Modified Versions of the Font Software may be bundled,
-redistributed and/or sold with any software, provided that each copy
-contains the above copyright notice and this license. These can be
-included either as stand-alone text files, human-readable headers or
-in the appropriate machine-readable metadata fields within text or
-binary files as long as those fields can be easily viewed by the user.
-
-3) No Modified Version of the Font Software may use the Reserved Font
-Name(s) unless explicit written permission is granted by the corresponding
-Copyright Holder. This restriction only applies to the primary font name as
-presented to the users.
-
-4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font
-Software shall not be used to promote, endorse or advertise any
-Modified Version, except to acknowledge the contribution(s) of the
-Copyright Holder(s) and the Author(s) or with their explicit written
-permission.
-
-5) The Font Software, modified or unmodified, in part or in whole,
-must be distributed entirely under this license, and must not be
-distributed under any other license. The requirement for fonts to
-remain under this license does not apply to any document created
-using the Font Software.
-
-TERMINATION
-This license becomes null and void if any of the above conditions are
-not met.
-
-DISCLAIMER
-THE FONT SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
-OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE
-COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
-DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
-OTHER DEALINGS IN THE FONT SOFTWARE.</pre></details>
-  <details><summary>Capacitor — MIT License (solo nella versione per iPhone)</summary><pre>MIT License
-
-Copyright (c) 2017-present Drifty Co.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the &quot;Software&quot;), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.</pre></details>
+  <h2>Condizioni d'uso</h2><p>Giocapensa non contiene pubblicità, acquisti all'interno dell'app o abbonamenti, né collegamenti a siti esterni o social. Viene offerta così com'è. Nella versione scaricata dall'App Store vale il contratto di licenza standard di Apple per le app (EULA).</p>
+  <h2>Licenze di terze parti</h2><p>Giocapensa usa il carattere tipografico Overpass e, nella versione per iPhone, il framework Capacitor. Le loro licenze, che ne permettono l'uso e la distribuzione, sono riportate qui sotto (in inglese, come vanno distribuite).</p>
 </article>
-<article lang="en" hidden>
+<article lang="en" data-title="Giocapensa — About" data-footer="Giocapensa" hidden>
   <h1>About</h1>
   <p class="ver">Giocapensa · version 1.0</p>
   <div class="box"><p><strong>Giocapensa</strong> — logic games for children, to play alone or with a grown-up.</p></div>
   <h2>Who it's for</h2><p>Made for children aged 3 and up. No reading needed: every game makes sense by looking and trying. For the youngest we suggest playing together with a grown-up.</p>
   <h2>Author and rights</h2><p>© 2026 Maurizio Tarsia. All rights reserved. Games, levels, drawings, animations, sounds and music are original, made specially for Giocapensa.</p>
-  <h2>Contact</h2><p>For questions, reports or support write to <strong>(da completare)</strong>.</p>
+  <h2>Contact</h2><p>For questions, reports or support write to <strong>xenotars.studio@gmail.com</strong>.</p>
   <h2>Personal data</h2><p>Giocapensa collects no data: no account, no advertising, no tracking. Progress stays on the device. Details in the <a href="privacy.html">privacy policy</a>.</p>
-  <h2>Terms of use</h2><p>Giocapensa is free, with no advertising, purchases or subscriptions, and no links to outside websites or social media. It is provided as is. In the version downloaded from the App Store, Apple's standard licence agreement for apps (EULA) applies.</p>
-  <h2>Third-party licences</h2>
-  <p>Giocapensa uses the Overpass typeface and, in the iPhone version, the Capacitor framework. Their licences, which allow their use and distribution, are reproduced below.</p>
+  <h2>Terms of use</h2><p>Giocapensa has no advertising, in-app purchases or subscriptions, and no links to outside websites or social media. It is provided as is. In the version downloaded from the App Store, Apple's standard licence agreement for apps (EULA) applies.</p>
+  <h2>Third-party licences</h2><p>Giocapensa uses the Overpass typeface and, in the iPhone version, the Capacitor framework. Their licences, which allow their use and distribution, are reproduced below.</p>
+</article>
+<article lang="es" data-title="Giocapensa — Información" data-footer="Giocapensa" hidden>
+  <h1>Información</h1>
+  <p class="ver">Giocapensa · versión 1.0</p>
+  <div class="box"><p><strong>Giocapensa</strong> — juegos de lógica para niños, para jugar solos o con un adulto.</p></div>
+  <h2>Para quién es</h2><p>Pensada para niños a partir de 3 años. No hace falta saber leer: cada juego se entiende mirando y probando. Para los más pequeños recomendamos jugar junto a un adulto.</p>
+  <h2>Autor y derechos</h2><p>© 2026 Maurizio Tarsia. Todos los derechos reservados. Los juegos, niveles, dibujos, animaciones, sonidos y música son originales, creados especialmente para Giocapensa.</p>
+  <h2>Contacto</h2><p>Para preguntas, avisos o solicitudes de ayuda, escribe a <strong>xenotars.studio@gmail.com</strong>.</p>
+  <h2>Datos personales</h2><p>Giocapensa no recoge ningún dato: sin cuentas, sin publicidad, sin seguimiento. El progreso se queda en el dispositivo. Más detalles en la <a href="privacy.html">política de privacidad</a>.</p>
+  <h2>Condiciones de uso</h2><p>Giocapensa no tiene publicidad, compras dentro de la app ni suscripciones, ni enlaces a sitios externos o redes sociales. Se ofrece tal cual. En la versión descargada del App Store se aplica el contrato de licencia estándar de Apple para apps (EULA).</p>
+  <h2>Licencias de terceros</h2><p>Giocapensa usa el tipo de letra Overpass y, en la versión para iPhone, el framework Capacitor. Sus licencias, que permiten su uso y distribución, se reproducen a continuación (en inglés, como deben distribuirse).</p>
+</article>
+<article lang="pt" data-title="Giocapensa — Informações" data-footer="Giocapensa" hidden>
+  <h1>Informações</h1>
+  <p class="ver">Giocapensa · versão 1.0</p>
+  <div class="box"><p><strong>Giocapensa</strong> — jogos de lógica para crianças, para jogar sozinho ou com um adulto.</p></div>
+  <h2>Para quem é</h2><p>Feito para crianças a partir de 3 anos. Não é preciso saber ler: cada jogo se entende olhando e experimentando. Para os menores, recomendamos jogar junto com um adulto.</p>
+  <h2>Autor e direitos</h2><p>© 2026 Maurizio Tarsia. Todos os direitos reservados. Jogos, níveis, desenhos, animações, sons e música são originais, criados especialmente para o Giocapensa.</p>
+  <h2>Contato</h2><p>Para dúvidas, avisos ou pedidos de ajuda, escreva para <strong>xenotars.studio@gmail.com</strong>.</p>
+  <h2>Dados pessoais</h2><p>O Giocapensa não coleta nenhum dado: sem conta, sem publicidade, sem rastreamento. O progresso fica no aparelho. Detalhes na <a href="privacy.html">política de privacidade</a>.</p>
+  <h2>Termos de uso</h2><p>O Giocapensa não tem publicidade, compras no app nem assinaturas, nem links para sites externos ou redes sociais. É oferecido no estado em que se encontra. Na versão baixada da App Store vale o contrato de licença padrão da Apple para apps (EULA).</p>
+  <h2>Licenças de terceiros</h2><p>O Giocapensa usa a fonte Overpass e, na versão para iPhone, o framework Capacitor. As licenças, que permitem seu uso e distribuição, estão reproduzidas abaixo (em inglês, como devem ser distribuídas).</p>
+</article>
+<article lang="fr" data-title="Giocapensa — Informations" data-footer="Giocapensa" hidden>
+  <h1>Informations</h1>
+  <p class="ver">Giocapensa · version 1.0</p>
+  <div class="box"><p><strong>Giocapensa</strong> — des jeux de logique pour les enfants, à jouer seul ou avec un adulte.</p></div>
+  <h2>Pour qui</h2><p>Conçue pour les enfants dès 3 ans. Pas besoin de savoir lire&nbsp;: chaque jeu se comprend en regardant et en essayant. Pour les plus petits, nous conseillons de jouer avec un adulte.</p>
+  <h2>Auteur et droits</h2><p>© 2026 Maurizio Tarsia. Tous droits réservés. Les jeux, niveaux, dessins, animations, sons et musiques sont originaux, créés spécialement pour Giocapensa.</p>
+  <h2>Contact</h2><p>Pour toute question, tout signalement ou toute demande d'aide, écrivez à <strong>xenotars.studio@gmail.com</strong>.</p>
+  <h2>Données personnelles</h2><p>Giocapensa ne collecte aucune donnée&nbsp;: pas de compte, pas de publicité, pas de suivi. La progression reste sur l'appareil. Détails dans la <a href="privacy.html">politique de confidentialité</a>.</p>
+  <h2>Conditions d'utilisation</h2><p>Giocapensa ne contient ni publicité, ni achats intégrés, ni abonnements, ni liens vers des sites externes ou des réseaux sociaux. Elle est fournie telle quelle. Dans la version téléchargée sur l'App Store, le contrat de licence standard d'Apple pour les apps (EULA) s'applique.</p>
+  <h2>Licences tierces</h2><p>Giocapensa utilise la police de caractères Overpass et, dans la version pour iPhone, le framework Capacitor. Leurs licences, qui en permettent l'utilisation et la distribution, sont reproduites ci-dessous (en anglais, comme elles doivent être distribuées).</p>
+</article>
+<article lang="de" data-title="Giocapensa — Informationen" data-footer="Giocapensa" hidden>
+  <h1>Informationen</h1>
+  <p class="ver">Giocapensa · Version 1.0</p>
+  <div class="box"><p><strong>Giocapensa</strong> – Logikspiele für Kinder, allein oder mit einem Erwachsenen zu spielen.</p></div>
+  <h2>Für wen</h2><p>Gedacht für Kinder ab 3 Jahren. Lesen ist nicht nötig: Jedes Spiel versteht man durch Hinschauen und Ausprobieren. Den Kleinsten empfehlen wir, gemeinsam mit einem Erwachsenen zu spielen.</p>
+  <h2>Urheber und Rechte</h2><p>© 2026 Maurizio Tarsia. Alle Rechte vorbehalten. Spiele, Level, Zeichnungen, Animationen, Töne und Musik sind Originale, eigens für Giocapensa geschaffen.</p>
+  <h2>Kontakt</h2><p>Für Fragen, Hinweise oder Hilfe schreiben Sie an <strong>xenotars.studio@gmail.com</strong>.</p>
+  <h2>Personenbezogene Daten</h2><p>Giocapensa erhebt keinerlei Daten: kein Konto, keine Werbung, kein Tracking. Der Fortschritt bleibt auf dem Gerät. Einzelheiten in der <a href="privacy.html">Datenschutzerklärung</a>.</p>
+  <h2>Nutzungsbedingungen</h2><p>Giocapensa enthält keine Werbung, keine In-App-Käufe, keine Abos und keine Links zu externen Websites oder sozialen Netzwerken. Die App wird so bereitgestellt, wie sie ist. Für die aus dem App Store geladene Version gilt Apples Standard-Lizenzvertrag für Apps (EULA).</p>
+  <h2>Lizenzen Dritter</h2><p>Giocapensa verwendet die Schrift Overpass und, in der iPhone-Version, das Framework Capacitor. Ihre Lizenzen, die Nutzung und Weitergabe erlauben, sind unten wiedergegeben (auf Englisch, wie sie weitergegeben werden müssen).</p>
+</article>
+<article lang="ja" data-title="Giocapensa — このアプリについて" data-footer="Giocapensa" hidden>
+  <h1>このアプリについて</h1>
+  <p class="ver">Giocapensa · バージョン 1.0</p>
+  <div class="box"><p><strong>Giocapensa</strong> — 子どものためのロジックゲーム。ひとりでも、大人といっしょでも遊べます。</p></div>
+  <h2>対象年齢</h2><p>3歳以上のお子さま向けです。文字が読めなくても大丈夫：どのゲームも、見て、さわって分かるように作られています。小さなお子さまは大人といっしょに遊ぶことをおすすめします。</p>
+  <h2>著作者と権利</h2><p>© 2026 Maurizio Tarsia。無断複製・転載を禁じます。ゲーム、レベル、イラスト、アニメーション、効果音、音楽はすべて、Giocapensaのために作られたオリジナルです。</p>
+  <h2>お問い合わせ</h2><p>ご質問、不具合の報告、サポートのご依頼は<strong>xenotars.studio@gmail.com</strong>までお送りください。</p>
+  <h2>個人情報</h2><p>Giocapensaはデータを一切収集しません。アカウント、広告、トラッキングはありません。進行状況は端末に保存されます。詳しくは<a href="privacy.html">プライバシーポリシー</a>をご覧ください。</p>
+  <h2>利用条件</h2><p>Giocapensaには、広告、アプリ内課金、サブスクリプション、外部サイトやSNSへのリンクはありません。現状のまま提供されます。App Storeからダウンロードした場合は、Appleの標準使用許諾契約（EULA）が適用されます。</p>
+  <h2>第三者のライセンス</h2><p>Giocapensaは書体Overpassと、iPhone版ではフレームワークCapacitorを使用しています。使用と配布を認めるそれぞれのライセンスを、以下に原文（英語）で掲載します。</p>
+</article>
+<article lang="zh-Hant" data-title="Giocapensa — 關於" data-footer="Giocapensa" hidden>
+  <h1>關於</h1>
+  <p class="ver">Giocapensa · 版本 1.0</p>
+  <div class="box"><p><strong>Giocapensa</strong> — 給孩子的邏輯遊戲，可以自己玩，也可以和大人一起玩。</p></div>
+  <h2>適合對象</h2><p>適合3歲以上的兒童。不需要識字：每個遊戲都能透過觀察和嘗試理解。建議年紀較小的孩子與大人一起玩。</p>
+  <h2>作者與權利</h2><p>© 2026 Maurizio Tarsia。保留所有權利。遊戲、關卡、插圖、動畫、音效和音樂皆為原創，專為 Giocapensa 製作。</p>
+  <h2>聯絡方式</h2><p>如有問題、回報或需要協助，請寫信至 <strong>xenotars.studio@gmail.com</strong>。</p>
+  <h2>個人資料</h2><p>Giocapensa 不收集任何資料：沒有帳號、沒有廣告、沒有追蹤。進度保存在裝置上。詳情請見<a href="privacy.html">隱私權政策</a>。</p>
+  <h2>使用條款</h2><p>Giocapensa 沒有廣告、App 內購買或訂閱，也沒有連到外部網站或社群的連結。本 App 依現況提供。從 App Store 下載的版本適用 Apple 的標準 App 授權合約（EULA）。</p>
+  <h2>第三方授權</h2><p>Giocapensa 使用 Overpass 字型，iPhone 版另使用 Capacitor 框架。允許其使用與散布的授權條款以原文（英文）列於下方。</p>
+</article>
+<article lang="zh-Hans" data-title="Giocapensa — 关于" data-footer="Giocapensa" hidden>
+  <h1>关于</h1>
+  <p class="ver">Giocapensa · 版本 1.0</p>
+  <div class="box"><p><strong>Giocapensa</strong> — 给孩子的逻辑游戏，可以自己玩，也可以和大人一起玩。</p></div>
+  <h2>适合对象</h2><p>适合3岁以上的儿童。不需要识字：每个游戏都能通过观察和尝试理解。建议年龄较小的孩子与大人一起玩。</p>
+  <h2>作者与权利</h2><p>© 2026 Maurizio Tarsia。保留所有权利。游戏、关卡、插图、动画、音效和音乐均为原创，专为 Giocapensa 制作。</p>
+  <h2>联系方式</h2><p>如有问题、反馈或需要帮助，请发邮件至 <strong>xenotars.studio@gmail.com</strong>。</p>
+  <h2>个人信息</h2><p>Giocapensa 不收集任何数据：没有账号、没有广告、没有追踪。进度保存在设备上。详情请见<a href="privacy.html">隐私政策</a>。</p>
+  <h2>使用条款</h2><p>Giocapensa 没有广告、App 内购买或订阅，也没有指向外部网站或社交平台的链接。本 App 按现状提供。从 App Store 下载的版本适用 Apple 的标准 App 许可协议（EULA）。</p>
+  <h2>第三方许可</h2><p>Giocapensa 使用 Overpass 字体，iPhone 版还使用 Capacitor 框架。允许其使用和分发的许可条款以原文（英文）列于下方。</p>
+</article>
+<section class="lic" lang="en">
   <details><summary>Overpass — SIL Open Font License 1.1</summary><pre>Copyright 2021 The Overpass Project Authors (https://github.com/RedHatOfficial/Overpass) Overpass-Italic[wght].ttf: Copyright 2021 The Overpass Project Authors (https://github.com/RedHatOfficial/Overpass)
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
@@ -258,7 +224,7 @@ INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
 DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
 OTHER DEALINGS IN THE FONT SOFTWARE.</pre></details>
-  <details><summary>Capacitor — MIT License (iPhone version only)</summary><pre>MIT License
+  <details><summary>Capacitor — MIT License (iPhone)</summary><pre>MIT License
 
 Copyright (c) 2017-present Drifty Co.
 
@@ -279,16 +245,27 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.</pre></details>
-</article>
+</section>
   <footer>Giocapensa</footer>
 </main>
 <script>
-(function () {                                    // same language as the app: the setting, or else the phone
-  var ui = 'auto'; try { var o = JSON.parse(localStorage.getItem('giocapensa.opzioni') || 'null'); if (o && o.ui) ui = o.ui; } catch (e) {}
-  var en = ui === 'en' || (ui === 'auto' && !/^it/i.test((navigator.languages && navigator.languages[0]) || navigator.language || 'it'));
-  if (!en) return;
-  document.documentElement.lang = 'en'; document.title = 'Giocapensa — About';
-  document.querySelector('article[lang="it"]').hidden = true; document.querySelector('article[lang="en"]').hidden = false;
+(function () {                                    // the language of the app: the setting, otherwise the first language of the phone that the app speaks
+  var LS = ['it', 'en', 'es', 'pt', 'fr', 'de', 'ja', 'zh-Hant', 'zh-Hans'], ui = 'auto', lang = null, i;
+  try { var o = JSON.parse(localStorage.getItem('giocapensa.opzioni') || 'null'); if (o && o.ui) ui = o.ui; } catch (e) {}
+  function from(t) { t = String(t || '').toLowerCase(); if (/^zh/.test(t)) return /^zh[-_](hant|tw|hk|mo)/.test(t) ? 'zh-Hant' : 'zh-Hans'; var b = t.split(/[-_]/)[0]; return LS.indexOf(b) >= 0 ? b : null; }
+  if (LS.indexOf(ui) >= 0) lang = ui;
+  var phone = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'en'];
+  for (i = 0; !lang && i < phone.length; i++) lang = from(phone[i]);
+  lang = lang || 'en';
+  var a = document.querySelector('article[lang="' + lang + '"]'); if (!a) return;
+  [].forEach.call(document.querySelectorAll('article[lang]'), function (x) { x.hidden = x !== a; });
+  document.documentElement.lang = lang; document.title = a.getAttribute('data-title') || document.title;
+  var f = document.querySelector('footer'), t = a.getAttribute('data-footer'); if (f && t) f.textContent = t;
+})();
+(function () {                                    // opened from the App Store page (?store): the support pages do not lead to the games of the website
+  if (!/[?&#]store\b/.test(location.href)) return;
+  [].forEach.call(document.querySelectorAll('a.back'), function (x) { x.remove(); });
+  [].forEach.call(document.querySelectorAll('a[href="privacy.html"]'), function (x) { x.setAttribute('href', 'privacy.html?store'); });
 })();
 </script>
 </body>

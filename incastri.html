@@ -2,6 +2,7 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
+<meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Incastri</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -31,7 +32,7 @@ button:focus-visible{outline:3px solid var(--joy); outline-offset:2px}
 
 .app{max-width:560px; height:100vh; height:100dvh; margin:0 auto; padding:max(8px,env(safe-area-inset-top)) 12px max(10px,env(safe-area-inset-bottom)); display:flex; flex-direction:column; gap:8px}
 .bar{display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:8px; flex:none}
-.pill{justify-self:start; display:inline-flex; align-items:center; gap:8px; height:40px; padding:2px 15px 0 12px; border-radius:20px; border:0; box-shadow:0 0 0 2.5px var(--ink); background:var(--surface); font-weight:800; font-size:.9375rem}
+.pill{justify-self:start; display:inline-flex; align-items:center; gap:8px; height:40px; padding:2px 15px 0 12px; border-radius:20px; border:0; box-shadow:0 0 0 2.5px var(--ink); background:var(--surface); font-weight:800; font-size:.9375rem; white-space:nowrap; flex:none}
 .pill svg{width:19px; height:19px; margin-top:-2px}
 .where{display:flex; align-items:center; gap:10px}
 .badge{min-width:40px; height:40px; padding:2px 7px 0; border-radius:20px; display:grid; place-items:center; background:var(--tier); color:var(--tier-ink); box-shadow:0 0 0 2.5px var(--ink); font-weight:900; font-size:1.0625rem; font-variant-numeric:tabular-nums}
@@ -85,10 +86,11 @@ button:focus-visible{outline:3px solid var(--joy); outline-offset:2px}
 .sign.waiting .ring{display:block}
 
 .kinds{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:4px 0 18px}
-.kind{display:flex; flex-direction:column; align-items:center; gap:4px; padding:10px 8px 8px; border:0; border-radius:22px; background:var(--kc,#fff); color:inherit; font:inherit; box-shadow:0 0 0 3px var(--ink), 0 5px 0 0 rgba(74,59,82,.25)}
+.kind{display:flex; flex-direction:column; align-items:center; gap:4px; padding:10px 8px 8px; border:0; border-radius:22px; background:var(--kc,#fff); color:#4A3B52; font:inherit; box-shadow:0 0 0 3px var(--ink), 0 5px 0 0 rgba(74,59,82,.25)}   /* pastel card in both themes, so its writing stays dark */
 .kind:active{transform:translateY(3px); box-shadow:0 0 0 3px var(--ink), 0 2px 0 0 rgba(74,59,82,.25)}
 .kind svg{width:100%; max-width:150px; height:auto}
 .kind span{font-weight:800; font-size:.875rem}
+#lvOf{white-space:nowrap}
 @media (max-width:370px){ .bar{gap:5px} .bar .pill span{display:none} .bar .pill{padding-left:12px; padding-right:12px} #lvOf{display:none} }
 .result{position:fixed; z-index:20; left:0; right:0; bottom:0; max-width:560px; margin:0 auto; background:var(--surface); border-radius:26px 26px 0 0; padding:22px 20px max(20px,env(safe-area-inset-bottom)); text-align:center; box-shadow:0 0 0 3px var(--ink); transform:translateY(108%); transition:transform .36s cubic-bezier(.2,.9,.25,1)}
 .result.show{transform:none}
@@ -209,6 +211,8 @@ a.round{color:inherit; text-decoration:none}
 </dialog>
 
 <script>window.KIT_HOME = 'index.html';</script>
+
+<script id="testi">window.TESTI = {"es":{"tocco":"giro","Come si gioca":"Cómo se juega","Chiudi":"Cerrar","Media":"Media","sul letto":"en la cama","Mai":"Nunca","Incastri":"Puzles de formas","Riempi {x} con i pezzi del cassetto.":"Rellena {x} con las piezas del cajón.","Tutto incastrato!":"¡Todo encajado!","Mosse":"Movimientos","mossa":"movimiento","mosse":"movimientos","Trascina i pezzi dal cassetto fino a riempire tutta la sagoma. I pezzi non si girano.":"Arrastra las piezas del cajón hasta llenar toda la figura. Las piezas no se giran.","Riempi tutta la sagoma con i pezzi del cassetto.":"Llena toda la figura con las piezas del cajón.","I pezzi si trascinano così come sono: non si possono girare.":"Las piezas se arrastran tal como están: no se pueden girar.","Un pezzo già messo si può riprendere e spostare, o riportare nel cassetto.":"Una pieza ya colocada se puede volver a coger y mover, o devolver al cajón.","Conta una mossa ogni pezzo appoggiato sulla sagoma: il minimo è un pezzo, una mossa.":"Cada pieza que se coloca en la figura cuenta como un movimiento: lo mínimo es una pieza, un movimiento.","Il pezzo {c} va dove lampeggia l'arancione.":"La pieza {c} va donde parpadea el naranja.","Così gli altri non ci stanno: togli il pezzo {c} e riprova.":"Así las demás no caben: quita la pieza {c} y vuelve a intentarlo.","Riporta i pezzi nel cassetto e riparti.":"Devuelve las piezas al cajón y empieza otra vez.","passi":"pasos","Livelli":"Niveles","Minimo":"Mínimo","Record":"Récord","Comandi":"Controles","Annulla":"Deshacer","Ricomincia":"Reiniciar","Aiuto":"Ayuda","Rigioca":"Jugar otra vez","Livello successivo":"Siguiente nivel","Principiante":"Principiante","Intermedio":"Intermedio","Avanzato":"Avanzado","Esperto":"Experto","Maestro":"Maestro","livello {n} di {tot}":"nivel {n} de {tot}","Risolto in {n} {w}: meno di così non si può.":"Resuelto en {n} {w}: imposible con menos.","Risolto in {n} {w}. Il minimo è {min}.":"Resuelto en {n} {w}. El mínimo es {min}.","Risolto in {n} {w}, nuovo record. Il minimo è {min}.":"Resuelto en {n} {w}, nuevo récord. El mínimo es {min}.","Risolto in {n} {w}. Il tuo record è {rec}, il minimo è {min}.":"Resuelto en {n} {w}. Tu récord es {rec}, el mínimo es {min}.","Era l'ultimo livello.":"Era el último nivel.","Scegli un livello":"Elige un nivel","Livello {n}":"Nivel {n}","{a} su {b}":"{a} de {b}","Scegli da quale livello partire: sono tutti aperti.":"Elige por qué nivel empezar: están todos abiertos.","Tutti i giochi":"Todos los juegos","Minimo di {w}":"Mínimo de {w}","Livello {n}, risolto":"Nivel {n}, resuelto","{n} di {tot} risolti, {p} con il minimo.":"{n} de {tot} resueltos, {p} con el mínimo."},"pt":{"tocco":"giro","Come si gioca":"Como jogar","Chiudi":"Fechar","Media":"Média","sul letto":"na cama","Mai":"Nunca","Incastri":"Encaixe","Riempi {x} con i pezzi del cassetto.":"Preencha {x} com as peças da gaveta.","Tutto incastrato!":"Tudo encaixado!","Mosse":"Jogadas","mossa":"jogada","mosse":"jogadas","Trascina i pezzi dal cassetto fino a riempire tutta la sagoma. I pezzi non si girano.":"Arraste as peças da gaveta até preencher toda a figura. As peças não giram.","Riempi tutta la sagoma con i pezzi del cassetto.":"Preencha toda a figura com as peças da gaveta.","I pezzi si trascinano così come sono: non si possono girare.":"As peças são arrastadas do jeito que estão: não dá para girá-las.","Un pezzo già messo si può riprendere e spostare, o riportare nel cassetto.":"Uma peça já colocada pode ser pega de novo e movida, ou devolvida à gaveta.","Conta una mossa ogni pezzo appoggiato sulla sagoma: il minimo è un pezzo, una mossa.":"Cada peça colocada na figura conta uma jogada: o mínimo é uma peça, uma jogada.","Il pezzo {c} va dove lampeggia l'arancione.":"A peça {c} vai onde o laranja está piscando.","Così gli altri non ci stanno: togli il pezzo {c} e riprova.":"Assim as outras não cabem: tire a peça {c} e tente de novo.","Riporta i pezzi nel cassetto e riparti.":"Devolva as peças à gaveta e comece de novo.","passi":"passos","Livelli":"Níveis","Minimo":"Mínimo","Record":"Recorde","Comandi":"Controles","Annulla":"Desfazer","Ricomincia":"Reiniciar","Aiuto":"Ajuda","Rigioca":"Jogar de novo","Livello successivo":"Próximo nível","Principiante":"Iniciante","Intermedio":"Intermediário","Avanzato":"Avançado","Esperto":"Especialista","Maestro":"Mestre","livello {n} di {tot}":"nível {n} de {tot}","Risolto in {n} {w}: meno di così non si può.":"Resolvido em {n} {w}: com menos não dá.","Risolto in {n} {w}. Il minimo è {min}.":"Resolvido em {n} {w}. O mínimo é {min}.","Risolto in {n} {w}, nuovo record. Il minimo è {min}.":"Resolvido em {n} {w}, novo recorde. O mínimo é {min}.","Risolto in {n} {w}. Il tuo record è {rec}, il minimo è {min}.":"Resolvido em {n} {w}. Seu recorde é {rec}, o mínimo é {min}.","Era l'ultimo livello.":"Era o último nível.","Scegli un livello":"Escolha um nível","Livello {n}":"Nível {n}","{a} su {b}":"{a} de {b}","Scegli da quale livello partire: sono tutti aperti.":"Escolha por qual nível começar: estão todos liberados.","Tutti i giochi":"Todos os jogos","Minimo di {w}":"Mínimo de {w}","Livello {n}, risolto":"Nível {n}, resolvido","{n} di {tot} risolti, {p} con il minimo.":"{n} de {tot} resolvidos, {p} com o mínimo."},"fr":{"tocco":"tour","Come si gioca":"Comment jouer","Chiudi":"Fermer","Media":"Moyen","sul letto":"sur le lit","Mai":"Jamais","Incastri":"Encastrements","Riempi {x} con i pezzi del cassetto.":"Remplis {x} avec les pièces du tiroir.","Tutto incastrato!":"Tout est en place !","Mosse":"Coups","mossa":"coup","mosse":"coups","Trascina i pezzi dal cassetto fino a riempire tutta la sagoma. I pezzi non si girano.":"Glisse les pièces du tiroir jusqu’à remplir toute la forme. Les pièces ne tournent pas.","Riempi tutta la sagoma con i pezzi del cassetto.":"Remplis toute la forme avec les pièces du tiroir.","I pezzi si trascinano così come sono: non si possono girare.":"Les pièces se glissent telles quelles : on ne peut pas les tourner.","Un pezzo già messo si può riprendere e spostare, o riportare nel cassetto.":"Une pièce déjà posée peut être reprise et déplacée, ou remise dans le tiroir.","Conta una mossa ogni pezzo appoggiato sulla sagoma: il minimo è un pezzo, una mossa.":"Chaque pièce posée sur la forme compte pour un coup : le minimum, c’est une pièce, un coup.","Il pezzo {c} va dove lampeggia l'arancione.":"La pièce {c} va là où clignote l’orange.","Così gli altri non ci stanno: togli il pezzo {c} e riprova.":"Comme ça, les autres ne rentrent pas : enlève la pièce {c} et réessaie.","Riporta i pezzi nel cassetto e riparti.":"Remets les pièces dans le tiroir et recommence.","passi":"pas","Livelli":"Niveaux","Minimo":"Minimum","Record":"Record","Comandi":"Commandes","Annulla":"Annuler","Ricomincia":"Recommencer","Aiuto":"Aide","Rigioca":"Rejouer","Livello successivo":"Niveau suivant","Principiante":"Débutant","Intermedio":"Intermédiaire","Avanzato":"Avancé","Esperto":"Expert","Maestro":"Maître","livello {n} di {tot}":"niveau {n} sur {tot}","Risolto in {n} {w}: meno di così non si può.":"Réussi en {n} {w} : impossible de faire moins.","Risolto in {n} {w}. Il minimo è {min}.":"Réussi en {n} {w}. Le minimum est {min}.","Risolto in {n} {w}, nuovo record. Il minimo è {min}.":"Réussi en {n} {w}, nouveau record. Le minimum est {min}.","Risolto in {n} {w}. Il tuo record è {rec}, il minimo è {min}.":"Réussi en {n} {w}. Ton record est {rec}, le minimum est {min}.","Era l'ultimo livello.":"C’était le dernier niveau.","Scegli un livello":"Choisis un niveau","Livello {n}":"Niveau {n}","{a} su {b}":"{a} sur {b}","Scegli da quale livello partire: sono tutti aperti.":"Choisis par quel niveau commencer : ils sont tous ouverts.","Tutti i giochi":"Tous les jeux","Minimo di {w}":"Minimum de {w}","Livello {n}, risolto":"Niveau {n}, réussi","{n} di {tot} risolti, {p} con il minimo.":"{n} sur {tot} réussis, {p} avec le minimum."},"de":{"tocco":"Drehung","Come si gioca":"So wird gespielt","Chiudi":"Schließen","Media":"Mittel","sul letto":"aufs Bett","sul letto#loc":"auf dem Bett","Mai":"Nie","Incastri":"Formenpuzzle","Riempi {x} con i pezzi del cassetto.":"Füll {x} mit den Teilen aus der Schublade.","Tutto incastrato!":"Alles passt!","Mosse":"Züge","mossa":"Zug","mosse":"Züge","Trascina i pezzi dal cassetto fino a riempire tutta la sagoma. I pezzi non si girano.":"Zieh die Teile aus der Schublade, bis die ganze Form gefüllt ist. Die Teile lassen sich nicht drehen.","Riempi tutta la sagoma con i pezzi del cassetto.":"Füll die ganze Form mit den Teilen aus der Schublade.","I pezzi si trascinano così come sono: non si possono girare.":"Die Teile werden so gezogen, wie sie sind: Man kann sie nicht drehen.","Un pezzo già messo si può riprendere e spostare, o riportare nel cassetto.":"Ein schon gelegtes Teil kann man wieder nehmen und verschieben oder zurück in die Schublade legen.","Conta una mossa ogni pezzo appoggiato sulla sagoma: il minimo è un pezzo, una mossa.":"Jedes Teil, das auf die Form gelegt wird, zählt als ein Zug: Am wenigsten ist ein Teil, ein Zug.","Il pezzo {c} va dove lampeggia l'arancione.":"Das {c} Teil gehört dorthin, wo es orange blinkt.","Così gli altri non ci stanno: togli il pezzo {c} e riprova.":"So passen die anderen nicht: Nimm das {c} Teil weg und versuch es noch einmal.","Riporta i pezzi nel cassetto e riparti.":"Leg die Teile zurück in die Schublade und fang neu an.","passi":"Schritte","Livelli":"Level","Minimo":"Minimum","Record":"Rekord","Comandi":"Steuerung","Annulla":"Zurück","Ricomincia":"Neu starten","Aiuto":"Hilfe","Rigioca":"Nochmal spielen","Livello successivo":"Nächstes Level","Principiante":"Anfänger","Intermedio":"Mittel","Avanzato":"Fortgeschritten","Esperto":"Experte","Maestro":"Meister","livello {n} di {tot}":"Level {n} von {tot}","Risolto in {n} {w}: meno di così non si può.":"Geschafft: {n} {w}. Weniger geht nicht.","Risolto in {n} {w}. Il minimo è {min}.":"Geschafft: {n} {w}. Das Minimum ist {min}.","Risolto in {n} {w}, nuovo record. Il minimo è {min}.":"Geschafft: {n} {w}, neuer Rekord. Das Minimum ist {min}.","Risolto in {n} {w}. Il tuo record è {rec}, il minimo è {min}.":"Geschafft: {n} {w}. Dein Rekord ist {rec}, das Minimum ist {min}.","Era l'ultimo livello.":"Das war das letzte Level.","Scegli un livello":"Wähle ein Level","Livello {n}":"Level {n}","{a} su {b}":"{a} von {b}","Scegli da quale livello partire: sono tutti aperti.":"Wähle, mit welchem Level du anfängst: Alle sind offen.","Tutti i giochi":"Alle Spiele","Minimo di {w}":"Wenigste {w}","Livello {n}, risolto":"Level {n}, gelöst","{n} di {tot} risolti, {p} con il minimo.":"{n} von {tot} gelöst, {p} mit dem Minimum."},"ja":{"tocco":"回","Come si gioca":"あそびかた","Chiudi":"閉じる","Media":"ふつう","sul letto":"ベッドの上","Mai":"なし","Incastri":"かたちパズル","Riempi {x} con i pezzi del cassetto.":"引き出しのピースで{x}をうめよう。","Tutto incastrato!":"ぴったりはまった！","Mosse":"手数","mossa":"手","mosse":"手","Trascina i pezzi dal cassetto fino a riempire tutta la sagoma. I pezzi non si girano.":"引き出しのピースをドラッグして、かたちをぜんぶうめましょう。ピースは回せません。","Riempi tutta la sagoma con i pezzi del cassetto.":"引き出しのピースで、かたちをぜんぶうめます。","I pezzi si trascinano così come sono: non si possono girare.":"ピースはそのままの向きで動かします。回すことはできません。","Un pezzo già messo si può riprendere e spostare, o riportare nel cassetto.":"置いたピースも、もう一度動かしたり、引き出しにもどしたりできます。","Conta una mossa ogni pezzo appoggiato sulla sagoma: il minimo è un pezzo, una mossa.":"かたちの上にピースを置くごとに1手と数えます。最少手数はピース1つにつき1手です。","Il pezzo {c} va dove lampeggia l'arancione.":"{c}ピースは、オレンジ色に光っているところだよ。","Così gli altri non ci stanno: togli il pezzo {c} e riprova.":"このままだとほかのピースが入らないよ。{c}ピースを取って、もう一度やってみよう。","Riporta i pezzi nel cassetto e riparti.":"ピースを引き出しにもどして、やり直そう。","passi":"歩","Livelli":"レベル","Minimo":"最少","Record":"記録","Comandi":"操作","Annulla":"もどす","Ricomincia":"やり直す","Aiuto":"ヒント","Rigioca":"もう一度","Livello successivo":"次のレベル","Principiante":"初級","Intermedio":"中級","Avanzato":"上級","Esperto":"エキスパート","Maestro":"マスター","livello {n} di {tot}":"レベル {n}/{tot}","Risolto in {n} {w}: meno di così non si può.":"{n}{w}でクリア！これより少なくはできません。","Risolto in {n} {w}. Il minimo è {min}.":"{n}{w}でクリア。最少は{min}です。","Risolto in {n} {w}, nuovo record. Il minimo è {min}.":"{n}{w}でクリア、新記録！最少は{min}です。","Risolto in {n} {w}. Il tuo record è {rec}, il minimo è {min}.":"{n}{w}でクリア。自己ベストは{rec}、最少は{min}です。","Era l'ultimo livello.":"これが最後のレベルでした。","Scegli un livello":"レベルをえらぶ","Livello {n}":"レベル{n}","{a} su {b}":"{a}/{b}","Scegli da quale livello partire: sono tutti aperti.":"好きなレベルから始められます。すべてのレベルが開いています。","Tutti i giochi":"すべてのゲーム","Minimo di {w}":"最少{w}数","Livello {n}, risolto":"レベル{n}、クリア","{n} di {tot} risolti, {p} con il minimo.":"{tot}レベル中{n}レベルをクリア（うち{p}レベルはパーフェクト）。"},"zh-Hant":{"tocco":"次","Come si gioca":"怎麼玩","Chiudi":"關閉","Media":"普通","sul letto":"床上","Mai":"不要","Incastri":"形狀拼圖","Riempi {x} con i pezzi del cassetto.":"用抽屜裡的拼塊把{x}填滿。","Tutto incastrato!":"全部拼好了！","Mosse":"步數","mossa":"步","mosse":"步","Trascina i pezzi dal cassetto fino a riempire tutta la sagoma. I pezzi non si girano.":"從抽屜拖出拼塊，把整個形狀填滿。拼塊不能旋轉。","Riempi tutta la sagoma con i pezzi del cassetto.":"用抽屜裡的拼塊把整個形狀填滿。","I pezzi si trascinano così come sono: non si possono girare.":"拼塊照原本的方向拖動，不能旋轉。","Un pezzo già messo si può riprendere e spostare, o riportare nel cassetto.":"已經放好的拼塊可以再拿起來移動，或放回抽屜。","Conta una mossa ogni pezzo appoggiato sulla sagoma: il minimo è un pezzo, una mossa.":"每把一塊拼塊放到形狀上算一步：最少就是一塊一步。","Il pezzo {c} va dove lampeggia l'arancione.":"{c}的拼塊要放在橘色閃爍的地方。","Così gli altri non ci stanno: togli il pezzo {c} e riprova.":"這樣其他拼塊放不進去：拿掉{c}的拼塊再試一次。","Riporta i pezzi nel cassetto e riparti.":"把拼塊放回抽屜，重新開始。","passi":"步","Livelli":"關卡","Minimo":"最少","Record":"紀錄","Comandi":"操作","Annulla":"復原","Ricomincia":"重來","Aiuto":"提示","Rigioca":"再玩一次","Livello successivo":"下一關","Principiante":"初級","Intermedio":"中級","Avanzato":"高級","Esperto":"專家","Maestro":"大師","livello {n} di {tot}":"第{n}關，共{tot}關","Risolto in {n} {w}: meno di così non si può.":"{n}{w}完成：不可能更少了。","Risolto in {n} {w}. Il minimo è {min}.":"{n}{w}完成。最少是{min}。","Risolto in {n} {w}, nuovo record. Il minimo è {min}.":"{n}{w}完成，新紀錄！最少是{min}。","Risolto in {n} {w}. Il tuo record è {rec}, il minimo è {min}.":"{n}{w}完成。你的紀錄是{rec}，最少是{min}。","Era l'ultimo livello.":"這是最後一關。","Scegli un livello":"選擇關卡","Livello {n}":"第{n}關","{a} su {b}":"{a}/{b}","Scegli da quale livello partire: sono tutti aperti.":"選擇從哪一關開始：所有關卡都開放。","Tutti i giochi":"所有遊戲","Minimo di {w}":"最少{w}數","Livello {n}, risolto":"第{n}關，已完成","{n} di {tot} risolti, {p} con il minimo.":"已完成{tot}關中的{n}關，其中{p}關完美過關。"},"zh-Hans":{"tocco":"次","Come si gioca":"怎么玩","Chiudi":"关闭","Media":"普通","sul letto":"床上","Mai":"不要","Incastri":"形状拼图","Riempi {x} con i pezzi del cassetto.":"用抽屉里的拼块把{x}填满。","Tutto incastrato!":"全部拼好了！","Mosse":"步数","mossa":"步","mosse":"步","Trascina i pezzi dal cassetto fino a riempire tutta la sagoma. I pezzi non si girano.":"从抽屉拖出拼块，把整个形状填满。拼块不能旋转。","Riempi tutta la sagoma con i pezzi del cassetto.":"用抽屉里的拼块把整个形状填满。","I pezzi si trascinano così come sono: non si possono girare.":"拼块按原来的方向拖动，不能旋转。","Un pezzo già messo si può riprendere e spostare, o riportare nel cassetto.":"已经放好的拼块可以再拿起来移动，或放回抽屉。","Conta una mossa ogni pezzo appoggiato sulla sagoma: il minimo è un pezzo, una mossa.":"每把一块拼块放到形状上算一步：最少就是一块一步。","Il pezzo {c} va dove lampeggia l'arancione.":"{c}的拼块要放在橙色闪烁的地方。","Così gli altri non ci stanno: togli il pezzo {c} e riprova.":"这样其他拼块放不进去：拿掉{c}的拼块再试一次。","Riporta i pezzi nel cassetto e riparti.":"把拼块放回抽屉，重新开始。","passi":"步","Livelli":"关卡","Minimo":"最少","Record":"纪录","Comandi":"操作","Annulla":"撤销","Ricomincia":"重来","Aiuto":"提示","Rigioca":"再玩一次","Livello successivo":"下一关","Principiante":"初级","Intermedio":"中级","Avanzato":"高级","Esperto":"专家","Maestro":"大师","livello {n} di {tot}":"第{n}关，共{tot}关","Risolto in {n} {w}: meno di così non si può.":"{n}{w}完成：不可能更少了。","Risolto in {n} {w}. Il minimo è {min}.":"{n}{w}完成。最少是{min}。","Risolto in {n} {w}, nuovo record. Il minimo è {min}.":"{n}{w}完成，新纪录！最少是{min}。","Risolto in {n} {w}. Il tuo record è {rec}, il minimo è {min}.":"{n}{w}完成。你的纪录是{rec}，最少是{min}。","Era l'ultimo livello.":"这是最后一关。","Scegli un livello":"选择关卡","Livello {n}":"第{n}关","{a} su {b}":"{a}/{b}","Scegli da quale livello partire: sono tutti aperti.":"选择从哪一关开始：所有关卡都开放。","Tutti i giochi":"所有游戏","Minimo di {w}":"最少{w}数","Livello {n}, risolto":"第{n}关，已完成","{n} di {tot} risolti, {p} con il minimo.":"已完成{tot}关中的{n}关，其中{p}关完美通关。"}};</script>
 <script id="opzioni">
 /* Settings shared by the home screen and all six games, kept in localStorage under one key.
    Games read them at every use, so a change on the home screen reaches a game as soon as it is opened. */
@@ -216,14 +220,15 @@ window.OPZ = (function () {
   'use strict';
   var KEY = 'giocapensa.opzioni';
   var DEF = { musica: true, suoni: true, voce: true, ui: 'auto', lingua: 'app', aiuto: 'attesa' };
+  var CODES = ['it', 'en', 'es', 'pt', 'fr', 'de', 'ja', 'zh-Hant', 'zh-Hans'];        // the same list as LINGUE in lingua.js
   var val = {}, k;
   for (k in DEF) val[k] = DEF[k];
   try {
     var raw = JSON.parse(localStorage.getItem(KEY) || 'null');
     if (raw && typeof raw === 'object') {
       ['musica', 'suoni', 'voce'].forEach(function (n) { if (typeof raw[n] === 'boolean') val[n] = raw[n]; });
-      if (['app', 'it', 'en'].indexOf(raw.lingua) >= 0) val.lingua = raw.lingua;
-      if (['auto', 'it', 'en'].indexOf(raw.ui) >= 0) val.ui = raw.ui;
+      if (['app'].concat(CODES).indexOf(raw.lingua) >= 0) val.lingua = raw.lingua;
+      if (['auto'].concat(CODES).indexOf(raw.ui) >= 0) val.ui = raw.ui;
       if (['subito', 'attesa', 'mai'].indexOf(raw.aiuto) >= 0) val.aiuto = raw.aiuto;
     } else if (localStorage.getItem('giocapensa.musica') === '0') val.musica = false;      // the old music-only switch
   } catch (e) {}
@@ -238,25 +243,64 @@ window.OPZ = (function () {
 
 </script>
 <script id="lingua">
-/* Interface language. «auto» follows the phone; the setting lives in OPZ ('ui': auto | it | en).
-   In the code every visible text is written as L('italiano', 'English'); in the markup an element with
-   data-en="…" gets that English text, data-en-aria / data-en-title do the same for aria-label and title. */
+/* Interface language. «auto» follows the phone; the setting lives in OPZ ('ui': auto | one of LINGUE).
+   Nine languages: Italian (the source), English, Spanish, Portuguese, French, German, Japanese, Chinese (traditional and simplified).
+   In the code every visible text is written as L('italiano', 'English'), with placeholders {n} filled from a third argument:
+   L('livello {n} di {tot}', 'level {n} of {tot}', { n: 3, tot: 120 }). The other languages come from window.TESTI[lang][italian text],
+   which src/build.py puts in each page from src/lingue/<lang>.json (only the texts that page uses). In the markup an element with
+   data-en="…" gets the text of the current language; data-en-aria / data-en-title do the same for aria-label and title. */
 (function () {
   'use strict';
-  function pick() {
-    var v = window.OPZ ? OPZ.get('ui') : 'auto';
-    if (v === 'it' || v === 'en') return v;
-    var langs = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'it']);
-    return /^it/i.test(langs[0] || '') ? 'it' : (/^en/i.test(langs[0] || '') ? 'en' : 'en');      // Italian phones get Italian, everyone else English
+  var LINGUE = ['it', 'en', 'es', 'pt', 'fr', 'de', 'ja', 'zh-Hant', 'zh-Hans'];
+  var NOMI = { it: 'Italiano', en: 'English', es: 'Español', pt: 'Português', fr: 'Français', de: 'Deutsch', ja: '日本語', 'zh-Hant': '繁體中文', 'zh-Hans': '简体中文' };
+  var LOCALI = { it: 'it-IT', en: 'en-GB', es: 'es-ES', pt: 'pt-BR', fr: 'fr-FR', de: 'de-DE', ja: 'ja-JP', 'zh-Hant': 'zh-TW', 'zh-Hans': 'zh-CN' };
+  function fromTag(t) {                                     // 'pt-BR' → 'pt', 'zh-TW' → 'zh-Hant', 'nl' → null
+    t = String(t || '').toLowerCase();
+    if (/^zh/.test(t)) return /^zh[-_](hant|tw|hk|mo)/.test(t) ? 'zh-Hant' : 'zh-Hans';
+    var b = t.split(/[-_]/)[0];
+    return LINGUE.indexOf(b) >= 0 ? b : null;
   }
+  function phone() {                                        // the first language of the phone that the app speaks, otherwise English
+    var langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'en'];
+    for (var i = 0; i < langs.length; i++) { var l = fromTag(langs[i]); if (l) return l; }
+    return 'en';
+  }
+  function pick() { var v = window.OPZ ? OPZ.get('ui') : 'auto'; return LINGUE.indexOf(v) >= 0 ? v : phone(); }
+  window.LINGUE = LINGUE; window.LINGUA_NOME = NOMI; window.LINGUA_TEL = phone; window.LINGUA_DA = fromTag;
   window.LANG = pick();
-  window.L = function (it, en) { return window.LANG === 'en' && en != null ? en : it; };
+  window.LOCALE = LOCALI[window.LANG];
+  window.LOCALE_DI = function (lang) { return LOCALI[lang] || 'en-GB'; };
+  var T = window.TESTI || {}, miss = window.__mancanti = {};
+  function tr(lang, it, en) {
+    if (it == null || lang === 'it') return it;
+    if (lang === 'en') return en != null ? en : it;
+    var d = T[lang], t = d ? d[it] : null;
+    if (t != null) return t;
+    miss[lang + ' | ' + it] = 1;                            // the automatic check reads this
+    return en != null ? en : it;
+  }
+  function fill(s, v) { return v && s ? String(s).replace(/\{(\w+)\}/g, function (m, k) { return v[k] != null ? v[k] : m; }) : s; }
+  window.L = function (it, en, v) { return fill(tr(window.LANG, it, en), v); };
+  window.LT = function (lang, it, en, v) { return fill(tr(lang, it, en), v); };            // a given language (the voice of Stickers)
+  window.LP = function (o, lang) { return tr(lang || window.LANG, o.it, o.en); };          // an {it, en} pair from a table
+  window.TROVA = function (lang, key) { var d = T[lang]; return d && d[key] != null ? d[key] : null; };   // an optional entry, such as the German «auf dem Bett» ('sul letto#loc')
+  window.FRASI = function () {                              // sentences one after the other: with a space, without one in Japanese and Chinese
+    return Array.prototype.filter.call(arguments, Boolean).join(/^(ja|zh)/.test(window.LANG) ? '' : ' ');
+  };
+  window.PICK = function (o, lang) {                        // a value per language from a table {it: …, en: …, es: …}
+    lang = lang || window.LANG;
+    if (o[lang] != null) return o[lang];
+    if (/^zh/.test(lang) && o.zh != null) return o.zh;
+    return o.en != null ? o.en : o.it;
+  };
   window.applyLang = function (root) {
-    if (window.LANG !== 'en') return;
+    if (window.LANG === 'it') return;
     root = root || document;
-    Array.prototype.forEach.call(root.querySelectorAll('[data-en]'), function (el) { el.textContent = el.getAttribute('data-en'); });
-    Array.prototype.forEach.call(root.querySelectorAll('[data-en-aria]'), function (el) { el.setAttribute('aria-label', el.getAttribute('data-en-aria')); });
-    Array.prototype.forEach.call(root.querySelectorAll('[data-en-title]'), function (el) { el.setAttribute('title', el.getAttribute('data-en-title')); });
+    function each(sel, f) { Array.prototype.forEach.call(root.querySelectorAll(sel), f); }
+    function keep(el, attr, now) { var k = el.getAttribute(attr); if (k == null) { k = now == null ? '' : now; el.setAttribute(attr, k); } return k; }   // the Italian original, so a second pass translates from it again
+    each('[data-en]', function (el) { el.textContent = tr(window.LANG, keep(el, 'data-it', el.textContent.trim()), el.getAttribute('data-en')); });
+    each('[data-en-aria]', function (el) { el.setAttribute('aria-label', tr(window.LANG, keep(el, 'data-it-aria', el.getAttribute('aria-label')), el.getAttribute('data-en-aria'))); });
+    each('[data-en-title]', function (el) { el.setAttribute('title', tr(window.LANG, keep(el, 'data-it-title', el.getAttribute('title')), el.getAttribute('data-en-title'))); });
   };
   document.documentElement.lang = window.LANG;
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { window.applyLang(document); });
@@ -494,7 +538,7 @@ window.Kit = (function () {
   function load(i) {
     level = Math.max(0, Math.min(N - 1, i)); data.last = level; persist(); won = false; hideResult();
     var t = tierOf(level), app = $('app'); app.style.setProperty('--tier', t.color); app.style.setProperty('--tier-ink', INK);
-    $('badge').textContent = level + 1; $('tierName').textContent = t.name; $('lvOf').textContent = L('livello ' + (level + 1) + ' di ' + N, 'level ' + (level + 1) + ' of ' + N);
+    $('badge').textContent = level + 1; $('tierName').textContent = t.name; $('lvOf').textContent = L('livello {n} di {tot}', 'level {n} of {tot}', { n: level + 1, tot: N });
     var msg = cfg.load(level); setStatus(msg || ''); gateReset(FIRST); changed();   // a game may greet the level with its own hint text
   }
 
@@ -518,13 +562,14 @@ window.Kit = (function () {
     data.last = Math.min(N - 1, level + 1); persist(); changed(true);
     var perfect = moves <= min, text;
     sfx(perfect ? 'perfect' : 'win'); buzz(perfect ? [12, 60, 18, 60, 22] : [12, 60, 18]);
-    var mw = moves === 1 ? w[0] : w[1];
-    if (perfect) text = L('Risolto in ' + moves + ' ' + mw + ': meno di così non si può.', 'Solved in ' + moves + ' ' + mw + ': it cannot be done in fewer.');
-    else if (!prev || moves < prev) text = L('Risolto in ' + moves + ' ' + mw + (prev ? ', nuovo record' : '') + '. Il minimo è ' + min + '.', 'Solved in ' + moves + ' ' + mw + (prev ? ', a new record' : '') + '. The best possible is ' + min + '.');
-    else text = L('Risolto in ' + moves + ' ' + mw + '. Il tuo record è ' + prev + ', il minimo è ' + min + '.', 'Solved in ' + moves + ' ' + mw + '. Your record is ' + prev + ', the best possible is ' + min + '.');
+    var v = { n: moves, w: moves === 1 ? w[0] : w[1], min: min, rec: prev };
+    if (perfect) text = L('Risolto in {n} {w}: meno di così non si può.', 'Solved in {n} {w}: it cannot be done in fewer.', v);
+    else if (!prev) text = L('Risolto in {n} {w}. Il minimo è {min}.', 'Solved in {n} {w}. The best possible is {min}.', v);
+    else if (moves < prev) text = L('Risolto in {n} {w}, nuovo record. Il minimo è {min}.', 'Solved in {n} {w}, a new record. The best possible is {min}.', v);
+    else text = L('Risolto in {n} {w}. Il tuo record è {rec}, il minimo è {min}.', 'Solved in {n} {w}. Your record is {rec}, the best possible is {min}.', v);
     var last = level >= N - 1;
-    $('resTitle').textContent = cfg.winTitle; $('resPerfect').hidden = !perfect; $('resPerfectTxt').textContent = L('Minimo di ' + w[1], 'Fewest ' + w[1]);
-    $('resText').textContent = text + (last ? L(" Era l'ultimo livello.", ' That was the last level.') : ''); $('btnNext').textContent = last ? L('Scegli un livello', 'Choose a level') : L('Livello successivo', 'Next level');
+    $('resTitle').textContent = cfg.winTitle; $('resPerfect').hidden = !perfect; $('resPerfectTxt').textContent = L('Minimo di {w}', 'Fewest {w}', { w: w[1] });
+    $('resText').textContent = FRASI(text, last ? L("Era l'ultimo livello.", 'That was the last level.') : ''); $('btnNext').textContent = last ? L('Scegli un livello', 'Choose a level') : L('Livello successivo', 'Next level');
     statusDefault = false; $('status').textContent = '';
     setTimeout(function () { if (won) { var r = $('result'); r.hidden = false; void r.offsetWidth; r.classList.add('show'); $('controls').style.visibility = 'hidden'; } }, calm ? 200 : (cfg.winDelay || 1200));
   }
@@ -555,11 +600,11 @@ window.Kit = (function () {
       var i = +b.getAttribute('data-level'), mine = data.best[i + 1], min = cfg.minOf(i), ti = Math.floor(i / PER);
       b.classList.toggle('done', !!mine); b.classList.toggle('perfect', !!mine && mine <= min); b.classList.toggle('current', i === level);
       if (mine) { counts[ti] = (counts[ti] || 0) + 1; if (mine <= min) perfect++; }
-      b.setAttribute('aria-label', L('Livello ', 'Level ') + (i + 1) + (mine ? L(', risolto', ', solved') : ''));
+      b.setAttribute('aria-label', mine ? L('Livello {n}, risolto', 'Level {n}, solved', { n: i + 1 }) : L('Livello {n}', 'Level {n}', { n: i + 1 }));
     });
-    Array.prototype.forEach.call(sh.querySelectorAll('[data-count]'), function (el) { var ti = +el.getAttribute('data-count'); el.textContent = (counts[ti] || 0) + L(' su ', ' of ') + Math.min(PER, N - ti * PER); });
+    Array.prototype.forEach.call(sh.querySelectorAll('[data-count]'), function (el) { var ti = +el.getAttribute('data-count'); el.textContent = L('{a} su {b}', '{a} of {b}', { a: counts[ti] || 0, b: Math.min(PER, N - ti * PER) }); });
     var n = solvedCount();
-    $('sheetSummary').textContent = n === 0 ? L('Scegli da quale livello partire: sono tutti aperti.', 'Pick any level to start: they are all open.') : L(n + ' di ' + N + ' risolti, ' + perfect + ' con il minimo.', n + ' of ' + N + ' solved, ' + perfect + ' in the fewest moves.');
+    $('sheetSummary').textContent = n === 0 ? L('Scegli da quale livello partire: sono tutti aperti.', 'Pick any level to start: they are all open.') : L('{n} di {tot} risolti, {p} con il minimo.', '{n} of {tot} solved, {p} in the fewest moves.', { n: n, tot: N, p: perfect });
     openDlg(sh); var cur = sh.querySelector('.lv.current'); if (cur) { try { cur.scrollIntoView({ block: 'center' }); } catch (e) {} }
   }
 
@@ -658,12 +703,47 @@ window.GAME_LEVELS = [{"w":2,"h":3,"g":"A./A./BB","m":2,"n":"elle"},{"w":3,"h":2
     var x = bx + (sx / n + 0.5) * 100, y = by + (sy / n + 0.5) * 100;
     fxG.insertAdjacentHTML('beforeend', '<g class="alive" transform="translate(' + x.toFixed(0) + ',' + y.toFixed(0) + ')"><g class="alin"><ellipse cx="-30" cy="-6" rx="13" ry="16" fill="#fff" stroke="#4A3B52" stroke-width="6"/><ellipse cx="30" cy="-6" rx="13" ry="16" fill="#fff" stroke="#4A3B52" stroke-width="6"/><circle cx="-27" cy="-3" r="7" fill="#4A3B52"/><circle cx="33" cy="-3" r="7" fill="#4A3B52"/><path d="M-22 22q22 24 44 0Z" fill="#7A3B46" stroke="#4A3B52" stroke-width="5" stroke-linejoin="round"/><circle cx="-46" cy="18" r="9" fill="#FFB59A" opacity=".9"/><circle cx="46" cy="18" r="9" fill="#FFB59A" opacity=".9"/></g></g>');
   }
-  var NAMES_EN = { quadrato: 'Square', montagna: 'Mountain', zeta: 'Zigzag', elle: 'L shape', croce: 'Cross', ti: 'T shape', gradini: 'Steps', scatola: 'Box', freccia: 'Arrow', coppa: 'Cup',
-    casetta: 'Little house', albero: 'Tree', albero2: 'Tree', razzo: 'Rocket', razzo2: 'Rocket', ponte: 'Bridge', gatto: 'Cat', pesce: 'Fish', barca: 'Boat', macchina: 'Car', aereo: 'Plane', aereo2: 'Plane',
-    fungo: 'Mushroom', stella: 'Star', corona: 'Crown', casa: 'House', casa2: 'House', treno: 'Train', robot: 'Robot', robot2: 'Robot', granchio: 'Crab', castello: 'Castle', castello2: 'Castle',
-    pinguino: 'Penguin', pinguino2: 'Penguin', balena: 'Whale', balena2: 'Whale', velieri: 'Sailboat', nave: 'Ship', dinosauro: 'Dinosaur', dinosauro2: 'Dinosaur', camion: 'Truck', camion2: 'Truck',
-    trattore: 'Tractor', torre: 'Tower' };
-  var COL = [['#FF9383', '#EE5E4D', '#C7402F'], ['#FFE98A', '#FFD95A', '#E8B52E'], ['#A9D3FF', '#7DB7F7', '#5791DB'], ['#B4ECAE', '#8DD68A', '#62B660'], ['#A6ECE6', '#4FC3C7', '#2E9AA1'], ['#FFC894', '#F2A65A', '#D98535']], CNAME = LANG === 'en' ? ['red', 'yellow', 'blue', 'green', 'turquoise', 'orange'] : ['rosso', 'giallo', 'blu', 'verde', 'turchese', 'arancione'];
+  var NOMI_L = {                                               // the other languages: 'Name|object of «fill …»|gender' (the gender only where the title agrees with the name)
+    en: { quadrato: 'Square|the square', montagna: 'Mountain|the mountain', zeta: 'Zigzag|the zigzag', elle: 'L shape|the L shape', croce: 'Cross|the cross', ti: 'T shape|the T shape', gradini: 'Steps|the steps', scatola: 'Box|the box',
+      freccia: 'Arrow|the arrow', coppa: 'Cup|the cup', casetta: 'Little house|the little house', albero: 'Tree|the tree', razzo: 'Rocket|the rocket', ponte: 'Bridge|the bridge', gatto: 'Cat|the cat', pesce: 'Fish|the fish',
+      barca: 'Boat|the boat', macchina: 'Car|the car', aereo: 'Plane|the plane', fungo: 'Mushroom|the mushroom', stella: 'Star|the star', corona: 'Crown|the crown', casa: 'House|the house', treno: 'Train|the train', robot: 'Robot|the robot',
+      granchio: 'Crab|the crab', castello: 'Castle|the castle', pinguino: 'Penguin|the penguin', balena: 'Whale|the whale', velieri: 'Sailboat|the sailboat', nave: 'Ship|the ship', dinosauro: 'Dinosaur|the dinosaur',
+      camion: 'Truck|the truck', trattore: 'Tractor|the tractor', torre: 'Tower|the tower' },
+    es: { quadrato: 'Cuadrado|el cuadrado|m', montagna: 'Montaña|la montaña|f', zeta: 'Zigzag|el zigzag|m', elle: 'Forma de L|la forma de L|f', croce: 'Cruz|la cruz|f', ti: 'Forma de T|la forma de T|f', gradini: 'Escalones|los escalones|mp',
+      scatola: 'Caja|la caja|f', freccia: 'Flecha|la flecha|f', coppa: 'Copa|la copa|f', casetta: 'Casita|la casita|f', albero: 'Árbol|el árbol|m', razzo: 'Cohete|el cohete|m', ponte: 'Puente|el puente|m', gatto: 'Gato|el gato|m',
+      pesce: 'Pez|el pez|m', barca: 'Barca|la barca|f', macchina: 'Coche|el coche|m', aereo: 'Avión|el avión|m', fungo: 'Hongo|el hongo|m', stella: 'Estrella|la estrella|f', corona: 'Corona|la corona|f', casa: 'Casa|la casa|f',
+      treno: 'Tren|el tren|m', robot: 'Robot|el robot|m', granchio: 'Cangrejo|el cangrejo|m', castello: 'Castillo|el castillo|m', pinguino: 'Pingüino|el pingüino|m', balena: 'Ballena|la ballena|f', velieri: 'Velero|el velero|m',
+      nave: 'Barco|el barco|m', dinosauro: 'Dinosaurio|el dinosaurio|m', camion: 'Camión|el camión|m', trattore: 'Tractor|el tractor|m', torre: 'Torre|la torre|f' },
+    pt: { quadrato: 'Quadrado|o quadrado|m', montagna: 'Montanha|a montanha|f', zeta: 'Zigue-zague|o zigue-zague|m', elle: 'Forma de L|a forma de L|f', croce: 'Cruz|a cruz|f', ti: 'Forma de T|a forma de T|f', gradini: 'Degraus|os degraus|mp',
+      scatola: 'Caixa|a caixa|f', freccia: 'Seta|a seta|f', coppa: 'Taça|a taça|f', casetta: 'Casinha|a casinha|f', albero: 'Árvore|a árvore|f', razzo: 'Foguete|o foguete|m', ponte: 'Ponte|a ponte|f', gatto: 'Gato|o gato|m',
+      pesce: 'Peixe|o peixe|m', barca: 'Barco|o barco|m', macchina: 'Carro|o carro|m', aereo: 'Avião|o avião|m', fungo: 'Cogumelo|o cogumelo|m', stella: 'Estrela|a estrela|f', corona: 'Coroa|a coroa|f', casa: 'Casa|a casa|f',
+      treno: 'Trem|o trem|m', robot: 'Robô|o robô|m', granchio: 'Caranguejo|o caranguejo|m', castello: 'Castelo|o castelo|m', pinguino: 'Pinguim|o pinguim|m', balena: 'Baleia|a baleia|f', velieri: 'Veleiro|o veleiro|m',
+      nave: 'Navio|o navio|m', dinosauro: 'Dinossauro|o dinossauro|m', camion: 'Caminhão|o caminhão|m', trattore: 'Trator|o trator|m', torre: 'Torre|a torre|f' },
+    fr: { quadrato: 'Carré|le carré|m', montagna: 'Montagne|la montagne|f', zeta: 'Zigzag|le zigzag|m', elle: 'Forme en L|la forme en L|f', croce: 'Croix|la croix|f', ti: 'Forme en T|la forme en T|f', gradini: 'Marches|les marches|fp',
+      scatola: 'Boîte|la boîte|f', freccia: 'Flèche|la flèche|f', coppa: 'Coupe|la coupe|f', casetta: 'Petite maison|la petite maison|f', albero: "Arbre|l'arbre|m", razzo: 'Fusée|la fusée|f', ponte: 'Pont|le pont|m', gatto: 'Chat|le chat|m',
+      pesce: 'Poisson|le poisson|m', barca: 'Bateau|le bateau|m', macchina: 'Voiture|la voiture|f', aereo: "Avion|l'avion|m", fungo: 'Champignon|le champignon|m', stella: "Étoile|l'étoile|f", corona: 'Couronne|la couronne|f',
+      casa: 'Maison|la maison|f', treno: 'Train|le train|m', robot: 'Robot|le robot|m', granchio: 'Crabe|le crabe|m', castello: 'Château|le château|m', pinguino: 'Pingouin|le pingouin|m', balena: 'Baleine|la baleine|f',
+      velieri: 'Voilier|le voilier|m', nave: 'Navire|le navire|m', dinosauro: 'Dinosaure|le dinosaure|m', camion: 'Camion|le camion|m', trattore: 'Tracteur|le tracteur|m', torre: 'Tour|la tour|f' },
+    de: { quadrato: 'Quadrat|das Quadrat', montagna: 'Berg|den Berg', zeta: 'Zickzack|den Zickzack', elle: 'L|das L', croce: 'Kreuz|das Kreuz', ti: 'T|das T', gradini: 'Treppe|die Treppe', scatola: 'Schachtel|die Schachtel',
+      freccia: 'Pfeil|den Pfeil', coppa: 'Pokal|den Pokal', casetta: 'Häuschen|das Häuschen', albero: 'Baum|den Baum', razzo: 'Rakete|die Rakete', ponte: 'Brücke|die Brücke', gatto: 'Katze|die Katze', pesce: 'Fisch|den Fisch',
+      barca: 'Boot|das Boot', macchina: 'Auto|das Auto', aereo: 'Flugzeug|das Flugzeug', fungo: 'Pilz|den Pilz', stella: 'Stern|den Stern', corona: 'Krone|die Krone', casa: 'Haus|das Haus', treno: 'Zug|den Zug', robot: 'Roboter|den Roboter',
+      granchio: 'Krabbe|die Krabbe', castello: 'Burg|die Burg', pinguino: 'Pinguin|den Pinguin', balena: 'Wal|den Wal', velieri: 'Segelboot|das Segelboot', nave: 'Schiff|das Schiff', dinosauro: 'Dinosaurier|den Dinosaurier',
+      camion: 'Lastwagen|den Lastwagen', trattore: 'Traktor|den Traktor', torre: 'Turm|den Turm' },
+    ja: { quadrato: '四角', montagna: '山', zeta: 'ジグザグ', elle: 'L字', croce: '十字', ti: 'T字', gradini: '階段', scatola: '箱', freccia: '矢印', coppa: 'カップ', casetta: '小さな家', albero: '木', razzo: 'ロケット', ponte: '橋',
+      gatto: 'ねこ', pesce: '魚', barca: 'ボート', macchina: '車', aereo: '飛行機', fungo: 'きのこ', stella: '星', corona: '王冠', casa: '家', treno: '電車', robot: 'ロボット', granchio: 'カニ', castello: 'お城', pinguino: 'ペンギン',
+      balena: 'クジラ', velieri: 'ヨット', nave: '船', dinosauro: '恐竜', camion: 'トラック', trattore: 'トラクター', torre: '塔' },
+    'zh-Hant': { quadrato: '正方形', montagna: '山', zeta: '之字形', elle: 'L形', croce: '十字', ti: 'T形', gradini: '階梯', scatola: '盒子', freccia: '箭頭', coppa: '獎盃', casetta: '小房子', albero: '樹', razzo: '火箭', ponte: '橋',
+      gatto: '貓', pesce: '魚', barca: '小船', macchina: '汽車', aereo: '飛機', fungo: '蘑菇', stella: '星星', corona: '皇冠', casa: '房子', treno: '火車', robot: '機器人', granchio: '螃蟹', castello: '城堡', pinguino: '企鵝',
+      balena: '鯨魚', velieri: '帆船', nave: '大船', dinosauro: '恐龍', camion: '卡車', trattore: '拖拉機', torre: '塔' },
+    'zh-Hans': { quadrato: '正方形', montagna: '山', zeta: '之字形', elle: 'L形', croce: '十字', ti: 'T形', gradini: '阶梯', scatola: '盒子', freccia: '箭头', coppa: '奖杯', casetta: '小房子', albero: '树', razzo: '火箭', ponte: '桥',
+      gatto: '猫', pesce: '鱼', barca: '小船', macchina: '汽车', aereo: '飞机', fungo: '蘑菇', stella: '星星', corona: '皇冠', casa: '房子', treno: '火车', robot: '机器人', granchio: '螃蟹', castello: '城堡', pinguino: '企鹅',
+      balena: '鲸鱼', velieri: '帆船', nave: '大船', dinosauro: '恐龙', camion: '卡车', trattore: '拖拉机', torre: '塔' }
+  };
+  var FINE = { en: '{N} done!', es: { m: '¡{N} terminado!', f: '¡{N} terminada!', mp: '¡{N} terminados!' }, pt: { m: '{N} pronto!', f: '{N} pronta!', mp: '{N} prontos!' },   // the title when the shape is full
+    fr: { m: '{N} terminé !', f: '{N} terminée !', fp: '{N} terminées !' }, de: '{N} fertig!', ja: '{N}、完成！', zh: '{N}完成了！' };
+  var COL = [['#FF9383', '#EE5E4D', '#C7402F'], ['#FFE98A', '#FFD95A', '#E8B52E'], ['#A9D3FF', '#7DB7F7', '#5791DB'], ['#B4ECAE', '#8DD68A', '#62B660'], ['#A6ECE6', '#4FC3C7', '#2E9AA1'], ['#FFC894', '#F2A65A', '#D98535']], CNAME = PICK({ it: ['rosso', 'giallo', 'blu', 'verde', 'turchese', 'arancione'], en: ['red', 'yellow', 'blue', 'green', 'turquoise', 'orange'],
+    es: ['roja', 'amarilla', 'azul', 'verde', 'turquesa', 'naranja'], pt: ['vermelha', 'amarela', 'azul', 'verde', 'turquesa', 'laranja'], fr: ['rouge', 'jaune', 'bleue', 'verte', 'turquoise', 'orange'],
+    de: ['rote', 'gelbe', 'blaue', 'grüne', 'türkise', 'orange'], ja: ['赤い', '黄色い', '青い', '緑の', '水色の', 'オレンジの'], 'zh-Hant': ['紅色', '黃色', '藍色', '綠色', '藍綠色', '橘色'], 'zh-Hans': ['红色', '黄色', '蓝色', '绿色', '蓝绿色', '橙色'] });
   var G, placed, hist, slots, els, W, H, bx, by, S = 0.58, drag = null, piecesG, ghostG, fxG;
   function dot(x, y, r, f) { return '<circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="' + (f || INK) + '"/>'; }
   function defs() {
@@ -737,12 +817,17 @@ window.GAME_LEVELS = [{"w":2,"h":3,"g":"A./A./BB","m":2,"n":"elle"},{"w":3,"h":2
     piecesG = scene.querySelector('#piecesG'); ghostG = scene.querySelector('#ghostG'); fxG = scene.querySelector('#fxG');
     els = G.pieces.map(function (p) { return piecesG.querySelector('[data-p="' + p.id + '"]'); });
     G.pieces.forEach(function (p, i2) { setT(i2, slots[i2][0], slots[i2][1], S); });
-    var nm = NOMI[RAW[n].n];
-    var en = NAMES_EN[RAW[n].n];
-    if (LANG === 'en') { CFG.winTitle = en ? en + ' done!' : 'All in place!'; return en ? 'Fill the ' + en.toLowerCase() + ' with the pieces from the drawer.' : ''; }
-    var fin = !nm ? '' : /^la /.test(nm[0]) ? ' finita!' : /^i /.test(nm[0]) ? ' finiti!' : /^le /.test(nm[0]) ? ' finite!' : ' finito!';   // the ending agrees with the name
-    CFG.winTitle = nm ? nm[1] + fin : 'Tutto incastrato!';
-    return nm ? 'Riempi ' + nm[0] + ' con i pezzi del cassetto.' : '';
+    var nm = NOMI[RAW[n].n], f, fine;
+    if (LANG === 'it') {
+      var fin = !nm ? '' : /^la /.test(nm[0]) ? ' finita!' : /^i /.test(nm[0]) ? ' finiti!' : /^le /.test(nm[0]) ? ' finite!' : ' finito!';   // the ending agrees with the name
+      CFG.winTitle = nm ? nm[1] + fin : 'Tutto incastrato!';
+      return nm ? L('Riempi {x} con i pezzi del cassetto.', 'Fill {x} with the pieces from the drawer.', { x: nm[0] }) : '';
+    }
+    f = (PICK(NOMI_L)[String(RAW[n].n).replace(/2$/, '')] || '').split('|');
+    if (!f[0]) { CFG.winTitle = L('Tutto incastrato!', 'All in place!'); return ''; }
+    fine = PICK(FINE); if (typeof fine !== 'string') fine = fine[f[2]] || fine.m || fine.f;
+    CFG.winTitle = fine.replace('{N}', f[0]);
+    return L('Riempi {x} con i pezzi del cassetto.', 'Fill {x} with the pieces from the drawer.', { x: f[1] || f[0] });
   }
   function pt(e) { var b = scene.getBoundingClientRect(), s = Math.min(b.width / W, b.height / H); return { x: (e.clientX - b.left - (b.width - W * s) / 2) / s, y: (e.clientY - b.top - (b.height - H * s) / 2) / s }; }
   function ghost(cells, color, cls) { ghostG.innerHTML = cells.map(function (c) { return '<rect class="' + (cls || '') + '" x="' + (bx + c[0] * 100 + 6) + '" y="' + (by + c[1] * 100 + 6) + '" width="88" height="88" rx="15" fill="' + color + '" stroke="#fff" stroke-width="4" stroke-dasharray="10 9"/>'; }).join(''); }
@@ -778,16 +863,15 @@ window.GAME_LEVELS = [{"w":2,"h":3,"g":"A./A./BB","m":2,"n":"elle"},{"w":3,"h":2
   var CFG = {
     key: 'incastri.v1', count: RAW.length, perTier: 24, moveLabel: L('Mosse', 'Moves'), word: [L('mossa', 'move'), L('mosse', 'moves')], winTitle: L('Tutto incastrato!', 'All in place!'), winDelay: 1500,
     intro: L('Trascina i pezzi dal cassetto fino a riempire tutta la sagoma. I pezzi non si girano.', 'Drag the pieces from the drawer until the whole shape is filled. The pieces do not turn.'),
-    rules: LANG === 'en' ? ['Fill the whole shape with the pieces from the drawer.', 'Pieces are dragged as they are: they cannot be turned.', 'A piece already placed can be picked up again and moved, or put back in the drawer.', 'Each piece set down on the shape counts as one move: the fewest is one piece, one move.']
-      : ['Riempi tutta la sagoma con i pezzi del cassetto.', 'I pezzi si trascinano così come sono: non si possono girare.', 'Un pezzo già messo si può riprendere e spostare, o riportare nel cassetto.', 'Conta una mossa ogni pezzo appoggiato sulla sagoma: il minimo è un pezzo, una mossa.'],
+    rules: [L('Riempi tutta la sagoma con i pezzi del cassetto.', 'Fill the whole shape with the pieces from the drawer.'), L('I pezzi si trascinano così come sono: non si possono girare.', 'Pieces are dragged as they are: they cannot be turned.'), L('Un pezzo già messo si può riprendere e spostare, o riportare nel cassetto.', 'A piece already placed can be picked up again and moved, or put back in the drawer.'), L('Conta una mossa ogni pezzo appoggiato sulla sagoma: il minimo è un pezzo, una mossa.', 'Each piece set down on the shape counts as one move: the fewest is one piece, one move.')],
     minOf: function (i) { return RAW[i].m; }, load: load, moves: function () { return hist ? hist.filter(function (h) { return h.to; }).length : 0; }, canUndo: function () { return hist && hist.length > 0 && !drag; },
     undo: function () { var h = hist.pop(); placed[h.p] = h.from; piecesG.appendChild(els[h.p]); els[h.p].classList.remove('pop'); glide(h.p, 200); K.sfx('back'); K.changed(); },
     clearHint: clearHint,
     hint: function () {
       if (drag) return null; var sol = IN.solve(G, placed), i;
       if (sol) { for (i = 0; i < sol.length; i++) if (!placed[i]) break; var p = G.pieces[i]; els[i].classList.add('hintp'); ghost(p.cells.map(function (c) { return [sol[i][0] + c[0], sol[i][1] + c[1]]; }), '#FF8A3D', 'ghostc');
-        return L('Il pezzo ' + CNAME[i % CNAME.length] + ' va dove lampeggia l\'arancione.', 'The ' + CNAME[i % CNAME.length] + ' piece goes where the orange is flashing.'); }
-      for (i = 0; i < placed.length; i++) { if (!placed[i]) continue; var trial = placed.slice(); trial[i] = null; if (IN.solve(G, trial)) { els[i].classList.add('hintp'); return L('Così gli altri non ci stanno: togli il pezzo ' + CNAME[i % CNAME.length] + ' e riprova.', 'The others will not fit like this: take the ' + CNAME[i % CNAME.length] + ' piece away and try again.'); } }
+        return L('Il pezzo {c} va dove lampeggia l\'arancione.', 'The {c} piece goes where the orange is flashing.', { c: CNAME[i % CNAME.length] }); }
+      for (i = 0; i < placed.length; i++) { if (!placed[i]) continue; var trial = placed.slice(); trial[i] = null; if (IN.solve(G, trial)) { els[i].classList.add('hintp'); return L('Così gli altri non ci stanno: togli il pezzo {c} e riprova.', 'The others will not fit like this: take the {c} piece away and try again.', { c: CNAME[i % CNAME.length] }); } }
       return L('Riporta i pezzi nel cassetto e riparti.', 'Put the pieces back in the drawer and start again.');
     }
   };

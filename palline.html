@@ -2,6 +2,7 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
+<meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Palline nei tubi</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;800;900&display=swap">
@@ -28,7 +29,7 @@ button:focus-visible{outline:3px solid var(--joy); outline-offset:2px}
 
 .app{max-width:560px; height:100vh; height:100dvh; margin:0 auto; padding:max(8px,env(safe-area-inset-top)) 12px max(10px,env(safe-area-inset-bottom)); display:flex; flex-direction:column; gap:8px}
 .bar{display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:8px; flex:none}
-.pill{justify-self:start; display:inline-flex; align-items:center; gap:8px; height:40px; padding:2px 15px 0 12px; border-radius:20px; border:0; box-shadow:0 0 0 2.5px var(--ink); background:var(--surface); font-weight:800; font-size:.9375rem}
+.pill{justify-self:start; display:inline-flex; align-items:center; gap:8px; height:40px; padding:2px 15px 0 12px; border-radius:20px; border:0; box-shadow:0 0 0 2.5px var(--ink); background:var(--surface); font-weight:800; font-size:.9375rem; white-space:nowrap; flex:none}
 .pill svg{width:19px; height:19px; margin-top:-2px}
 .where{display:flex; align-items:center; gap:10px}
 .badge{min-width:40px; height:40px; padding:2px 7px 0; border-radius:20px; display:grid; place-items:center; background:var(--tier); color:var(--tier-ink); box-shadow:0 0 0 2.5px var(--ink); font-weight:900; font-size:1.0625rem; font-variant-numeric:tabular-nums}
@@ -84,6 +85,7 @@ button:focus-visible{outline:3px solid var(--joy); outline-offset:2px}
 .ring .fill{stroke:var(--joy); transition:stroke-dashoffset .3s linear}
 .sign.waiting .ring{display:block}
 
+#lvOf{white-space:nowrap}
 @media (max-width:370px){ .bar{gap:5px} .bar .pill span{display:none} .bar .pill{padding-left:12px; padding-right:12px} #lvOf{display:none} }
 .result{position:fixed; z-index:20; left:0; right:0; bottom:0; max-width:560px; margin:0 auto; background:var(--surface); border-radius:26px 26px 0 0; padding:22px 20px max(20px,env(safe-area-inset-bottom)); text-align:center; box-shadow:0 0 0 3px var(--ink); transform:translateY(108%); transition:transform .36s cubic-bezier(.2,.9,.25,1)}
 .result.show{transform:none}
@@ -165,6 +167,8 @@ a.round{color:inherit; text-decoration:none}
   <div class="sheet-body" id="sheetBody"></div>
 </dialog>
 
+
+<script id="testi">window.TESTI = {"es":{"tocco":"giro","Scene":"Escenas","Come si gioca":"Cómo se juega","Chiudi":"Cerrar","Media":"Media","sul letto":"en la cama","Via libera":"Vía libre","Palline nei tubi":"Bolas en frascos","Mosse":"Movimientos","mossa":"movimiento","mosse":"movimientos","passi":"pasos","Livelli":"Niveles","Minimo":"Mínimo","Record":"Récord","Barattoli con le palline":"Frascos con bolas","Comandi":"Controles","Annulla":"Deshacer","Ricomincia":"Reiniciar","Aiuto":"Ayuda","Tutto in ordine!":"¡Todo ordenado!","Minimo di mosse":"Mínimo de movimientos","Rigioca":"Jugar otra vez","Livello successivo":"Siguiente nivel","Principiante":"Principiante","Intermedio":"Intermedio","Avanzato":"Avanzado","Esperto":"Experto","Maestro":"Maestro","Tocca un barattolo per sollevare la pallina in cima, poi tocca quello dove vuoi metterla. Ogni barattolo deve avere un solo colore.":"Toca un frasco para levantar la bola de arriba y luego toca el frasco donde quieres ponerla. Cada frasco debe tener un solo color.","livello {n} di {tot}":"nivel {n} de {tot}","Sposta la pallina {c} dal {a} al {b} barattolo.":"Mueve la bola {c} del {a} al {b} frasco.","Da qui mancano {n} mosse.":"Desde aquí faltan {n} movimientos.","Risolto in {n} {w}: meno di così non si può.":"Resuelto en {n} {w}: imposible con menos.","Risolto in {n} {w}. Il minimo è {min}.":"Resuelto en {n} {w}. El mínimo es {min}.","Risolto in {n} {w}, nuovo record. Il minimo è {min}.":"Resuelto en {n} {w}, nuevo récord. El mínimo es {min}.","Risolto in {n} {w}. Il tuo record è {rec}, il minimo è {min}.":"Resuelto en {n} {w}. Tu récord es {rec}, el mínimo es {min}.","Era l'ultimo livello.":"Era el último nivel.","Scegli un livello":"Elige un nivel","Ogni barattolo deve finire con palline di un solo colore.":"Cada frasco tiene que acabar con bolas de un solo color.","Si sposta una pallina alla volta, quella in cima: toccala e poi tocca il barattolo di arrivo, oppure trascinala.":"Se mueve una bola cada vez, la de arriba: tócala y luego toca el frasco de destino, o arrástrala.","Una pallina entra in qualsiasi barattolo che abbia ancora posto.":"Una bola cabe en cualquier frasco que todavía tenga sitio.","Ogni spostamento conta una mossa.":"Cada cambio cuenta como un movimiento.","Livello {n}":"Nivel {n}","Livello {n}, risolto con il minimo di mosse":"Nivel {n}, resuelto con el mínimo de movimientos","Livello {n}, risolto in {m} mosse":"Nivel {n}, resuelto en {m} movimientos","{a} su {b}":"{a} de {b}","Scegli da quale livello partire: sono tutti aperti.":"Elige por qué nivel empezar: están todos abiertos.","{n} di {tot} risolti, {p} con il minimo di mosse.":"{n} de {tot} resueltos, {p} con el mínimo de movimientos.","Tutti i giochi":"Todos los juegos","Livello {n}, risolto":"Nivel {n}, resuelto"},"pt":{"tocco":"giro","Scene":"Cenas","Come si gioca":"Como jogar","Chiudi":"Fechar","Media":"Média","sul letto":"na cama","Via libera":"Caminho livre","Palline nei tubi":"Bolinhas nos potes","Mosse":"Jogadas","mossa":"jogada","mosse":"jogadas","passi":"passos","Livelli":"Níveis","Minimo":"Mínimo","Record":"Recorde","Barattoli con le palline":"Potes com bolinhas","Comandi":"Controles","Annulla":"Desfazer","Ricomincia":"Reiniciar","Aiuto":"Ajuda","Tutto in ordine!":"Tudo arrumado!","Minimo di mosse":"Mínimo de jogadas","Rigioca":"Jogar de novo","Livello successivo":"Próximo nível","Principiante":"Iniciante","Intermedio":"Intermediário","Avanzato":"Avançado","Esperto":"Especialista","Maestro":"Mestre","Tocca un barattolo per sollevare la pallina in cima, poi tocca quello dove vuoi metterla. Ogni barattolo deve avere un solo colore.":"Toque em um pote para levantar a bolinha de cima, depois toque no pote onde quer colocá-la. Cada pote deve ter uma cor só.","livello {n} di {tot}":"nível {n} de {tot}","Sposta la pallina {c} dal {a} al {b} barattolo.":"Mova a bolinha {c} do {a} para o {b} pote.","Da qui mancano {n} mosse.":"Daqui faltam {n} jogadas.","Risolto in {n} {w}: meno di così non si può.":"Resolvido em {n} {w}: com menos não dá.","Risolto in {n} {w}. Il minimo è {min}.":"Resolvido em {n} {w}. O mínimo é {min}.","Risolto in {n} {w}, nuovo record. Il minimo è {min}.":"Resolvido em {n} {w}, novo recorde. O mínimo é {min}.","Risolto in {n} {w}. Il tuo record è {rec}, il minimo è {min}.":"Resolvido em {n} {w}. Seu recorde é {rec}, o mínimo é {min}.","Era l'ultimo livello.":"Era o último nível.","Scegli un livello":"Escolha um nível","Ogni barattolo deve finire con palline di un solo colore.":"Cada pote tem que terminar com bolinhas de uma cor só.","Si sposta una pallina alla volta, quella in cima: toccala e poi tocca il barattolo di arrivo, oppure trascinala.":"Move-se uma bolinha por vez, a de cima: toque nela e depois no pote de destino, ou arraste-a.","Una pallina entra in qualsiasi barattolo che abbia ancora posto.":"Uma bolinha cabe em qualquer pote que ainda tenha lugar.","Ogni spostamento conta una mossa.":"Cada movimento conta uma jogada.","Livello {n}":"Nível {n}","Livello {n}, risolto con il minimo di mosse":"Nível {n}, resolvido com o mínimo de jogadas","Livello {n}, risolto in {m} mosse":"Nível {n}, resolvido em {m} jogadas","{a} su {b}":"{a} de {b}","Scegli da quale livello partire: sono tutti aperti.":"Escolha por qual nível começar: estão todos liberados.","{n} di {tot} risolti, {p} con il minimo di mosse.":"{n} de {tot} resolvidos, {p} com o mínimo de jogadas.","Tutti i giochi":"Todos os jogos","Livello {n}, risolto":"Nível {n}, resolvido"},"fr":{"tocco":"tour","Scene":"Scènes","Come si gioca":"Comment jouer","Chiudi":"Fermer","Media":"Moyen","sul letto":"sur le lit","Via libera":"Voie libre","Palline nei tubi":"Boules en bocaux","Mosse":"Coups","mossa":"coup","mosse":"coups","passi":"pas","Livelli":"Niveaux","Minimo":"Minimum","Record":"Record","Barattoli con le palline":"Bocaux avec les boules","Comandi":"Commandes","Annulla":"Annuler","Ricomincia":"Recommencer","Aiuto":"Aide","Tutto in ordine!":"Tout est rangé !","Minimo di mosse":"Minimum de coups","Rigioca":"Rejouer","Livello successivo":"Niveau suivant","Principiante":"Débutant","Intermedio":"Intermédiaire","Avanzato":"Avancé","Esperto":"Expert","Maestro":"Maître","Tocca un barattolo per sollevare la pallina in cima, poi tocca quello dove vuoi metterla. Ogni barattolo deve avere un solo colore.":"Touche un bocal pour soulever la boule du dessus, puis touche celui où tu veux la mettre. Chaque bocal doit n’avoir qu’une seule couleur.","livello {n} di {tot}":"niveau {n} sur {tot}","Sposta la pallina {c} dal {a} al {b} barattolo.":"Déplace la boule {c} du {a} au {b} bocal.","Da qui mancano {n} mosse.":"D’ici, il reste {n} coups.","Risolto in {n} {w}: meno di così non si può.":"Réussi en {n} {w} : impossible de faire moins.","Risolto in {n} {w}. Il minimo è {min}.":"Réussi en {n} {w}. Le minimum est {min}.","Risolto in {n} {w}, nuovo record. Il minimo è {min}.":"Réussi en {n} {w}, nouveau record. Le minimum est {min}.","Risolto in {n} {w}. Il tuo record è {rec}, il minimo è {min}.":"Réussi en {n} {w}. Ton record est {rec}, le minimum est {min}.","Era l'ultimo livello.":"C’était le dernier niveau.","Scegli un livello":"Choisis un niveau","Ogni barattolo deve finire con palline di un solo colore.":"Chaque bocal doit finir avec des boules d’une seule couleur.","Si sposta una pallina alla volta, quella in cima: toccala e poi tocca il barattolo di arrivo, oppure trascinala.":"On déplace une boule à la fois, celle du dessus : touche-la puis touche le bocal d’arrivée, ou fais-la glisser.","Una pallina entra in qualsiasi barattolo che abbia ancora posto.":"Une boule entre dans n’importe quel bocal qui a encore de la place.","Ogni spostamento conta una mossa.":"Chaque déplacement compte pour un coup.","Livello {n}":"Niveau {n}","Livello {n}, risolto con il minimo di mosse":"Niveau {n}, réussi avec le minimum de coups","Livello {n}, risolto in {m} mosse":"Niveau {n}, réussi en {m} coups","{a} su {b}":"{a} sur {b}","Scegli da quale livello partire: sono tutti aperti.":"Choisis par quel niveau commencer : ils sont tous ouverts.","{n} di {tot} risolti, {p} con il minimo di mosse.":"{n} sur {tot} réussis, {p} avec le minimum de coups.","Tutti i giochi":"Tous les jeux","Livello {n}, risolto":"Niveau {n}, réussi"},"de":{"tocco":"Drehung","Scene":"Bilder","Come si gioca":"So wird gespielt","Chiudi":"Schließen","Media":"Mittel","sul letto":"aufs Bett","sul letto#loc":"auf dem Bett","Via libera":"Freie Fahrt","Palline nei tubi":"Kugeln im Glas","Mosse":"Züge","mossa":"Zug","mosse":"Züge","passi":"Schritte","Livelli":"Level","Minimo":"Minimum","Record":"Rekord","Barattoli con le palline":"Gläser mit Kugeln","Comandi":"Steuerung","Annulla":"Zurück","Ricomincia":"Neu starten","Aiuto":"Hilfe","Tutto in ordine!":"Alles sortiert!","Minimo di mosse":"Wenigste Züge","Rigioca":"Nochmal spielen","Livello successivo":"Nächstes Level","Principiante":"Anfänger","Intermedio":"Mittel","Avanzato":"Fortgeschritten","Esperto":"Experte","Maestro":"Meister","Tocca un barattolo per sollevare la pallina in cima, poi tocca quello dove vuoi metterla. Ogni barattolo deve avere un solo colore.":"Tippe auf ein Glas, um die oberste Kugel hochzuheben, dann tippe auf das Glas, in das sie soll. Jedes Glas darf nur eine Farbe haben.","livello {n} di {tot}":"Level {n} von {tot}","Sposta la pallina {c} dal {a} al {b} barattolo.":"Leg die {c} Kugel vom {a} ins {b} Glas.","Da qui mancano {n} mosse.":"Von hier noch {n} Züge.","Risolto in {n} {w}: meno di così non si può.":"Geschafft: {n} {w}. Weniger geht nicht.","Risolto in {n} {w}. Il minimo è {min}.":"Geschafft: {n} {w}. Das Minimum ist {min}.","Risolto in {n} {w}, nuovo record. Il minimo è {min}.":"Geschafft: {n} {w}, neuer Rekord. Das Minimum ist {min}.","Risolto in {n} {w}. Il tuo record è {rec}, il minimo è {min}.":"Geschafft: {n} {w}. Dein Rekord ist {rec}, das Minimum ist {min}.","Era l'ultimo livello.":"Das war das letzte Level.","Scegli un livello":"Wähle ein Level","Ogni barattolo deve finire con palline di un solo colore.":"Am Ende muss jedes Glas Kugeln in nur einer Farbe haben.","Si sposta una pallina alla volta, quella in cima: toccala e poi tocca il barattolo di arrivo, oppure trascinala.":"Man bewegt immer eine Kugel, die oberste: Tippe sie an und dann das Zielglas, oder zieh sie hinüber.","Una pallina entra in qualsiasi barattolo che abbia ancora posto.":"Eine Kugel passt in jedes Glas, in dem noch Platz ist.","Ogni spostamento conta una mossa.":"Jedes Umsetzen zählt als ein Zug.","Livello {n}":"Level {n}","Livello {n}, risolto con il minimo di mosse":"Level {n}, mit den wenigsten Zügen gelöst","Livello {n}, risolto in {m} mosse":"Level {n}, gelöst mit {m} Zügen","{a} su {b}":"{a} von {b}","Scegli da quale livello partire: sono tutti aperti.":"Wähle, mit welchem Level du anfängst: Alle sind offen.","{n} di {tot} risolti, {p} con il minimo di mosse.":"{n} von {tot} gelöst, {p} mit den wenigsten Zügen.","Tutti i giochi":"Alle Spiele","Livello {n}, risolto":"Level {n}, gelöst"},"ja":{"tocco":"回","Scene":"場面","Come si gioca":"あそびかた","Chiudi":"閉じる","Media":"ふつう","sul letto":"ベッドの上","Via libera":"クルマ脱出","Palline nei tubi":"ボールわけ","Mosse":"手数","mossa":"手","mosse":"手","passi":"歩","Livelli":"レベル","Minimo":"最少","Record":"記録","Barattoli con le palline":"ボールの入ったびん","Comandi":"操作","Annulla":"もどす","Ricomincia":"やり直す","Aiuto":"ヒント","Tutto in ordine!":"ぜんぶそろった！","Minimo di mosse":"最少手数","Rigioca":"もう一度","Livello successivo":"次のレベル","Principiante":"初級","Intermedio":"中級","Avanzato":"上級","Esperto":"エキスパート","Maestro":"マスター","Tocca un barattolo per sollevare la pallina in cima, poi tocca quello dove vuoi metterla. Ogni barattolo deve avere un solo colore.":"びんをタップするといちばん上のボールが持ち上がります。次に、入れたいびんをタップしてね。どのびんも1色だけにしよう。","livello {n} di {tot}":"レベル {n}/{tot}","Sposta la pallina {c} dal {a} al {b} barattolo.":"{c}のボールを、{a}番目のびんから{b}番目のびんへ動かそう。","Da qui mancano {n} mosse.":"ここからあと{n}手。","Risolto in {n} {w}: meno di così non si può.":"{n}{w}でクリア！これより少なくはできません。","Risolto in {n} {w}. Il minimo è {min}.":"{n}{w}でクリア。最少は{min}です。","Risolto in {n} {w}, nuovo record. Il minimo è {min}.":"{n}{w}でクリア、新記録！最少は{min}です。","Risolto in {n} {w}. Il tuo record è {rec}, il minimo è {min}.":"{n}{w}でクリア。自己ベストは{rec}、最少は{min}です。","Era l'ultimo livello.":"これが最後のレベルでした。","Scegli un livello":"レベルをえらぶ","Ogni barattolo deve finire con palline di un solo colore.":"最後に、どのびんも1色のボールだけになればクリアです。","Si sposta una pallina alla volta, quella in cima: toccala e poi tocca il barattolo di arrivo, oppure trascinala.":"動かせるのは、いちばん上のボールを1つずつです。ボールをタップしてから入れたいびんをタップするか、ドラッグします。","Una pallina entra in qualsiasi barattolo che abbia ancora posto.":"あきがあれば、どのびんにも入れられます。","Ogni spostamento conta una mossa.":"ボールを1回動かすごとに1手です。","Livello {n}":"レベル{n}","Livello {n}, risolto con il minimo di mosse":"レベル{n}、最少手数でクリア","Livello {n}, risolto in {m} mosse":"レベル{n}、{m}手でクリア","{a} su {b}":"{a}/{b}","Scegli da quale livello partire: sono tutti aperti.":"好きなレベルから始められます。すべてのレベルが開いています。","{n} di {tot} risolti, {p} con il minimo di mosse.":"{tot}レベル中{n}レベルをクリア（うち{p}レベルは最少手数）。","Tutti i giochi":"すべてのゲーム","Livello {n}, risolto":"レベル{n}、クリア"},"zh-Hant":{"tocco":"次","Scene":"場景","Come si gioca":"怎麼玩","Chiudi":"關閉","Media":"普通","sul letto":"床上","Via libera":"塞車脫困","Palline nei tubi":"彩球分類","Mosse":"步數","mossa":"步","mosse":"步","passi":"步","Livelli":"關卡","Minimo":"最少","Record":"紀錄","Barattoli con le palline":"裝著球的罐子","Comandi":"操作","Annulla":"復原","Ricomincia":"重來","Aiuto":"提示","Tutto in ordine!":"全部排好了！","Minimo di mosse":"最少步數","Rigioca":"再玩一次","Livello successivo":"下一關","Principiante":"初級","Intermedio":"中級","Avanzato":"高級","Esperto":"專家","Maestro":"大師","Tocca un barattolo per sollevare la pallina in cima, poi tocca quello dove vuoi metterla. Ogni barattolo deve avere un solo colore.":"點一個罐子，拿起最上面的球，再點你想放進去的罐子。每個罐子只能有一種顏色。","livello {n} di {tot}":"第{n}關，共{tot}關","Sposta la pallina {c} dal {a} al {b} barattolo.":"把{c}的球從第{a}個罐子移到第{b}個罐子。","Da qui mancano {n} mosse.":"從這裡還差{n}步。","Risolto in {n} {w}: meno di così non si può.":"{n}{w}完成：不可能更少了。","Risolto in {n} {w}. Il minimo è {min}.":"{n}{w}完成。最少是{min}。","Risolto in {n} {w}, nuovo record. Il minimo è {min}.":"{n}{w}完成，新紀錄！最少是{min}。","Risolto in {n} {w}. Il tuo record è {rec}, il minimo è {min}.":"{n}{w}完成。你的紀錄是{rec}，最少是{min}。","Era l'ultimo livello.":"這是最後一關。","Scegli un livello":"選擇關卡","Ogni barattolo deve finire con palline di un solo colore.":"最後每個罐子裡的球都要是同一種顏色。","Si sposta una pallina alla volta, quella in cima: toccala e poi tocca il barattolo di arrivo, oppure trascinala.":"一次移動一顆球，就是最上面那顆：點一下它再點要放的罐子，或直接拖過去。","Una pallina entra in qualsiasi barattolo che abbia ancora posto.":"只要罐子還有空位，球就放得進去。","Ogni spostamento conta una mossa.":"每移動一次算一步。","Livello {n}":"第{n}關","Livello {n}, risolto con il minimo di mosse":"第{n}關，以最少步數完成","Livello {n}, risolto in {m} mosse":"第{n}關，{m}步完成","{a} su {b}":"{a}/{b}","Scegli da quale livello partire: sono tutti aperti.":"選擇從哪一關開始：所有關卡都開放。","{n} di {tot} risolti, {p} con il minimo di mosse.":"已完成{tot}關中的{n}關，其中{p}關用最少步數完成。","Tutti i giochi":"所有遊戲","Livello {n}, risolto":"第{n}關，已完成"},"zh-Hans":{"tocco":"次","Scene":"场景","Come si gioca":"怎么玩","Chiudi":"关闭","Media":"普通","sul letto":"床上","Via libera":"堵车脱困","Palline nei tubi":"彩球分类","Mosse":"步数","mossa":"步","mosse":"步","passi":"步","Livelli":"关卡","Minimo":"最少","Record":"纪录","Barattoli con le palline":"装着球的罐子","Comandi":"操作","Annulla":"撤销","Ricomincia":"重来","Aiuto":"提示","Tutto in ordine!":"全部排好了！","Minimo di mosse":"最少步数","Rigioca":"再玩一次","Livello successivo":"下一关","Principiante":"初级","Intermedio":"中级","Avanzato":"高级","Esperto":"专家","Maestro":"大师","Tocca un barattolo per sollevare la pallina in cima, poi tocca quello dove vuoi metterla. Ogni barattolo deve avere un solo colore.":"点一个罐子，拿起最上面的球，再点你想放进去的罐子。每个罐子只能有一种颜色。","livello {n} di {tot}":"第{n}关，共{tot}关","Sposta la pallina {c} dal {a} al {b} barattolo.":"把{c}的球从第{a}个罐子移到第{b}个罐子。","Da qui mancano {n} mosse.":"从这里还差{n}步。","Risolto in {n} {w}: meno di così non si può.":"{n}{w}完成：不可能更少了。","Risolto in {n} {w}. Il minimo è {min}.":"{n}{w}完成。最少是{min}。","Risolto in {n} {w}, nuovo record. Il minimo è {min}.":"{n}{w}完成，新纪录！最少是{min}。","Risolto in {n} {w}. Il tuo record è {rec}, il minimo è {min}.":"{n}{w}完成。你的纪录是{rec}，最少是{min}。","Era l'ultimo livello.":"这是最后一关。","Scegli un livello":"选择关卡","Ogni barattolo deve finire con palline di un solo colore.":"最后每个罐子里的球都要是同一种颜色。","Si sposta una pallina alla volta, quella in cima: toccala e poi tocca il barattolo di arrivo, oppure trascinala.":"一次移动一个球，就是最上面那个：点一下它再点要放的罐子，或直接拖过去。","Una pallina entra in qualsiasi barattolo che abbia ancora posto.":"只要罐子还有空位，球就放得进去。","Ogni spostamento conta una mossa.":"每移动一次算一步。","Livello {n}":"第{n}关","Livello {n}, risolto con il minimo di mosse":"第{n}关，以最少步数完成","Livello {n}, risolto in {m} mosse":"第{n}关，{m}步完成","{a} su {b}":"{a}/{b}","Scegli da quale livello partire: sono tutti aperti.":"选择从哪一关开始：所有关卡都开放。","{n} di {tot} risolti, {p} con il minimo di mosse.":"已完成{tot}关中的{n}关，其中{p}关用最少步数完成。","Tutti i giochi":"所有游戏","Livello {n}, risolto":"第{n}关，已完成"}};</script>
 <script id="opzioni">
 /* Settings shared by the home screen and all six games, kept in localStorage under one key.
    Games read them at every use, so a change on the home screen reaches a game as soon as it is opened. */
@@ -172,14 +176,15 @@ window.OPZ = (function () {
   'use strict';
   var KEY = 'giocapensa.opzioni';
   var DEF = { musica: true, suoni: true, voce: true, ui: 'auto', lingua: 'app', aiuto: 'attesa' };
+  var CODES = ['it', 'en', 'es', 'pt', 'fr', 'de', 'ja', 'zh-Hant', 'zh-Hans'];        // the same list as LINGUE in lingua.js
   var val = {}, k;
   for (k in DEF) val[k] = DEF[k];
   try {
     var raw = JSON.parse(localStorage.getItem(KEY) || 'null');
     if (raw && typeof raw === 'object') {
       ['musica', 'suoni', 'voce'].forEach(function (n) { if (typeof raw[n] === 'boolean') val[n] = raw[n]; });
-      if (['app', 'it', 'en'].indexOf(raw.lingua) >= 0) val.lingua = raw.lingua;
-      if (['auto', 'it', 'en'].indexOf(raw.ui) >= 0) val.ui = raw.ui;
+      if (['app'].concat(CODES).indexOf(raw.lingua) >= 0) val.lingua = raw.lingua;
+      if (['auto'].concat(CODES).indexOf(raw.ui) >= 0) val.ui = raw.ui;
       if (['subito', 'attesa', 'mai'].indexOf(raw.aiuto) >= 0) val.aiuto = raw.aiuto;
     } else if (localStorage.getItem('giocapensa.musica') === '0') val.musica = false;      // the old music-only switch
   } catch (e) {}
@@ -194,25 +199,64 @@ window.OPZ = (function () {
 
 </script>
 <script id="lingua">
-/* Interface language. «auto» follows the phone; the setting lives in OPZ ('ui': auto | it | en).
-   In the code every visible text is written as L('italiano', 'English'); in the markup an element with
-   data-en="…" gets that English text, data-en-aria / data-en-title do the same for aria-label and title. */
+/* Interface language. «auto» follows the phone; the setting lives in OPZ ('ui': auto | one of LINGUE).
+   Nine languages: Italian (the source), English, Spanish, Portuguese, French, German, Japanese, Chinese (traditional and simplified).
+   In the code every visible text is written as L('italiano', 'English'), with placeholders {n} filled from a third argument:
+   L('livello {n} di {tot}', 'level {n} of {tot}', { n: 3, tot: 120 }). The other languages come from window.TESTI[lang][italian text],
+   which src/build.py puts in each page from src/lingue/<lang>.json (only the texts that page uses). In the markup an element with
+   data-en="…" gets the text of the current language; data-en-aria / data-en-title do the same for aria-label and title. */
 (function () {
   'use strict';
-  function pick() {
-    var v = window.OPZ ? OPZ.get('ui') : 'auto';
-    if (v === 'it' || v === 'en') return v;
-    var langs = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'it']);
-    return /^it/i.test(langs[0] || '') ? 'it' : (/^en/i.test(langs[0] || '') ? 'en' : 'en');      // Italian phones get Italian, everyone else English
+  var LINGUE = ['it', 'en', 'es', 'pt', 'fr', 'de', 'ja', 'zh-Hant', 'zh-Hans'];
+  var NOMI = { it: 'Italiano', en: 'English', es: 'Español', pt: 'Português', fr: 'Français', de: 'Deutsch', ja: '日本語', 'zh-Hant': '繁體中文', 'zh-Hans': '简体中文' };
+  var LOCALI = { it: 'it-IT', en: 'en-GB', es: 'es-ES', pt: 'pt-BR', fr: 'fr-FR', de: 'de-DE', ja: 'ja-JP', 'zh-Hant': 'zh-TW', 'zh-Hans': 'zh-CN' };
+  function fromTag(t) {                                     // 'pt-BR' → 'pt', 'zh-TW' → 'zh-Hant', 'nl' → null
+    t = String(t || '').toLowerCase();
+    if (/^zh/.test(t)) return /^zh[-_](hant|tw|hk|mo)/.test(t) ? 'zh-Hant' : 'zh-Hans';
+    var b = t.split(/[-_]/)[0];
+    return LINGUE.indexOf(b) >= 0 ? b : null;
   }
+  function phone() {                                        // the first language of the phone that the app speaks, otherwise English
+    var langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'en'];
+    for (var i = 0; i < langs.length; i++) { var l = fromTag(langs[i]); if (l) return l; }
+    return 'en';
+  }
+  function pick() { var v = window.OPZ ? OPZ.get('ui') : 'auto'; return LINGUE.indexOf(v) >= 0 ? v : phone(); }
+  window.LINGUE = LINGUE; window.LINGUA_NOME = NOMI; window.LINGUA_TEL = phone; window.LINGUA_DA = fromTag;
   window.LANG = pick();
-  window.L = function (it, en) { return window.LANG === 'en' && en != null ? en : it; };
+  window.LOCALE = LOCALI[window.LANG];
+  window.LOCALE_DI = function (lang) { return LOCALI[lang] || 'en-GB'; };
+  var T = window.TESTI || {}, miss = window.__mancanti = {};
+  function tr(lang, it, en) {
+    if (it == null || lang === 'it') return it;
+    if (lang === 'en') return en != null ? en : it;
+    var d = T[lang], t = d ? d[it] : null;
+    if (t != null) return t;
+    miss[lang + ' | ' + it] = 1;                            // the automatic check reads this
+    return en != null ? en : it;
+  }
+  function fill(s, v) { return v && s ? String(s).replace(/\{(\w+)\}/g, function (m, k) { return v[k] != null ? v[k] : m; }) : s; }
+  window.L = function (it, en, v) { return fill(tr(window.LANG, it, en), v); };
+  window.LT = function (lang, it, en, v) { return fill(tr(lang, it, en), v); };            // a given language (the voice of Stickers)
+  window.LP = function (o, lang) { return tr(lang || window.LANG, o.it, o.en); };          // an {it, en} pair from a table
+  window.TROVA = function (lang, key) { var d = T[lang]; return d && d[key] != null ? d[key] : null; };   // an optional entry, such as the German «auf dem Bett» ('sul letto#loc')
+  window.FRASI = function () {                              // sentences one after the other: with a space, without one in Japanese and Chinese
+    return Array.prototype.filter.call(arguments, Boolean).join(/^(ja|zh)/.test(window.LANG) ? '' : ' ');
+  };
+  window.PICK = function (o, lang) {                        // a value per language from a table {it: …, en: …, es: …}
+    lang = lang || window.LANG;
+    if (o[lang] != null) return o[lang];
+    if (/^zh/.test(lang) && o.zh != null) return o.zh;
+    return o.en != null ? o.en : o.it;
+  };
   window.applyLang = function (root) {
-    if (window.LANG !== 'en') return;
+    if (window.LANG === 'it') return;
     root = root || document;
-    Array.prototype.forEach.call(root.querySelectorAll('[data-en]'), function (el) { el.textContent = el.getAttribute('data-en'); });
-    Array.prototype.forEach.call(root.querySelectorAll('[data-en-aria]'), function (el) { el.setAttribute('aria-label', el.getAttribute('data-en-aria')); });
-    Array.prototype.forEach.call(root.querySelectorAll('[data-en-title]'), function (el) { el.setAttribute('title', el.getAttribute('data-en-title')); });
+    function each(sel, f) { Array.prototype.forEach.call(root.querySelectorAll(sel), f); }
+    function keep(el, attr, now) { var k = el.getAttribute(attr); if (k == null) { k = now == null ? '' : now; el.setAttribute(attr, k); } return k; }   // the Italian original, so a second pass translates from it again
+    each('[data-en]', function (el) { el.textContent = tr(window.LANG, keep(el, 'data-it', el.textContent.trim()), el.getAttribute('data-en')); });
+    each('[data-en-aria]', function (el) { el.setAttribute('aria-label', tr(window.LANG, keep(el, 'data-it-aria', el.getAttribute('aria-label')), el.getAttribute('data-en-aria'))); });
+    each('[data-en-title]', function (el) { el.setAttribute('title', tr(window.LANG, keep(el, 'data-it-title', el.getAttribute('title')), el.getAttribute('data-en-title'))); });
   };
   document.documentElement.lang = window.LANG;
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { window.applyLang(document); });
@@ -463,8 +507,15 @@ window.TB_LEVELS = ["2|bg,b,g|2","3|bp,bb,pp|2","3|ggr,g,rr|2","2|pp,r,rb,b|2","
     { name: L('Principiante', 'Beginner'), color: '#8DD68A' }, { name: L('Intermedio', 'Intermediate'), color: '#FFD95A' }, { name: L('Avanzato', 'Advanced'), color: '#7DB7F7' },
     { name: L('Esperto', 'Expert'), color: '#F59A3A' }, { name: L('Maestro', 'Master'), color: '#EE5E4D' }
   ];
-  var NAME = LANG === 'en' ? { r: 'red', y: 'yellow', b: 'blue', g: 'green', p: 'orange' } : { r: 'rossa', y: 'gialla', b: 'blu', g: 'verde', p: 'arancione' }, NOTE = { r: 523.25, y: 587.33, b: 659.25, g: 783.99, p: 880 };
-  var ORD = LANG === 'en' ? ['first', 'second', 'third', 'fourth', 'fifth', 'sixth'] : ['primo', 'secondo', 'terzo', 'quarto', 'quinto', 'sesto'];
+  var NAME = PICK({ it: { r: 'rossa', y: 'gialla', b: 'blu', g: 'verde', p: 'arancione' }, en: { r: 'red', y: 'yellow', b: 'blue', g: 'green', p: 'orange' },     // the ball's colour, as the hint says it
+    es: { r: 'roja', y: 'amarilla', b: 'azul', g: 'verde', p: 'naranja' }, pt: { r: 'vermelha', y: 'amarela', b: 'azul', g: 'verde', p: 'laranja' },
+    fr: { r: 'rouge', y: 'jaune', b: 'bleue', g: 'verte', p: 'orange' }, de: { r: 'rote', y: 'gelbe', b: 'blaue', g: 'grüne', p: 'orange' },
+    ja: { r: '赤', y: '黄色', b: '青', g: '緑', p: 'オレンジ' }, 'zh-Hant': { r: '紅色', y: '黃色', b: '藍色', g: '綠色', p: '橘色' }, 'zh-Hans': { r: '红色', y: '黄色', b: '蓝色', g: '绿色', p: '橙色' } }), NOTE = { r: 523.25, y: 587.33, b: 659.25, g: 783.99, p: 880 };
+  var ORD = PICK({ it: ['primo', 'secondo', 'terzo', 'quarto', 'quinto', 'sesto'], en: ['first', 'second', 'third', 'fourth', 'fifth', 'sixth'],
+    es: ['primer', 'segundo', 'tercer', 'cuarto', 'quinto', 'sexto'], pt: ['primeiro', 'segundo', 'terceiro', 'quarto', 'quinto', 'sexto'],
+    fr: ['premier', 'deuxième', 'troisième', 'quatrième', 'cinquième', 'sixième'], de: ['ersten', 'zweiten', 'dritten', 'vierten', 'fünften', 'sechsten'],
+    ja: ['1', '2', '3', '4', '5', '6'], zh: ['一', '二', '三', '四', '五', '六'] });
+  var ORD_TO = LANG === 'de' ? ['erste', 'zweite', 'dritte', 'vierte', 'fünfte', 'sechste'] : ORD;     // German: «vom ersten ins dritte Glas»
   var $ = function (id) { return document.getElementById(id); };
   var scene = $('scene'), statusEl = $('status'), result = $('result'), controls = $('controls'), sheet = $('sheet');
   var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -577,7 +628,7 @@ window.TB_LEVELS = ["2|bg,b,g|2","3|bp,bb,pp|2","3|ggr,g,rr|2","2|pp,r,rb,b|2","
     hideResult(); refreshDone(true);
     var t = tierOf(level), app = $('app');
     app.style.setProperty('--tier', t.color); app.style.setProperty('--tier-ink', INK);
-    $('badge').textContent = level + 1; $('tierName').textContent = t.name; $('lvOf').textContent = L('livello ' + (level + 1) + ' di ' + RAW.length, 'level ' + (level + 1) + ' of ' + RAW.length);
+    $('badge').textContent = level + 1; $('tierName').textContent = t.name; $('lvOf').textContent = L('livello {n} di {tot}', 'level {n} of {tot}', { n: level + 1, tot: RAW.length });
     setStatus(''); gateReset(HINT_FIRST); updateStats();
     if (!calm) els.forEach(function (col, ti) { col.forEach(function (el, j) { var y1 = el._y; setPos(el, el._x, y1 - 420); setTimeout(function () { tween(300, function (q) { setPos(el, el._x, y1 - 420 * (1 - inQuad(q))); }, function () { land(el); }); }, 60 * ti + 70 * j); }); });
   }
@@ -707,8 +758,8 @@ window.TB_LEVELS = ["2|bg,b,g|2","3|bp,bb,pp|2","3|ggr,g,rr|2","2|pp,r,rb,b|2","
       '<g class="arrowG"><path d="M' + xa + ' ' + top + 'Q' + mid + ' ' + (top - 96) + ' ' + xb + ' ' + top + '" fill="none" stroke="#FF8A3D" stroke-width="10" stroke-linecap="round"/>' +
       '<path d="M' + (xb - dir * 30) + ' ' + (top - 30) + 'L' + xb + ' ' + top + 'L' + (xb - dir * 34) + ' ' + (top + 8) + '" fill="none" stroke="#FF8A3D" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></g>';
     var c = tubes[m.from][tubes[m.from].length - 1];
-    setStatus(L('Sposta la pallina ' + NAME[c] + ' dal ' + ORD[m.from] + ' al ' + ORD[m.to] + ' barattolo.' + (sol.length > 1 ? ' Da qui mancano ' + sol.length + ' mosse.' : ''),
-      'Move the ' + NAME[c] + ' ball from the ' + ORD[m.from] + ' to the ' + ORD[m.to] + ' jar.' + (sol.length > 1 ? ' ' + sol.length + ' moves to go from here.' : '')));
+    setStatus(FRASI(L('Sposta la pallina {c} dal {a} al {b} barattolo.', 'Move the {c} ball from the {a} to the {b} jar.', { c: NAME[c], a: ORD[m.from], b: ORD_TO[m.to] }),
+      sol.length > 1 ? L('Da qui mancano {n} mosse.', '{n} moves to go from here.', { n: sol.length }) : ''));
   }
 
   /* ---------- winning ---------- */
@@ -720,11 +771,13 @@ window.TB_LEVELS = ["2|bg,b,g|2","3|bp,bb,pp|2","3|ggr,g,rr|2","2|pp,r,rb,b|2","
     els.forEach(function (col, ti) { col.forEach(function (el, j) { el.style.setProperty('--pd', (ti * 0.09 + j * 0.05).toFixed(2) + 's'); el.classList.remove('land'); el.classList.add('party'); }); if (col.length) setTimeout(function () { sparkle(cx(ti), TOP - 50); }, 120 * ti); });
     var perfect = moves <= minMoves, text;
     sfx(perfect ? 'perfect' : 'win'); buzz(perfect ? [12, 60, 18, 60, 22] : [12, 60, 18]); confetti();
-    if (perfect) text = L('Risolto in ' + moves + ' mosse: meno di così non si può.', 'Solved in ' + moves + ' moves: it cannot be done in fewer.');
-    else if (!prev || moves < prev) text = L('Risolto in ' + moves + ' mosse' + (prev ? ', nuovo record' : '') + '. Il minimo è ' + minMoves + '.', 'Solved in ' + moves + ' moves' + (prev ? ', a new record' : '') + '. The best possible is ' + minMoves + '.');
-    else text = L('Risolto in ' + moves + ' mosse. Il tuo record è ' + prev + ', il minimo è ' + minMoves + '.', 'Solved in ' + moves + ' moves. Your record is ' + prev + ', the best possible is ' + minMoves + '.');
+    var v = { n: moves, w: moves === 1 ? L('mossa', 'move') : L('mosse', 'moves'), min: minMoves, rec: prev };
+    if (perfect) text = L('Risolto in {n} {w}: meno di così non si può.', 'Solved in {n} {w}: it cannot be done in fewer.', v);
+    else if (!prev) text = L('Risolto in {n} {w}. Il minimo è {min}.', 'Solved in {n} {w}. The best possible is {min}.', v);
+    else if (moves < prev) text = L('Risolto in {n} {w}, nuovo record. Il minimo è {min}.', 'Solved in {n} {w}, a new record. The best possible is {min}.', v);
+    else text = L('Risolto in {n} {w}. Il tuo record è {rec}, il minimo è {min}.', 'Solved in {n} {w}. Your record is {rec}, the best possible is {min}.', v);
     var last = level >= RAW.length - 1;
-    $('resPerfect').hidden = !perfect; $('resText').textContent = text + (last ? L(" Era l'ultimo livello.", ' That was the last level.') : '');
+    $('resPerfect').hidden = !perfect; $('resText').textContent = FRASI(text, last ? L("Era l'ultimo livello.", 'That was the last level.') : '');
     $('btnNext').textContent = last ? L('Scegli un livello', 'Choose a level') : L('Livello successivo', 'Next level');
     statusDefault = false; statusEl.textContent = '';
     setTimeout(function () { if (won) { result.hidden = false; void result.offsetWidth; result.classList.add('show'); controls.style.visibility = 'hidden'; } }, calm ? 200 : 1250);
@@ -742,22 +795,21 @@ window.TB_LEVELS = ["2|bg,b,g|2","3|bp,bb,pp|2","3|ggr,g,rr|2","2|pp,r,rb,b|2","
       for (var i = from; i < to; i++) html += '<button class="lv" type="button" data-level="' + i + '">' + (i + 1) + '</button>';
       html += '</div></section>';
     });
-    html += LANG === 'en' ? '<section class="rules"><h3>How to play</h3><ul><li>Each jar must end up with balls of one colour only.</li><li>One ball moves at a time, the top one: tap it and then tap the jar it goes to, or drag it.</li><li>A ball fits in any jar that still has room.</li><li>Each move counts as one move.</li></ul></section>'
-      : '<section class="rules"><h3>Come si gioca</h3><ul><li>Ogni barattolo deve finire con palline di un solo colore.</li><li>Si sposta una pallina alla volta, quella in cima: toccala e poi tocca il barattolo di arrivo, oppure trascinala.</li><li>Una pallina entra in qualsiasi barattolo che abbia ancora posto.</li><li>Ogni spostamento conta una mossa.</li></ul></section>';
+    html += '<section class="rules"><h3>' + L('Come si gioca', 'How to play') + '</h3><ul>' + [L('Ogni barattolo deve finire con palline di un solo colore.', 'Each jar must end up with balls of one colour only.'), L('Si sposta una pallina alla volta, quella in cima: toccala e poi tocca il barattolo di arrivo, oppure trascinala.', 'One ball moves at a time, the top one: tap it and then tap the jar it goes to, or drag it.'), L('Una pallina entra in qualsiasi barattolo che abbia ancora posto.', 'A ball fits in any jar that still has room.'), L('Ogni spostamento conta una mossa.', 'Each move counts as one move.')].map(function (r) { return '<li>' + r + '</li>'; }).join('') + '</ul></section>';
     $('sheetBody').innerHTML = html;
     $('sheetBody').addEventListener('click', function (e) { var b = e.target.closest ? e.target.closest('.lv') : null; if (!b) return; loadLevel(+b.getAttribute('data-level')); closeDlg(sheet); });
   }
   function refreshSheet() {
     var counts = TIERS.map(function () { return 0; }), perfect = 0;
     Array.prototype.forEach.call(sheet.querySelectorAll('.lv'), function (b) {
-      var i = +b.getAttribute('data-level'), mine = data.best[i + 1], min = +RAW[i].split('|')[2], label = L('Livello ', 'Level ') + (i + 1);
+      var i = +b.getAttribute('data-level'), mine = data.best[i + 1], min = +RAW[i].split('|')[2], label = L('Livello {n}', 'Level {n}', { n: i + 1 });
       b.classList.toggle('done', !!mine); b.classList.toggle('perfect', !!mine && mine <= min); b.classList.toggle('current', i === level);
-      if (mine) { counts[Math.floor(i / PER_TIER)]++; label += mine <= min ? L(', risolto con il minimo di mosse', ', solved in the fewest moves') : L(', risolto in ' + mine + ' mosse', ', solved in ' + mine + ' moves'); if (mine <= min) perfect++; }
+      if (mine) { counts[Math.floor(i / PER_TIER)]++; label = mine <= min ? L('Livello {n}, risolto con il minimo di mosse', 'Level {n}, solved in the fewest moves', { n: i + 1 }) : L('Livello {n}, risolto in {m} mosse', 'Level {n}, solved in {m} moves', { n: i + 1, m: mine }); if (mine <= min) perfect++; }
       b.setAttribute('aria-label', label);
     });
-    Array.prototype.forEach.call(sheet.querySelectorAll('[data-count]'), function (el) { var ti = +el.getAttribute('data-count'); el.textContent = counts[ti] + L(' su ', ' of ') + Math.min(PER_TIER, RAW.length - ti * PER_TIER); });
+    Array.prototype.forEach.call(sheet.querySelectorAll('[data-count]'), function (el) { var ti = +el.getAttribute('data-count'); el.textContent = L('{a} su {b}', '{a} of {b}', { a: counts[ti], b: Math.min(PER_TIER, RAW.length - ti * PER_TIER) }); });
     var n = solvedCount();
-    $('sheetSummary').textContent = n === 0 ? L('Scegli da quale livello partire: sono tutti aperti.', 'Pick any level to start: they are all open.') : L(n + ' di ' + RAW.length + ' risolti, ' + perfect + ' con il minimo di mosse.', n + ' of ' + RAW.length + ' solved, ' + perfect + ' in the fewest moves.');
+    $('sheetSummary').textContent = n === 0 ? L('Scegli da quale livello partire: sono tutti aperti.', 'Pick any level to start: they are all open.') : L('{n} di {tot} risolti, {p} con il minimo di mosse.', '{n} of {tot} solved, {p} in the fewest moves.', { n: n, tot: RAW.length, p: perfect });
   }
   function openSheet() { refreshSheet(); openDlg(sheet); var cur = sheet.querySelector('.lv.current'); if (cur) { try { cur.scrollIntoView({ block: 'center' }); } catch (e) {} } }
 
