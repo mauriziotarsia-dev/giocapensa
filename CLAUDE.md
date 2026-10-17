@@ -11,6 +11,7 @@ Sei giochi touch per un bambino di circa tre anni, pubblicati con GitHub Pages d
 - Prima di ogni commit: `node src/tests/verify.js` deve finire con «Tutti i livelli verificati». Controlla che ogni livello sia risolvibile e che il minimo salvato sia quello vero.
 - `build.py` dà alla cache offline un nome che dipende dal contenuto delle pagine: ogni modifica arriva da sola ai telefoni, non c'è nessuna versione da aggiornare a mano.
 - Dopo il merge su `main` GitHub Pages pubblica in pochi minuti.
+- **Chi carica i file.** Dal 17 ottobre 2026 Claude scrive direttamente nel repository (app Claude di GitHub, installata dal genitore solo su `giocapensa`): il genitore non carica più file a mano. Nel repository ci sono i 17 file di `giocapensa.zip` (pagine, icone, `CLAUDE.md`, `LEGGIMI.txt`, `sorgenti.zip` con `src/`), `giocapensa-ios.zip`, la cartella `scheda/` e i flussi in `.github/workflows/` (`iphone.yml`, `scheda.yml`). I commit usano l'indirizzo noreply di GitHub del genitore, mai la sua email personale. I segreti delle Actions non si leggono e non si scrivono da qui: li mette il genitore.
 
 ## Struttura
 
