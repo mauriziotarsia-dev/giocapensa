@@ -69,6 +69,7 @@ Un gioco nuovo basato su `src/shared` fornisce a `Kit.start({...})`: `key`, `cou
 
 - Altre scene degli Adesivi (giardino, spiaggia…): per ora il genitore ha scelto solo le cinque attuali.
 - Un settimo gioco possibile, «Guida tu»: mettere in fila delle frecce e poi far partire l'auto.
+- Stati Uniti: l'app ne è esclusa perché in Texas (legge in vigore da giugno 2026) e in altri Stati lo sviluppatore deve verificare l'età di chi la usa con le informazioni dell'App Store. Per includerli servirebbe nell'app lo strumento di Apple per l'età (Declared Age Range, iOS 26) con un piccolo plugin nativo; poi basta rimettere la spunta in «Prezzi e disponibilità».
 
 ## Adesivi (versione a scene)
 
@@ -129,6 +130,14 @@ Il progetto Xcode è fuori da questo repository, nello zip `giocapensa-iphone` (
 
 ## Scheda App Store (ottobre 2026)
 - L'app esce **gratis** (deciso il 18 ottobre 2026, dopo aver preparato la vendita a 2,99 €). Venderla più avanti dipende dal parere di un commercialista sulla partita IVA. Chi l'ha scaricata gratis la tiene per sempre, con gli aggiornamenti: un prezzo messo dopo vale solo per i nuovi arrivati, e un eventuale sblocco dentro l'app dovrebbe lasciare tutto aperto a chi l'aveva prima (StoreKit, `AppTransaction`, versione e data del primo download). Per la vendita è già tutto pronto: accordo Paid Apps, moduli fiscali e banca attivi, operatore commerciale per il Digital Services Act dichiarato sull'account, Small Business Program richiesto (commissione al 15%: su 2,99 € in Italia arrivano circa 2,08 €). Lo stato di operatore si può togliere app per app («Informazioni sull'app» → Digital Services Act): finché l'app è gratis, così indirizzo e telefono non compaiono nella pagina europea.
+- **Stato al 18 ottobre 2026:** versione 1.0 (build 2.1) inviata alla revisione. Scelte fatte in App Store Connect:
+  - prezzo gratis, rilascio automatico;
+  - tutti i paesi tranne Stati Uniti, Cina continentale e Vietnam; niente Mac né Apple Vision Pro (su visionOS le app per bambini non sono ammesse);
+  - età 4+, «Per bambini» 0-5 anni; privacy «Dati non raccolti»;
+  - per questa app «non operatore commerciale»;
+  - DAC7 compilato: l'app non offre servizi personali.
+
+  Per la Corea del Sud App Store Connect propone «Aggiungi RCN», il numero della classificazione coreana: per un gioco classificato «Tutti» non serve.
 - Il sito resta gratuito per la famiglia ma non va pubblicizzato: tutte le pagine hanno `<meta name="robots" content="noindex">` (lo aggiunge `build.py`) e gli URL di assistenza e privacy dati ad Apple finiscono con `?store`, che in `info.html` e `privacy.html` toglie il collegamento ai giochi. Nei testi della scheda non scrivere né che l'app è gratuita né che è a pagamento: così il prezzo si cambia senza toccarli. «Niente pubblicità, acquisti in-app o abbonamenti» resta vero. Si dice sempre «acquisti dentro l'app» (in giapponese «アプリ内課金»), mai solo «acquisti» o «課金», perché un giorno l'app stessa potrebbe essere in vendita.
 - Categoria Bambini, fascia «5 anni e meno» («Made for Kids» nel questionario dell'età), con categoria Giochi (Rompicapo, Famiglia) e secondaria Istruzione. È obbligatoria perché la scheda dice che l'app è per bambini: le linee guida 5.1.4(b) e 2.3.8 lo vietano alle app fuori dalla categoria Bambini. Di conseguenza nessun collegamento verso l'esterno, nessun acquisto dentro l'app (Apple li ammetterebbe dietro un controllo per adulti, ma la scheda promette che non ci sono), nessuna statistica o pubblicità di terze parti, ora e negli aggiornamenti; un'eventuale uscita dall'app va dietro un controllo per adulti.
 - Testi della scheda in inglese (Regno Unito, lingua principale, e Stati Uniti), italiano, spagnolo (anche per il Messico), portoghese (anche per il Portogallo), francese (anche per il Canada), tedesco, giapponese, cinese semplificato e tradizionale. Un paese senza la sua variante di lingua mostra la scheda in inglese.
