@@ -21,12 +21,23 @@ jobs:
           P8: ${{ secrets.APPSTORE_P8 }}
         run: |
           ok=1
+          # spaces and line breaks picked up when pasting on the phone do not count
+          TEAM="${TEAM//[[:space:]]/}"; KEY_ID="${KEY_ID//[[:space:]]/}"; ISSUER="${ISSUER//[[:space:]]/}"
           for n in TEAM:APPLE_TEAM_ID:B1 KEY_ID:APPSTORE_KEY_ID:B7 ISSUER:APPSTORE_ISSUER_ID:B7 P8:APPSTORE_P8:B8; do
             IFS=: read -r v s step <<< "$n"
             [ -n "${!v}" ] || { echo "::error title=Segreti::Manca il segreto $s: aggiungilo come al passo C1 (il valore viene dal passo $step)."; ok=0; }
           done
-          [ -z "$TEAM" ] || [[ "$TEAM" =~ ^[A-Z0-9]{10}$ ]] || { echo "::error title=Segreti::APPLE_TEAM_ID deve essere di 10 caratteri, lettere maiuscole e numeri, senza spazi (passo B1)."; ok=0; }
-          [ -z "$KEY_ID" ] || [[ "$KEY_ID" =~ ^[A-Z0-9]{10}$ ]] || { echo "::error title=Segreti::APPSTORE_KEY_ID deve essere di 10 caratteri, senza spazi (passo B7)."; ok=0; }
+          hint() {   # what a wrong value looks like, without ever printing it ($2: the length it should have)
+            local x="$1"
+            if [[ "$x" == *PRIVATE*KEY* ]]; then echo " Contiene il testo della chiave: va in APPSTORE_P8.";
+            elif [ "$2" = 10 ] && [[ "$x" =~ ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}- ]]; then echo " Contiene trattini come l'Issuer ID: forse i due codici sono scambiati.";
+            elif [ "$2" = 36 ] && [[ "$x" =~ ^[A-Z0-9]{10}$ ]]; then echo " Sembra un codice di 10 caratteri come l'ID chiave: forse i due codici sono scambiati.";
+            elif [ "$2" = 10 ] && [[ "$x" =~ [a-z] ]]; then echo " Contiene lettere minuscole: il codice è tutto maiuscolo.";
+            else echo " Ha ${#x} caratteri invece di $2."; fi
+          }
+          [ -z "$TEAM" ] || [[ "$TEAM" =~ ^[A-Z0-9]{10}$ ]] || { echo "::error title=Segreti::APPLE_TEAM_ID deve essere di 10 caratteri, lettere maiuscole e numeri (passo B1).$(hint "$TEAM" 10)"; ok=0; }
+          [ -z "$KEY_ID" ] || [[ "$KEY_ID" =~ ^[A-Z0-9]{10}$ ]] || { echo "::error title=Segreti::APPSTORE_KEY_ID deve essere di 10 caratteri, lettere maiuscole e numeri (passo B7).$(hint "$KEY_ID" 10)"; ok=0; }
+          [ -z "$ISSUER" ] || [[ "$ISSUER" =~ ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$ ]] || { echo "::error title=Segreti::APPSTORE_ISSUER_ID deve avere la forma xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx (passo B7).$(hint "$ISSUER" 36)"; ok=0; }
           [ -z "$P8" ] || { [[ "$P8" == *"BEGIN PRIVATE KEY"* ]] && [[ "$P8" == *"END PRIVATE KEY"* ]]; } || { echo "::error title=Segreti::APPSTORE_P8 deve contenere tutto il testo della chiave, comprese le righe BEGIN e END (passo B8)."; ok=0; }
           [ "$ok" = 1 ]
       - name: Xcode
@@ -44,6 +55,7 @@ jobs:
           P8: ${{ secrets.APPSTORE_P8 }}
           KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
         run: |
+          KEY_ID="${KEY_ID//[[:space:]]/}"
           mkdir -p "$RUNNER_TEMP/keys"
           printf '%s\n' "$P8" > "$RUNNER_TEMP/keys/AuthKey_$KEY_ID.p8"
       - name: Compila e firma
@@ -54,6 +66,7 @@ jobs:
           VERSIONE: ${{ inputs.versione }}
         run: |
           set -o pipefail
+          TEAM="${TEAM//[[:space:]]/}"; KEY_ID="${KEY_ID//[[:space:]]/}"; ISSUER="${ISSUER//[[:space:]]/}"
           [[ "$VERSIONE" =~ ^[0-9]+(\.[0-9]+){0,2}$ ]] || { echo "::error title=Versione::Versione non valida: «$VERSIONE». Usa numeri e punti, per esempio 1.1"; exit 1; }
           cd build/ios-progetto/ios/App
           xcodebuild -project App.xcodeproj -scheme App -configuration Release \
@@ -72,6 +85,7 @@ jobs:
           TEAM: ${{ secrets.APPLE_TEAM_ID }}
         run: |
           set -o pipefail
+          TEAM="${TEAM//[[:space:]]/}"; KEY_ID="${KEY_ID//[[:space:]]/}"; ISSUER="${ISSUER//[[:space:]]/}"
           cat > "$RUNNER_TEMP/export.plist" <<PLIST
           <?xml version="1.0" encoding="UTF-8"?>
           <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
