@@ -12,11 +12,11 @@ optional VERSIONE (version to fill, e.g. 1.1; default: the one being prepared), 
 usage: python3 carica.py [folder with testi.json and schermate/]
 Messages for the parent are in Italian and go out as GitHub annotations, readable from the API.
 """
-import glob, hashlib, http.client, json, os, sys, time, urllib.error, urllib.parse, urllib.request
+import glob, hashlib, http.client, json, os, re, sys, time, urllib.error, urllib.parse, urllib.request
 
 API = os.environ.get('ASC_API', 'https://api.appstoreconnect.apple.com').rstrip('/')
 DIR = os.path.abspath(sys.argv[1] if len(sys.argv) > 1 else os.path.dirname(os.path.abspath(__file__)))
-EDITABLE = {'PREPARE_FOR_SUBMISSION', 'DEVELOPER_REJECTED', 'REJECTED', 'METADATA_REJECTED', 'INVALID_BINARY'}
+EDITABLE = {'PREPARE_FOR_SUBMISSION', 'READY_FOR_REVIEW', 'DEVELOPER_REJECTED', 'REJECTED', 'METADATA_REJECTED', 'INVALID_BINARY'}
 DISPLAY = 'APP_IPHONE_67'            # the 6.9-inch slot of App Store Connect (1320 x 2868)
 SUMMARY = []                          # rows for the run page
 
@@ -42,13 +42,23 @@ def fail(msg):
 _tok = {'t': None, 'at': 0}
 
 
+def pem(text):
+    """The .p8 key as pasted from a phone: extra spaces, blank lines or \\n written out do not matter."""
+    t = text.replace('\\n', '\n')
+    m = re.search(r'-----BEGIN PRIVATE KEY-----(.*?)-----END PRIVATE KEY-----', t, re.S)
+    body = re.sub(r'[^A-Za-z0-9+/=]', '', m.group(1) if m else t)
+    return '-----BEGIN PRIVATE KEY-----\n%s\n-----END PRIVATE KEY-----\n' % '\n'.join(body[i:i + 64] for i in range(0, len(body), 64))
+
+
 def token():
     now = int(time.time())
     if not _tok['t'] or now - _tok['at'] > 600:
         import jwt                    # PyJWT, with cryptography for ES256
-        key = os.environ['APPSTORE_P8'].strip().replace('\\n', '\n')
-        _tok['t'] = jwt.encode({'iss': os.environ['APPSTORE_ISSUER_ID'].strip(), 'iat': now, 'exp': now + 1080, 'aud': 'appstoreconnect-v1'},
-                               key, algorithm='ES256', headers={'kid': os.environ['APPSTORE_KEY_ID'].strip(), 'typ': 'JWT'})
+        try:
+            _tok['t'] = jwt.encode({'iss': os.environ['APPSTORE_ISSUER_ID'].strip(), 'iat': now, 'exp': now + 1080, 'aud': 'appstoreconnect-v1'},
+                                   pem(os.environ['APPSTORE_P8']), algorithm='ES256', headers={'kid': re.sub(r'\s', '', os.environ['APPSTORE_KEY_ID']), 'typ': 'JWT'})
+        except Exception as e:
+            raise Apple('La chiave APPSTORE_P8 non si legge (%s): rimettila copiando tutto il testo del file .p8, comprese le righe BEGIN e END (passi B8 e C1).' % type(e).__name__)
         _tok['at'] = now
     return _tok['t']
 
@@ -125,6 +135,31 @@ def upsert(kind, have, locale, attrs, parent_rel, parent_kind, parent_id):
     return res['data']['id'], 'aggiunta'
 
 
+def first_keywords(kw, limit=100):
+    """The keywords from the first, whole, within limit bytes: for the case Apple counts bytes and not characters."""
+    out = []
+    for w in kw.split(','):
+        if len(','.join(out + [w]).encode()) > limit:
+            break
+        out.append(w)
+    return ','.join(out)
+
+
+def builds(app, version):
+    """One line on the builds of this version, for the parent; never stops the run."""
+    try:
+        rows = call('GET', '/v1/builds', query={'filter[app]': app, 'filter[preReleaseVersion.version]': version, 'sort': '-uploadedDate', 'limit': 5}).get('data') or []
+    except Apple:
+        return
+    if not rows:
+        note('notice', 'Build', 'Per la versione %s Apple non ha ancora nessuna build: si carica con il flusso «App per iPhone».' % version)
+        return
+    words = {'VALID': 'pronta: si sceglie nella pagina della versione, sezione Build', 'PROCESSING': 'Apple la sta ancora controllando (di solito 15-60 minuti)',
+             'FAILED': 'scartata da Apple: il motivo è nell\'email di Apple', 'INVALID': 'scartata da Apple: il motivo è nell\'email di Apple'}
+    a = rows[0]['attributes']
+    note('notice', 'Build', 'Ultima build della versione %s: %s, %s.' % (version, a.get('version'), words.get(a.get('processingState'), a.get('processingState'))))
+
+
 def md5(path):
     return hashlib.md5(open(path, 'rb').read()).hexdigest()
 
@@ -176,7 +211,7 @@ def main():
             fail('Mancano le schermate nella cartella scheda/schermate/%s.' % L['schermate'])
         shots[loc] = files
 
-    apps = call('GET', '/v1/apps', query={'filter[bundleId]': T['bundle']}).get('data') or []
+    apps = [a for a in call('GET', '/v1/apps', query={'filter[bundleId]': T['bundle']}).get('data') or [] if (a.get('attributes') or {}).get('bundleId') == T['bundle']]
     if not apps:
         fail('In App Store Connect non c\'è ancora un\'app con identificativo %s: creala prima (passo B6), poi rilancia.' % T['bundle'])
     app = apps[0]['id']
@@ -206,7 +241,14 @@ def main():
     vloc = {}
     for loc, L in T['lingue'].items():
         attrs = {'description': L['description'], 'keywords': L['keywords'], 'promotionalText': L['promotionalText'], 'supportUrl': T['url']['support']}
-        vloc[loc], what = upsert('appStoreVersionLocalizations', have, loc, attrs, 'appStoreVersion', 'appStoreVersions', ver['id'])
+        try:
+            vloc[loc], what = upsert('appStoreVersionLocalizations', have, loc, attrs, 'appStoreVersion', 'appStoreVersions', ver['id'])
+        except Apple as e:
+            short = first_keywords(L['keywords'])
+            if 'keywords' not in str(e) or short == L['keywords']:
+                raise
+            vloc[loc], what = upsert('appStoreVersionLocalizations', have, loc, dict(attrs, keywords=short), 'appStoreVersion', 'appStoreVersions', ver['id'])
+            note('warning', 'Parole chiave', '%s: Apple ha rifiutato le parole chiave così lunghe, ho messo solo le prime %d. Risposta di Apple: %s' % (loc, short.count(',') + 1, e))
         print('%-8s descrizione e parole chiave: %s' % (loc, what), flush=True)
 
     sent, same, pending = 0, 0, []
@@ -252,6 +294,7 @@ def main():
 
     langs = len(T['lingue'])
     note('notice', 'Scheda compilata', '%d lingue: testi, categorie e copyright a posto; schermate inviate %d, già presenti %d.' % (langs, sent, same))
+    builds(app, ver['attributes'].get('versionString'))
     out = os.environ.get('GITHUB_STEP_SUMMARY')
     if out:
         with open(out, 'a', encoding='utf-8') as f:
@@ -266,3 +309,7 @@ if __name__ == '__main__':
         main()
     except Apple as e:
         fail(str(e))
+    except Exception as e:            # the full log cannot be read from outside: say where it broke
+        import traceback
+        at = traceback.extract_tb(e.__traceback__)[-1]
+        fail('Errore inatteso in %s, riga %d (%s): %s: %s' % (os.path.basename(at.filename), at.lineno, at.name, type(e).__name__, e))
