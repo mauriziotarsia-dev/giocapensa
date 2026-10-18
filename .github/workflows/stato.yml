@@ -1,0 +1,24 @@
+name: Stato su App Store Connect
+on:
+  workflow_dispatch:
+  push:
+    # Claude reads the state by pushing an empty commit to this branch: nothing is changed in App Store Connect
+    branches: [stato-asc]
+jobs:
+  stato:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Strumenti
+        run: python -m pip install --quiet "pyjwt[crypto]>=2.8,<3"
+      - name: Leggi lo stato
+        # versions, builds, review submissions and countries go out as annotations, readable from the GitHub API
+        env:
+          APPSTORE_KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
+          APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
+          APPSTORE_P8: ${{ secrets.APPSTORE_P8 }}
+        run: python scheda/carica.py scheda --stato

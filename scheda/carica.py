@@ -9,7 +9,8 @@ It can run again at any time: texts are rewritten, screenshots are replaced only
 
 Environment: APPSTORE_KEY_ID, APPSTORE_ISSUER_ID, APPSTORE_P8 (text of the .p8 key);
 optional VERSIONE (version to fill, e.g. 1.1; default: the one being prepared), ASC_API (tests only).
-usage: python3 carica.py [folder with testi.json and schermate/]
+usage: python3 carica.py [folder with testi.json and schermate/] [--stato]
+--stato only reads: versions, builds, review submissions and countries, as annotations (workflow «Stato su App Store Connect»).
 Messages for the parent are in Italian and go out as GitHub annotations, readable from the API.
 """
 import glob, hashlib, http.client, json, os, re, sys, time, urllib.error, urllib.parse, urllib.request
@@ -199,11 +200,58 @@ def upload(set_id, path, checksum):
     return res['id']
 
 
+def find_app(T):
+    apps = [a for a in call('GET', '/v1/apps', query={'filter[bundleId]': T['bundle']}).get('data') or [] if (a.get('attributes') or {}).get('bundleId') == T['bundle']]
+    if not apps:
+        fail('In App Store Connect non c\'è ancora un\'app con identificativo %s: creala prima (passo B6), poi rilancia.' % T['bundle'])
+    return apps[0]
+
+
+def stato(T):
+    """Read-only (--stato): versions, builds, review submissions and countries as App Store Connect sees them now.
+    Each part goes out as annotations; a part Apple refuses becomes a warning and the others still run."""
+    app = find_app(T)['id']
+
+    def versioni():
+        for v in items('/v1/apps/%s/appStoreVersions' % app, {'filter[platform]': 'IOS'})[:4]:
+            b = call('GET', '/v1/appStoreVersions/%s/build' % v['id']).get('data')
+            note('notice', 'Versione ' + str(v['attributes'].get('versionString')), '%s; build scelta: %s' % (state(v), b['attributes'].get('version') if b else 'nessuna'))
+
+    def build():
+        res = call('GET', '/v1/builds', query={'filter[app]': app, 'sort': '-uploadedDate', 'limit': 6, 'include': 'preReleaseVersion'})
+        pre = {x['id']: (x.get('attributes') or {}).get('version') for x in res.get('included') or [] if x.get('type') == 'preReleaseVersions'}
+        for b in res.get('data') or []:
+            a = b.get('attributes') or {}
+            p = (((b.get('relationships') or {}).get('preReleaseVersion') or {}).get('data') or {}).get('id')
+            note('notice', 'Build ' + str(a.get('version')), 'versione %s: %s (caricata %s)' % (pre.get(p, '?'), a.get('processingState'), (a.get('uploadedDate') or '-')[:16]))
+
+    def revisioni():
+        for s in items('/v1/reviewSubmissions', {'filter[app]': app, 'filter[platform]': 'IOS'})[-4:]:
+            a = s.get('attributes') or {}
+            note('notice', 'Revisione', '%s (inviata %s)' % (a.get('state'), (a.get('submittedDate') or '-')[:16]))
+
+    def paesi():
+        av = call('GET', '/v1/apps/%s/appAvailabilityV2' % app)['data']['id']
+        on, off = [], []
+        for t in items('/v2/appAvailabilities/%s/territoryAvailabilities' % av, {'include': 'territory'}):
+            tid = (((t.get('relationships') or {}).get('territory') or {}).get('data') or {}).get('id', '?')
+            (on if (t.get('attributes') or {}).get('available') else off).append(tid)
+        note('notice', 'Paesi', 'disponibile in %d; esclusi: %s' % (len(on), ', '.join(sorted(off)) or 'nessuno'))
+
+    for title, part in (('Versioni', versioni), ('Build', build), ('Revisione', revisioni), ('Paesi', paesi)):
+        try:
+            part()
+        except (Apple, KeyError, TypeError) as e:
+            note('warning', title, 'non letto: %s' % e)
+
+
 def main():
     for k in ('APPSTORE_KEY_ID', 'APPSTORE_ISSUER_ID', 'APPSTORE_P8'):
         if not os.environ.get(k, '').strip():
             fail('Manca il segreto %s: aggiungilo in Settings → Secrets and variables → Actions del repository (passo C1).' % k)
     T = json.load(open(os.path.join(DIR, 'testi.json'), encoding='utf-8'))
+    if '--stato' in sys.argv[2:]:
+        return stato(T)
     shots = {}
     for loc, L in T['lingue'].items():
         files = sorted(glob.glob(os.path.join(DIR, 'schermate', L['schermate'], '*.png')))
@@ -211,11 +259,9 @@ def main():
             fail('Mancano le schermate nella cartella scheda/schermate/%s.' % L['schermate'])
         shots[loc] = files
 
-    apps = [a for a in call('GET', '/v1/apps', query={'filter[bundleId]': T['bundle']}).get('data') or [] if (a.get('attributes') or {}).get('bundleId') == T['bundle']]
-    if not apps:
-        fail('In App Store Connect non c\'è ancora un\'app con identificativo %s: creala prima (passo B6), poi rilancia.' % T['bundle'])
-    app = apps[0]['id']
-    print('App:', apps[0]['attributes'].get('name'), app, flush=True)
+    found = find_app(T)
+    app = found['id']
+    print('App:', found['attributes'].get('name'), app, flush=True)
 
     # app information: categories, then name, subtitle, privacy URL in every language
     infos = [x for x in items('/v1/apps/%s/appInfos' % app) if state(x) in EDITABLE]
