@@ -6,10 +6,15 @@ on:
         description: "Versione dell'app: 1.0 la prima volta, poi 1.1, 1.2..."
         required: true
         default: "1.0"
+  push:
+    # Claude's dry runs: a push to this branch builds and signs everything for the App Store, but sends nothing to Apple
+    branches: [prova-iphone]
 jobs:
   carica:
     runs-on: macos-latest
     timeout-minutes: 40
+    env:
+      PROVA: ${{ github.event_name == 'push' }}
     steps:
       - uses: actions/checkout@v4
       - name: Controlla i segreti
@@ -41,11 +46,27 @@ jobs:
           [ -z "$P8" ] || { [[ "$P8" == *"BEGIN PRIVATE KEY"* ]] && [[ "$P8" == *"END PRIVATE KEY"* ]]; } || { echo "::error title=Segreti::APPSTORE_P8 deve contenere tutto il testo della chiave, comprese le righe BEGIN e END (passo B8)."; ok=0; }
           [ "$ok" = 1 ]
       - name: Xcode
-        # the runner's default Xcode: always a released version (a beta cannot send apps to the App Store)
+        # the runner's default Xcode if it is 26.2 or later (needed by the age check, DeclaredAgeRange); otherwise the
+        # oldest installed release that is recent enough. Never a beta or a release candidate: the App Store refuses them.
         run: |
-          xcodebuild -version
-          v=$(xcodebuild -version | head -1 | awk '{print $2}' | cut -d. -f1)
-          [ "$v" -ge 26 ] || { echo "::error title=Xcode::Il Mac di GitHub ha Xcode $v: serve Xcode 26 o successivo. Riprova tra qualche giorno."; exit 1; }
+          python3 - <<'PY'
+          import glob, os, re, subprocess, sys
+          NEED = (26, 2)
+          def ver(s): return tuple(int(x) for x in s.split('.'))
+          def current(): return subprocess.run(['xcodebuild', '-version'], capture_output=True, text=True).stdout.split()
+          cur = current()[1]
+          if ver(cur) < NEED:
+              ok = []
+              for app in glob.glob('/Applications/Xcode_*.app'):
+                  m = re.fullmatch(r'Xcode_(\d+(?:\.\d+)*)\.app', os.path.basename(app))   # betas and release candidates have longer names
+                  if m and ver(m.group(1)) >= NEED:
+                      ok.append((ver(m.group(1)), app))
+              if not ok:
+                  print("::error title=Xcode::Il Mac di GitHub ha Xcode %s: serve Xcode 26.2 o successivo. Riprova tra qualche giorno." % cur)
+                  sys.exit(1)
+              subprocess.run(['sudo', 'xcode-select', '-s', min(ok)[1]], check=True)
+          print('::notice title=Xcode::' + ' '.join(current()))
+          PY
       - name: Prepara il progetto con le pagine del sito
         run: |
           mkdir -p build && unzip -q giocapensa-ios.zip -d build
@@ -63,7 +84,7 @@ jobs:
           KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
           ISSUER: ${{ secrets.APPSTORE_ISSUER_ID }}
           TEAM: ${{ secrets.APPLE_TEAM_ID }}
-          VERSIONE: ${{ inputs.versione }}
+          VERSIONE: ${{ inputs.versione || '1.0' }}
         run: |
           set -o pipefail
           TEAM="${TEAM//[[:space:]]/}"; KEY_ID="${KEY_ID//[[:space:]]/}"; ISSUER="${ISSUER//[[:space:]]/}"
@@ -78,6 +99,18 @@ jobs:
             CODE_SIGN_IDENTITY=- AD_HOC_CODE_SIGNING_ALLOWED=YES \
             MARKETING_VERSION="$VERSIONE" CURRENT_PROJECT_VERSION=${{ github.run_number }}.${{ github.run_attempt }} \
             archive 2>&1 | tee "$RUNNER_TEMP/compila.log"
+          # the age check uses DeclaredAgeRange, which exists only from iOS 26: it must be linked weakly,
+          # or the app would not even start on older iOS
+          APP="$RUNNER_TEMP/App.xcarchive/Products/Applications/App.app"
+          link=$(otool -l "$APP/App" | awk '/^ *cmd /{c=$2} /^ *name .*DeclaredAgeRange/ && !d {print c; d=1}')
+          case "$link" in
+            LC_LOAD_WEAK_DYLIB) echo "::notice title=Controllo dell'età::DeclaredAgeRange collegato in modo debole: l'app parte anche sugli iOS più vecchi." ;;
+            "") echo "::error title=Controllo dell'età::DeclaredAgeRange non risulta collegato all'app."; exit 1 ;;
+            *) echo "::error title=Controllo dell'età::DeclaredAgeRange è collegato con $link: sugli iOS prima del 26 l'app non partirebbe."; exit 1 ;;
+          esac
+          ent=$(codesign -d --entitlements - "$APP" 2>&1 || true)   # read whole: grep -q would cut the pipe under pipefail
+          [[ "$ent" == *declared-age-range* ]] \
+            || { echo "::error title=Controllo dell'età::Nell'archivio manca il permesso com.apple.developer.declared-age-range."; exit 1; }
       - name: Invia ad App Store Connect
         env:
           KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
@@ -86,12 +119,14 @@ jobs:
         run: |
           set -o pipefail
           TEAM="${TEAM//[[:space:]]/}"; KEY_ID="${KEY_ID//[[:space:]]/}"; ISSUER="${ISSUER//[[:space:]]/}"
+          # a dry run signs for the App Store exactly the same way, but keeps the app here instead of sending it
+          DEST=upload; [ "$PROVA" = true ] && DEST=export
           cat > "$RUNNER_TEMP/export.plist" <<PLIST
           <?xml version="1.0" encoding="UTF-8"?>
           <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
           <plist version="1.0"><dict>
           <key>method</key><string>app-store-connect</string>
-          <key>destination</key><string>upload</string>
+          <key>destination</key><string>$DEST</string>
           <key>teamID</key><string>$TEAM</string>
           <key>signingStyle</key><string>automatic</string>
           <key>manageAppVersionAndBuildNumber</key><false/>
@@ -102,6 +137,13 @@ jobs:
             -allowProvisioningUpdates \
             -authenticationKeyPath "$RUNNER_TEMP/keys/AuthKey_$KEY_ID.p8" \
             -authenticationKeyID "$KEY_ID" -authenticationKeyIssuerID "$ISSUER" 2>&1 | tee "$RUNNER_TEMP/invia.log"
+          if [ "$PROVA" = true ]; then
+            mkdir -p "$RUNNER_TEMP/ipa" && unzip -q "$RUNNER_TEMP"/export/*.ipa -d "$RUNNER_TEMP/ipa"
+            ent=$(codesign -d --entitlements - "$RUNNER_TEMP/ipa/Payload/App.app" 2>&1 || true)
+            [[ "$ent" == *declared-age-range* ]] \
+              || { echo "::error title=Prova::La firma per l'App Store non contiene il permesso dell'età: sull'identificativo dell'app va attivato «Declared Age Range»."; exit 1; }
+            echo "::notice title=Prova::App compilata e firmata per l'App Store, con il controllo dell'età. Non è stata inviata ad Apple."
+          fi
       - name: Spiega l'errore
         # the lines that say why it failed become annotations: they show on the run page and can be read from the GitHub API
         if: failure()
