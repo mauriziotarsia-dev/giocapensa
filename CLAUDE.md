@@ -69,7 +69,7 @@ Un gioco nuovo basato su `src/shared` fornisce a `Kit.start({...})`: `key`, `cou
 
 - Altre scene degli Adesivi (giardino, spiaggia…): per ora il genitore ha scelto solo le cinque attuali.
 - Un settimo gioco possibile, «Guida tu»: mettere in fila delle frecce e poi far partire l'auto.
-- Stati Uniti: esclusi finché Apple non approva una versione con il controllo dell'età (vedi «Controllo dell'età» nella sezione dell'app per iPhone). In Texas (legge in vigore da giugno 2026) e in altri Stati lo sviluppatore deve verificare l'età di chi usa l'app con le informazioni dell'App Store. Dopo l'approvazione basta rimettere la spunta in «Prezzi e disponibilità».
+- Stati Uniti: inclusi dal 18 ottobre 2026, insieme alla build con il controllo dell'età (vedi «Controllo dell'età» nella sezione dell'app per iPhone). In Texas (legge in vigore da giugno 2026) e in altri Stati lo sviluppatore deve verificare l'età di chi usa l'app con le informazioni dell'App Store. Se un giorno una build uscisse senza quel controllo, gli Stati Uniti vanno tolti prima di inviarla.
 
 ## Adesivi (versione a scene)
 
@@ -139,9 +139,9 @@ Il progetto Xcode è fuori da questo repository, nello zip `giocapensa-iphone` (
 
 ## Scheda App Store (ottobre 2026)
 - L'app esce **gratis** (deciso il 18 ottobre 2026, dopo aver preparato la vendita a 2,99 €). Venderla più avanti dipende dal parere di un commercialista sulla partita IVA. Chi l'ha scaricata gratis la tiene per sempre, con gli aggiornamenti: un prezzo messo dopo vale solo per i nuovi arrivati, e un eventuale sblocco dentro l'app dovrebbe lasciare tutto aperto a chi l'aveva prima (StoreKit, `AppTransaction`, versione e data del primo download). Per la vendita è già tutto pronto: accordo Paid Apps, moduli fiscali e banca attivi, operatore commerciale per il Digital Services Act dichiarato sull'account, Small Business Program richiesto (commissione al 15%: su 2,99 € in Italia arrivano circa 2,08 €). Lo stato di operatore si può togliere app per app («Informazioni sull'app» → Digital Services Act): finché l'app è gratis, così indirizzo e telefono non compaiono nella pagina europea.
-- **Stato al 18 ottobre 2026:** versione 1.0 (build 2.1) inviata alla revisione. Scelte fatte in App Store Connect:
+- **Stato al 18 ottobre 2026:** versione 1.0 inviata alla revisione alle 10:54 con la build 4.1, che ha il controllo dell'età. La prima richiesta, con la build 2.1, era partita alle 09:20 ed è stata annullata dal genitore. Scelte fatte in App Store Connect:
   - prezzo gratis, rilascio automatico;
-  - tutti i paesi tranne Stati Uniti, Cina continentale e Vietnam; niente Mac né Apple Vision Pro (su visionOS le app per bambini non sono ammesse);
+  - tutti i paesi tranne Cina continentale e Vietnam (173), Stati Uniti compresi; niente Mac né Apple Vision Pro (su visionOS le app per bambini non sono ammesse);
   - età 4+, «Per bambini» 0-5 anni; privacy «Dati non raccolti»;
   - per questa app «non operatore commerciale»;
   - DAC7 compilato: l'app non offre servizi personali.
