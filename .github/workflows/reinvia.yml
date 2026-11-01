@@ -1,0 +1,35 @@
+name: Reinvio alla revisione
+on:
+  workflow_dispatch:
+    inputs:
+      davvero:
+        description: "Reinvia davvero (senza la spunta è solo una prova che non cambia niente)"
+        type: boolean
+        default: false
+  push:
+    # Claude: a push on reinvia-prova only reads and says what it would do; a push on reinvia-asc resubmits
+    branches: [reinvia-prova, reinvia-asc]
+jobs:
+  reinvia:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Strumenti
+        run: python -m pip install --quiet "pyjwt[crypto]>=2.8,<3"
+      - name: Reinvia
+        # review notes, rejected item marked as resolved, submission sent again; every step goes out as an annotation
+        env:
+          APPSTORE_KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
+          APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
+          APPSTORE_P8: ${{ secrets.APPSTORE_P8 }}
+          DAVVERO: ${{ github.ref_name == 'reinvia-asc' || inputs.davvero == true }}
+        run: |
+          if [ "$DAVVERO" = true ]; then
+            python scheda/carica.py scheda --reinvia --davvero
+          else
+            python scheda/carica.py scheda --reinvia
+          fi

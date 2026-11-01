@@ -9,8 +9,10 @@ It can run again at any time: texts are rewritten, screenshots are replaced only
 
 Environment: APPSTORE_KEY_ID, APPSTORE_ISSUER_ID, APPSTORE_P8 (text of the .p8 key);
 optional VERSIONE (version to fill, e.g. 1.1; default: the one being prepared), ASC_API (tests only).
-usage: python3 carica.py [folder with testi.json and schermate/] [--stato]
+usage: python3 carica.py [folder with testi.json and schermate/] [--stato | --reinvia [--davvero]]
 --stato only reads: versions, builds, review submissions and countries, as annotations (workflow «Stato su App Store Connect»).
+--reinvia sends a rejected version back to App Review with the review notes of testi.json (workflow «Reinvio alla
+revisione»); without --davvero it only reads and says what it would do.
 Messages for the parent are in Italian and go out as GitHub annotations, readable from the API.
 """
 import glob, hashlib, http.client, json, os, re, sys, time, urllib.error, urllib.parse, urllib.request
@@ -245,6 +247,65 @@ def stato(T):
             note('warning', title, 'non letto: %s' % e)
 
 
+def reinvia(T, davvero):
+    """--reinvia: sends the rejected app version back to App Review, as «Modifica», «Aggiungi alla verifica» and
+    the resubmit button do in App Store Connect. It puts T['note_revisione'] in the version's review notes, marks
+    the rejected item of the open submission as resolved and submits the submission again; Apple then closes the
+    message thread of that submission, so the notes open with a line that points the new reviewer to the answers.
+    Without davvero it changes nothing and says what it would do.
+    The current notes are never printed (annotations are public): only their length."""
+    tit = 'Reinvio' if davvero else 'Prova del reinvio'
+    base = (T.get('note_revisione') or '').strip()
+    if 'Guideline 1.3' not in base:
+        fail('In testi.json mancano le note per la revisione con le risposte sulla categoria Bambini (note_revisione): senza, non reinvio.')
+    nuove = ('Resubmission after an information request: the answers to the Kids Category questions (Guideline 1.3) '
+             'are repeated at the end of these notes.\n\n' + base)
+    if len(nuove) > 4000:
+        fail('Le note per la revisione sono lunghe %d caratteri: Apple ne accetta al massimo 4000.' % len(nuove))
+    app = find_app(T)['id']
+    aperte = items('/v1/reviewSubmissions', {'filter[app]': app, 'filter[platform]': 'IOS', 'filter[state]': 'UNRESOLVED_ISSUES'})
+    if len(aperte) != 1:
+        fail('Mi aspettavo una sola richiesta di revisione con problemi da risolvere, ne ho trovate %d: non tocco niente.' % len(aperte))
+    sub = aperte[0]
+    note('notice', tit, 'richiesta %s: %s (inviata %s)' % (sub['id'], state(sub), (sub['attributes'].get('submittedDate') or '-')[:16]))
+    res = call('GET', '/v1/reviewSubmissions/%s/items' % sub['id'], query={'include': 'appStoreVersion', 'limit': 50})
+    elementi = [x for x in res.get('data') or [] if state(x) != 'REMOVED']
+    for x in elementi:
+        note('notice', tit, 'elemento %s: %s' % (x['id'], state(x)))
+    vers = [x for x in elementi if (((x.get('relationships') or {}).get('appStoreVersion') or {}).get('data') or {}).get('id')]
+    if len(elementi) != 1 or len(vers) != 1 or state(vers[0]) not in ('REJECTED', 'READY_FOR_REVIEW'):
+        fail('Nella richiesta mi aspettavo solo la versione dell\'app, respinta: trovo altro, quindi non tocco niente.')
+    item = vers[0]
+    vid = item['relationships']['appStoreVersion']['data']['id']
+    ver = call('GET', '/v1/appStoreVersions/' + vid)['data']
+    b = call('GET', '/v1/appStoreVersions/%s/build' % vid).get('data')
+    note('notice', tit, 'versione %s: %s; build scelta: %s' % (ver['attributes'].get('versionString'), state(ver), b['attributes'].get('version') if b else 'nessuna'))
+    if not b:
+        fail('La versione non ha una build scelta: non reinvio.')
+    det = call('GET', '/v1/appStoreVersions/%s/appStoreReviewDetail' % vid).get('data')
+    if not det:
+        fail('La versione non ha i dati per la revisione: compilali in App Store Connect, poi rilancia.')
+    vecchie = ((det.get('attributes') or {}).get('notes') or '').strip()
+    cambia = vecchie != nuove
+    note('notice', tit, 'note per la revisione: adesso %d caratteri, %s le risposte sulla categoria Bambini; %s' % (
+        len(vecchie), 'con' if 'Guideline 1.3' in vecchie else 'senza',
+        'da sostituire con quelle nuove (%d caratteri)' % len(nuove) if cambia else 'già quelle nuove'))
+    if not davvero:
+        note('notice', tit, 'Prova finita, non ho cambiato niente. Il reinvio vero: %selemento segnato come risolto, richiesta inviata di nuovo.' % ('note nuove, ' if cambia else ''))
+        return
+    if cambia:
+        call('PATCH', '/v1/appStoreReviewDetails/' + det['id'], {'data': {'type': 'appStoreReviewDetails', 'id': det['id'], 'attributes': {'notes': nuove}}})
+        note('notice', tit, 'note per la revisione aggiornate')
+    if state(item) == 'REJECTED':
+        call('PATCH', '/v1/reviewSubmissionItems/' + item['id'], {'data': {'type': 'reviewSubmissionItems', 'id': item['id'], 'attributes': {'resolved': True}}})
+        note('notice', tit, 'elemento segnato come risolto')
+    call('PATCH', '/v1/reviewSubmissions/' + sub['id'], {'data': {'type': 'reviewSubmissions', 'id': sub['id'], 'attributes': {'submitted': True}}})
+    time.sleep(5)
+    s2 = call('GET', '/v1/reviewSubmissions/' + sub['id'])['data']
+    v2 = call('GET', '/v1/appStoreVersions/' + vid)['data']
+    note('notice', 'Reinviata', 'richiesta %s: %s; versione %s: %s' % (sub['id'], state(s2), v2['attributes'].get('versionString'), state(v2)))
+
+
 def main():
     for k in ('APPSTORE_KEY_ID', 'APPSTORE_ISSUER_ID', 'APPSTORE_P8'):
         if not os.environ.get(k, '').strip():
@@ -252,6 +313,8 @@ def main():
     T = json.load(open(os.path.join(DIR, 'testi.json'), encoding='utf-8'))
     if '--stato' in sys.argv[2:]:
         return stato(T)
+    if '--reinvia' in sys.argv[2:]:
+        return reinvia(T, '--davvero' in sys.argv[2:])
     shots = {}
     for loc, L in T['lingue'].items():
         files = sorted(glob.glob(os.path.join(DIR, 'schermate', L['schermate'], '*.png')))
