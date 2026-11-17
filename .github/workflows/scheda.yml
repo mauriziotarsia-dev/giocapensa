@@ -6,6 +6,9 @@ on:
         description: "Versione da compilare (lascia vuoto: quella in preparazione)"
         required: false
         default: ""
+  push:
+    # Claude: a push to scheda-asc fills the listing of the version written in scheda/testi.json («versione»)
+    branches: [scheda-asc]
 jobs:
   scheda:
     runs-on: ubuntu-24.04

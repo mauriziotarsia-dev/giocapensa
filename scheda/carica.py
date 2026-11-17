@@ -8,11 +8,17 @@ privacy, review contact and the submission stay manual in App Store Connect.
 It can run again at any time: texts are rewritten, screenshots are replaced only where they differ.
 
 Environment: APPSTORE_KEY_ID, APPSTORE_ISSUER_ID, APPSTORE_P8 (text of the .p8 key);
-optional VERSIONE (version to fill, e.g. 1.1; default: the one being prepared), ASC_API (tests only).
-usage: python3 carica.py [folder with testi.json and schermate/] [--stato | --reinvia [--davvero]]
+optional VERSIONE (version to fill, e.g. 1.1; default: «versione» of testi.json, else the one being prepared; a version
+that does not exist yet is created), USCITA (--invia: release date, e.g. 2026-12-08; default: «uscita» of testi.json; empty: as soon as it is approved),
+ASC_API (tests only).
+usage: python3 carica.py [folder with testi.json and schermate/] [--stato | --reinvia [--davvero] | --invia [--davvero] | --candida [--davvero]]
 --stato only reads: versions, builds, review submissions and countries, as annotations (workflow «Stato su App Store Connect»).
 --reinvia sends a rejected version back to App Review with the review notes of testi.json (workflow «Reinvio alla
 revisione»); without --davvero it only reads and says what it would do.
+--invia sends the version being prepared to App Review (workflow «Invio alla revisione»): newest ready build, review
+notes of testi.json, release date, submission; without --davvero it only reads and says what it would do.
+--candida nominates the version for an App Store feature (Featuring → Nominations) with «candidatura» of testi.json and the
+release date as publishing date (workflow «Candidatura in evidenza»); without --davvero it only says what it would send.
 Messages for the parent are in Italian and go out as GitHub annotations, readable from the API.
 """
 import glob, hashlib, http.client, json, os, re, sys, time, urllib.error, urllib.parse, urllib.request
@@ -306,6 +312,109 @@ def reinvia(T, davvero):
     note('notice', 'Reinviata', 'richiesta %s: %s; versione %s: %s' % (sub['id'], state(s2), v2['attributes'].get('versionString'), state(v2)))
 
 
+def invia(T, davvero):
+    """--invia: sends the version being prepared to App Review, as the version page of App Store Connect does: it picks the
+    newest build of that version that Apple has finished checking, writes T['note_revisione'] in the review notes, sets the
+    release (USCITA: a date, e.g. 2026-12-08, for a scheduled release at 9:00 Italian time; empty: as soon as it is approved),
+    then adds the version to a review submission and submits it. Without davvero it changes nothing and says what it would do."""
+    tit = 'Invio' if davvero else 'Prova dell\'invio'
+    want = os.environ.get('VERSIONE', '').strip() or T.get('versione', '')
+    notes = (T.get('note_revisione') or '').strip()
+    if not want:
+        fail('Manca la versione da inviare: VERSIONE o «versione» in testi.json.')
+    if 'Guideline 1.3' not in notes:
+        fail('In testi.json mancano le note per la revisione con le risposte sulla categoria Bambini (note_revisione): senza, non invio.')
+    app = find_app(T)['id']
+    vers = [v for v in items('/v1/apps/%s/appStoreVersions' % app, {'filter[platform]': 'IOS'}) if v['attributes'].get('versionString') == want]
+    if not vers:
+        fail('La versione %s non c\'è ancora in App Store Connect: prima si compila la scheda (flusso «Scheda App Store»).' % want)
+    ver = vers[0]
+    if state(ver) not in EDITABLE - {'INVALID_BINARY'}:
+        fail('La versione %s è %s: adesso non si può inviare.' % (want, state(ver)))
+    rows = call('GET', '/v1/builds', query={'filter[app]': app, 'filter[preReleaseVersion.version]': want, 'filter[processingState]': 'VALID',
+                                            'sort': '-uploadedDate', 'limit': 1}).get('data') or []
+    if not rows:
+        fail('Per la versione %s Apple non ha ancora una build pronta (VALID): si carica con il flusso «App per iPhone» e si aspetta che Apple finisca di controllarla.' % want)
+    build = rows[0]
+    try:
+        det = call('GET', '/v1/appStoreVersions/%s/appStoreReviewDetail' % ver['id']).get('data')
+    except Apple:
+        det = None
+    uscita = os.environ.get('USCITA', '').strip() or T.get('uscita', '')
+    if uscita and not re.match(r'^\d{4}-\d{2}-\d{2}$', uscita):
+        fail('USCITA deve essere una data come 2026-12-08, non «%s».' % uscita)
+    quando = ('il %s alle 9:00 (ora italiana), se approvata prima; altrimenti appena approvata' % uscita) if uscita else 'appena approvata'
+    subs = [x for x in items('/v1/reviewSubmissions', {'filter[app]': app, 'filter[platform]': 'IOS'}) if state(x) in ('READY_FOR_REVIEW', 'WAITING_FOR_REVIEW', 'IN_REVIEW', 'UNRESOLVED_ISSUES')]
+    busy = [x for x in subs if state(x) != 'READY_FOR_REVIEW']
+    if busy:
+        fail('C\'è già una richiesta di revisione %s: non ne apro un\'altra.' % state(busy[0]))
+    note('notice', tit, 'versione %s (%s): build %s; note per la revisione %d caratteri (dati di contatto %s); uscita %s.' % (
+        want, state(ver), build['attributes'].get('version'), len(notes), 'già presenti' if det else 'MANCANTI', quando))
+    if not det:
+        fail('La versione %s non ha ancora le informazioni per la revisione (nome, telefono, email di contatto): vanno messe una volta in App Store Connect, pagina della versione, sezione «Informazioni per la revisione».' % want)
+    if not davvero:
+        note('notice', tit, 'nessuna modifica: con un push sul ramo invia-asc sceglie la build, scrive le note, imposta l\'uscita e invia la versione %s alla revisione.' % want)
+        return
+    call('PATCH', '/v1/appStoreVersions/%s/relationships/build' % ver['id'], rel('builds', build['id']))
+    call('PATCH', '/v1/appStoreReviewDetails/' + det['id'], {'data': {'type': 'appStoreReviewDetails', 'id': det['id'], 'attributes': {'notes': notes}}})
+    attrs = {'releaseType': 'SCHEDULED', 'earliestReleaseDate': uscita + 'T08:00:00Z'} if uscita else {'releaseType': 'AFTER_APPROVAL'}
+    call('PATCH', '/v1/appStoreVersions/' + ver['id'], {'data': {'type': 'appStoreVersions', 'id': ver['id'], 'attributes': attrs}})
+    note('notice', tit, 'build %s scelta, note scritte, uscita: %s' % (build['attributes'].get('version'), quando))
+    sub = subs[0] if subs else call('POST', '/v1/reviewSubmissions', {'data': {'type': 'reviewSubmissions', 'attributes': {'platform': 'IOS'},
+                                                                                'relationships': {'app': rel('apps', app)}}})['data']
+    have = call('GET', '/v1/reviewSubmissions/%s/items' % sub['id'], query={'include': 'appStoreVersion', 'limit': 20}).get('data') or []
+    if not any((((x.get('relationships') or {}).get('appStoreVersion') or {}).get('data') or {}).get('id') == ver['id'] for x in have):
+        call('POST', '/v1/reviewSubmissionItems', {'data': {'type': 'reviewSubmissionItems', 'relationships': {
+            'reviewSubmission': rel('reviewSubmissions', sub['id']), 'appStoreVersion': rel('appStoreVersions', ver['id'])}}})
+    call('PATCH', '/v1/reviewSubmissions/' + sub['id'], {'data': {'type': 'reviewSubmissions', 'id': sub['id'], 'attributes': {'submitted': True}}})
+    time.sleep(5)
+    s2 = call('GET', '/v1/reviewSubmissions/' + sub['id'])['data']
+    v2 = call('GET', '/v1/appStoreVersions/' + ver['id'])['data']
+    note('notice', 'Inviata', 'richiesta %s: %s; versione %s: %s' % (sub['id'], state(s2), want, state(v2)))
+
+
+def candida(T, davvero):
+    """--candida: nominates the new version for an App Store feature, as App Store Connect → Featuring → Nominations does.
+    Apple asks for nominations at least three weeks before the publishing date, which is the release date of testi.json.
+    A nomination of the same name that is already there is not sent twice."""
+    tit = 'Candidatura' if davvero else 'Prova della candidatura'
+    C = T.get('candidatura') or {}
+    uscita = os.environ.get('USCITA', '').strip() or T.get('uscita', '')
+    if not (C.get('name') and C.get('description') and uscita):
+        fail('In testi.json mancano la candidatura (nome e descrizione) o la data d\'uscita: senza, non candido.')
+    giorni = (time.mktime(time.strptime(uscita, '%Y-%m-%d')) - time.time()) / 86400
+    app = find_app(T)['id']
+    old = []
+    for st in ('DRAFT', 'SUBMITTED'):
+        try:
+            old += items('/v1/nominations', {'filter[state]': st, 'filter[relatedApps]': app})
+        except Apple as e:
+            note('warning', tit, 'candidature esistenti non lette: %s' % e)
+    same = [x for x in old if (x.get('attributes') or {}).get('name') == C['name']]
+    if same and state(same[0]) == 'SUBMITTED':
+        note('notice', tit, 'la candidatura «%s» è già stata inviata il %s: non la rimando.' % (C['name'], ((same[0]['attributes'].get('submittedDate')) or '-')[:10]))
+        return
+    locales = sorted(T['lingue'])
+    attrs = {'name': C['name'], 'type': C.get('type', 'APP_ENHANCEMENTS'), 'description': C['description'], 'notes': C.get('notes') or None,
+             'publishStartDate': uscita + 'T08:00:00Z', 'deviceFamilies': ['IPHONE'], 'locales': locales,
+             'hasInAppEvents': False, 'launchInSelectMarketsFirst': False, 'preOrderEnabled': False, 'submitted': bool(davvero)}
+    note('notice', tit, '%s «%s», uscita %s (fra %d giorni%s), %d lingue, descrizione %d caratteri, note %d.' % (
+        attrs['type'], C['name'], uscita, giorni, '' if giorni >= 21 else ': Apple chiede almeno tre settimane, la candidatura vale lo stesso ma ha meno probabilità',
+        len(locales), len(C['description']), len(C.get('notes') or '')))
+    if not davvero:
+        note('notice', tit, 'nessuna modifica: con un push sul ramo candida-asc la candidatura viene inviata ad Apple.')
+        return
+    if same:
+        nid = same[0]['id']
+        a2 = {k: v for k, v in attrs.items() if k != 'type'}
+        call('PATCH', '/v1/nominations/' + nid, {'data': {'type': 'nominations', 'id': nid, 'attributes': a2}})
+    else:
+        nid = call('POST', '/v1/nominations', {'data': {'type': 'nominations', 'attributes': attrs,
+                                                         'relationships': {'relatedApps': {'data': [{'type': 'apps', 'id': app}]}}}})['data']['id']
+    n2 = call('GET', '/v1/nominations/' + nid)['data']
+    note('notice', 'Candidatura inviata', '«%s»: %s' % (C['name'], state(n2)))
+
+
 def main():
     for k in ('APPSTORE_KEY_ID', 'APPSTORE_ISSUER_ID', 'APPSTORE_P8'):
         if not os.environ.get(k, '').strip():
@@ -315,6 +424,10 @@ def main():
         return stato(T)
     if '--reinvia' in sys.argv[2:]:
         return reinvia(T, '--davvero' in sys.argv[2:])
+    if '--invia' in sys.argv[2:]:
+        return invia(T, '--davvero' in sys.argv[2:])
+    if '--candida' in sys.argv[2:]:
+        return candida(T, '--davvero' in sys.argv[2:])
     shots = {}
     for loc, L in T['lingue'].items():
         files = sorted(glob.glob(os.path.join(DIR, 'schermate', L['schermate'], '*.png')))
@@ -339,8 +452,15 @@ def main():
         print('%-8s nome e sottotitolo: %s' % (loc, what), flush=True)
 
     # the version being prepared: copyright, texts, screenshots
-    want = os.environ.get('VERSIONE', '').strip()
-    vers = [v for v in items('/v1/apps/%s/appStoreVersions' % app, {'filter[platform]': 'IOS'}) if state(v) in EDITABLE and (not want or v['attributes'].get('versionString') == want)]
+    want = os.environ.get('VERSIONE', '').strip() or T.get('versione', '')
+    every = items('/v1/apps/%s/appStoreVersions' % app, {'filter[platform]': 'IOS'})
+    vers = [v for v in every if state(v) in EDITABLE and (not want or v['attributes'].get('versionString') == want)]
+    if not vers and want and not any(v['attributes'].get('versionString') == want for v in every):
+        if any(state(v) in EDITABLE or state(v) in ('WAITING_FOR_REVIEW', 'IN_REVIEW', 'PENDING_DEVELOPER_RELEASE') for v in every):
+            fail('Non creo la versione %s: un\'altra versione è ancora in preparazione o in revisione.' % want)
+        vers = [call('POST', '/v1/appStoreVersions', {'data': {'type': 'appStoreVersions', 'attributes': {'platform': 'IOS', 'versionString': want},
+                                                                'relationships': {'app': rel('apps', app)}}})['data']]
+        note('notice', 'Versione ' + want, 'creata in App Store Connect: testi e schermate di quella precedente vengono riscritti con quelli di scheda/')
     if not vers:
         fail('Non c\'è nessuna versione %sin preparazione per iPhone: in App Store Connect crea la versione (+ accanto a «App iOS»), poi rilancia.' % (want + ' ' if want else ''))
     ver = vers[0]
@@ -350,6 +470,8 @@ def main():
     vloc = {}
     for loc, L in T['lingue'].items():
         attrs = {'description': L['description'], 'keywords': L['keywords'], 'promotionalText': L['promotionalText'], 'supportUrl': T['url']['support']}
+        if L.get('whatsNew') and ver['attributes'].get('versionString') != '1.0':      # Apple refuses «What's New» on the first version
+            attrs['whatsNew'] = L['whatsNew']
         try:
             vloc[loc], what = upsert('appStoreVersionLocalizations', have, loc, attrs, 'appStoreVersion', 'appStoreVersions', ver['id'])
         except Apple as e:
