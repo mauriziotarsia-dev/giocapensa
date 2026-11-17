@@ -439,8 +439,26 @@ def main():
     app = found['id']
     print('App:', found['attributes'].get('name'), app, flush=True)
 
+    # the version being prepared (created if it is missing: only then can the app information change after a release)
+    want = os.environ.get('VERSIONE', '').strip() or T.get('versione', '')
+    every, created = items('/v1/apps/%s/appStoreVersions' % app, {'filter[platform]': 'IOS'}), False
+    vers = [v for v in every if state(v) in EDITABLE and (not want or v['attributes'].get('versionString') == want)]
+    if not vers and want and not any(v['attributes'].get('versionString') == want for v in every):
+        if any(state(v) in EDITABLE or state(v) in ('WAITING_FOR_REVIEW', 'IN_REVIEW', 'PENDING_DEVELOPER_RELEASE') for v in every):
+            fail('Non creo la versione %s: un\'altra versione è ancora in preparazione o in revisione.' % want)
+        vers = [call('POST', '/v1/appStoreVersions', {'data': {'type': 'appStoreVersions', 'attributes': {'platform': 'IOS', 'versionString': want},
+                                                                'relationships': {'app': rel('apps', app)}}})['data']]
+        created = True
+        note('notice', 'Versione ' + want, 'creata in App Store Connect: testi e schermate di quella precedente vengono riscritti con quelli di scheda/')
+    if not vers:
+        fail('Non c\'è nessuna versione %sin preparazione per iPhone: in App Store Connect crea la versione (+ accanto a «App iOS»), poi rilancia.' % (want + ' ' if want else ''))
+    ver = vers[0]
     # app information: categories, then name, subtitle, privacy URL in every language
-    infos = [x for x in items('/v1/apps/%s/appInfos' % app) if state(x) in EDITABLE]
+    for attempt in range(7):                      # a version just created gets its own app information after a moment
+        infos = [x for x in items('/v1/apps/%s/appInfos' % app) if state(x) in EDITABLE]
+        if infos or not created:
+            break
+        time.sleep(10)
     if not infos:
         fail('Le informazioni dell\'app adesso non si possono modificare (app in revisione o già pubblicata senza una versione nuova).')
     info = infos[0]['id']
@@ -452,18 +470,6 @@ def main():
         print('%-8s nome e sottotitolo: %s' % (loc, what), flush=True)
 
     # the version being prepared: copyright, texts, screenshots
-    want = os.environ.get('VERSIONE', '').strip() or T.get('versione', '')
-    every = items('/v1/apps/%s/appStoreVersions' % app, {'filter[platform]': 'IOS'})
-    vers = [v for v in every if state(v) in EDITABLE and (not want or v['attributes'].get('versionString') == want)]
-    if not vers and want and not any(v['attributes'].get('versionString') == want for v in every):
-        if any(state(v) in EDITABLE or state(v) in ('WAITING_FOR_REVIEW', 'IN_REVIEW', 'PENDING_DEVELOPER_RELEASE') for v in every):
-            fail('Non creo la versione %s: un\'altra versione è ancora in preparazione o in revisione.' % want)
-        vers = [call('POST', '/v1/appStoreVersions', {'data': {'type': 'appStoreVersions', 'attributes': {'platform': 'IOS', 'versionString': want},
-                                                                'relationships': {'app': rel('apps', app)}}})['data']]
-        note('notice', 'Versione ' + want, 'creata in App Store Connect: testi e schermate di quella precedente vengono riscritti con quelli di scheda/')
-    if not vers:
-        fail('Non c\'è nessuna versione %sin preparazione per iPhone: in App Store Connect crea la versione (+ accanto a «App iOS»), poi rilancia.' % (want + ' ' if want else ''))
-    ver = vers[0]
     print('Versione:', ver['attributes'].get('versionString'), state(ver), flush=True)
     call('PATCH', '/v1/appStoreVersions/' + ver['id'], {'data': {'type': 'appStoreVersions', 'id': ver['id'], 'attributes': {'copyright': T['copyright']}}})
     have = {x['attributes']['locale']: x['id'] for x in items('/v1/appStoreVersions/%s/appStoreVersionLocalizations' % ver['id'])}
