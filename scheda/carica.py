@@ -105,6 +105,10 @@ def call(method, path, body=None, query=None):
             if e.code in (429, 500, 502, 503, 504) and attempt < 4:
                 time.sleep(5 * (attempt + 1))
                 continue
+            if e.code == 401 and attempt < 3:            # Apple now and then refuses a good token: a fresh one usually goes through
+                _tok['t'] = None
+                time.sleep(4 * (attempt + 1))
+                continue
             raise Apple(describe(method, url, e.code, raw))
         except (urllib.error.URLError, TimeoutError, ConnectionError) as e:
             if attempt < 4:
