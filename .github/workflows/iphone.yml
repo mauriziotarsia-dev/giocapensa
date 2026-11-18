@@ -7,14 +7,15 @@ on:
         required: true
         default: "1.0"
   push:
-    # Claude's dry runs: a push to this branch builds and signs everything for the App Store, but sends nothing to Apple
-    branches: [prova-iphone]
+    # Claude: a push to prova-iphone builds and signs everything for the App Store but sends nothing to Apple;
+    # a push to iphone-asc builds and uploads, with the version written in scheda/testi.json («versione»)
+    branches: [prova-iphone, iphone-asc]
 jobs:
   carica:
     runs-on: macos-latest
     timeout-minutes: 40
     env:
-      PROVA: ${{ github.event_name == 'push' }}
+      PROVA: ${{ github.event_name == 'push' && github.ref_name != 'iphone-asc' }}
     steps:
       - uses: actions/checkout@v4
       - name: Controlla i segreti
@@ -84,9 +85,11 @@ jobs:
           KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
           ISSUER: ${{ secrets.APPSTORE_ISSUER_ID }}
           TEAM: ${{ secrets.APPLE_TEAM_ID }}
-          VERSIONE: ${{ inputs.versione || '1.0' }}
+          VERSIONE: ${{ inputs.versione }}
         run: |
           set -o pipefail
+          [ -n "$VERSIONE" ] || VERSIONE=$(python3 -c "import json; print(json.load(open('scheda/testi.json')).get('versione', '1.0'))" 2>/dev/null || echo 1.0)
+          echo "::notice title=Versione::$VERSIONE (build ${{ github.run_number }}.${{ github.run_attempt }})"
           TEAM="${TEAM//[[:space:]]/}"; KEY_ID="${KEY_ID//[[:space:]]/}"; ISSUER="${ISSUER//[[:space:]]/}"
           [[ "$VERSIONE" =~ ^[0-9]+(\.[0-9]+){0,2}$ ]] || { echo "::error title=Versione::Versione non valida: «$VERSIONE». Usa numeri e punti, per esempio 1.1"; exit 1; }
           cd build/ios-progetto/ios/App
