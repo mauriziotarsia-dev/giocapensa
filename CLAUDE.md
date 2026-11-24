@@ -177,3 +177,11 @@ Il progetto Xcode è fuori da questo repository, nello zip `giocapensa-iphone` (
 
   Claude lo avvia da sé con un commit vuoto sul ramo `stato-asc` e legge le annotazioni dall'API di GitHub. Così sa quando una build è pronta senza chiedere schermate al genitore: l'email di Apple sulla build elaborata non arriva sempre.
 - Da aprile 2027 Apple chiede anche le schermate per iPhone Duo (1398 × 2034 schermo esterno, 2007 × 2853 interno) alle app compilate con iOS 27.1 o successivo.
+
+## Cartella `natale/` (non fa parte di Giocapensa)
+
+Pagina a sé, aggiunta il 24 novembre 2026: la lista dei desideri di Natale della famiglia, da mandare ai parenti su WhatsApp (`…github.io/giocapensa/natale/`). Non è un gioco e non va nell'app per iPhone: `src/native/prepara_www.py` prende solo le pagine `.html` della radice, quindi la cartella resta fuori; non spostarla nella radice e non aggiungerla a `build.py`.
+
+- `natale/index.html` è scritta a mano (non generata), con stile e script dentro la pagina. Le foto dei regali sono in `natale/foto/` con un pezzo di hash nel nome, perché il service worker di Giocapensa tiene in cache le immagini dello stesso sito: un file cambiato va salvato con un nome nuovo.
+- I dati (regali, prenotazioni, proposte, nomi dei parenti) stanno nel progetto Supabase `natale-leo` (schema privato `natale`, raggiunto solo con funzioni RPC `natale_*`): nel repository pubblico non c'è nessun dato personale. La pagina contiene solo l'indirizzo del progetto e la chiave pubblicabile.
+- L'area genitori è `natale/#genitori` e chiede il codice dei genitori, che non sta nel repository.

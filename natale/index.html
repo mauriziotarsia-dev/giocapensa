@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Lista dei desideri di Natale</title>
+<meta property="og:title" content="Lista dei desideri di Natale 🎄">
+<meta property="og:description" content="Scegli un regalo dalla lista: per gli altri risulterà già preso.">
+<meta property="og:image" content="https://mauriziotarsia-dev.github.io/giocapensa/natale/og.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#1d5b43">
+<link rel="apple-touch-icon" href="icona.png">
+<link rel="icon" href="icona.png">
+<style>
+:root{
+  --verde:#1d5b43; --verde-2:#2f7a5c; --rosso:#c62f2f; --rosso-2:#a32020; --oro:#e3a72f;
+  --crema:#fbf6ee; --carta:#ffffff; --inchiostro:#22302a; --grigio:#6b756f; --linea:#e7ddcd;
+  --ok:#2f7a5c; --ombra:0 2px 10px rgba(30,40,35,.08);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--crema);color:var(--inchiostro);
+  font:16px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--verde)}
+.wrap{max-width:980px;margin:0 auto;padding:0 14px}
+header.hero{background:linear-gradient(160deg,#1d5b43 0%,#174a37 70%,#123a2b 100%);color:#fff;position:relative;overflow:hidden}
+header.hero .wrap{padding-top:calc(18px + env(safe-area-inset-top));padding-bottom:20px;position:relative;z-index:1}
+.snow{position:absolute;inset:0;pointer-events:none;opacity:.55;
+  background-image:radial-gradient(2px 2px at 20px 30px,#fff 50%,transparent 51%),radial-gradient(1.5px 1.5px at 80px 70px,#fff 50%,transparent 51%),
+  radial-gradient(2.5px 2.5px at 140px 20px,#fff 50%,transparent 51%),radial-gradient(1.5px 1.5px at 200px 90px,#fff 50%,transparent 51%),
+  radial-gradient(2px 2px at 260px 40px,#fff 50%,transparent 51%);background-size:300px 120px;animation:neve 14s linear infinite}
+@keyframes neve{from{background-position:0 0}to{background-position:60px 120px}}
+@media (prefers-reduced-motion:reduce){.snow{animation:none}}
+.kicker{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#f3d48a;font-weight:700}
+h1{margin:4px 0 6px;font-size:clamp(24px,6vw,34px);line-height:1.15}
+.hero p{margin:0;color:#e5efe9;max-width:680px;font-size:15px}
+.hero-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.pill{display:inline-flex;align-items:center;gap:6px;border:0;border-radius:999px;padding:9px 14px;font-weight:600;font-size:14px;text-decoration:none}
+.pill.light{background:#fff;color:var(--verde)}
+.pill.ghost{background:rgba(255,255,255,.14);color:#fff}
+.pill.wa{background:#25d366;color:#08311a}
+.stats{display:flex;gap:10px;margin:14px 0 4px;flex-wrap:wrap}
+.stat{background:rgba(255,255,255,.12);border-radius:12px;padding:8px 12px;min-width:90px}
+.stat b{display:block;font-size:20px;line-height:1.1}
+.stat span{font-size:12px;color:#d7e6dd}
+
+.toolbar{position:sticky;top:0;z-index:5;background:rgba(251,246,238,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--linea)}
+.toolbar .wrap{display:flex;gap:8px;overflow-x:auto;padding-top:10px;padding-bottom:10px;scrollbar-width:none}
+.toolbar .wrap::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1px solid var(--linea);background:#fff;border-radius:999px;padding:7px 13px;font-size:14px;color:var(--inchiostro);white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--verde);border-color:var(--verde);color:#fff}
+
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+@media (min-width:640px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:900px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.card{background:var(--carta);border-radius:16px;box-shadow:var(--ombra);overflow:hidden;display:flex;flex-direction:column;border:0;padding:0;text-align:left;position:relative}
+.card .ph{aspect-ratio:1/1;background:#f1ebe0 center/cover no-repeat;position:relative}
+.card .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.card .body{padding:9px 10px 11px;display:flex;flex-direction:column;gap:4px;flex:1}
+.card .t{font-weight:700;font-size:14px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card .meta{font-size:12px;color:var(--grigio)}
+.card .prezzo{font-weight:700;color:var(--rosso-2);font-size:14px;margin-top:auto}
+.card .prezzo.nd{color:var(--grigio);font-weight:500;font-size:12px}
+.badges{position:absolute;top:8px;left:8px;right:8px;display:flex;justify-content:space-between;gap:6px;pointer-events:none}
+.b{font-size:11px;font-weight:700;border-radius:999px;padding:3px 8px;background:rgba(255,255,255,.92);color:var(--inchiostro)}
+.b.leo{background:var(--oro);color:#3b2a05}
+.b.eta{margin-left:auto}
+.stato{font-size:12px;font-weight:700;border-radius:10px;padding:6px 8px;margin-top:6px;text-align:center}
+.stato.libero{background:#e8f3ed;color:var(--verde)}
+.stato.preso{background:#f3eee6;color:var(--grigio)}
+.stato.mio{background:#fff3d6;color:#7a5200}
+.card.preso .ph{filter:grayscale(.75) brightness(1.02);opacity:.75}
+.vuoto{text-align:center;color:var(--grigio);padding:30px 10px}
+
+section.box{background:#fff;border-radius:16px;box-shadow:var(--ombra);padding:16px;margin:16px 0}
+section.box h2{margin:0 0 6px;font-size:19px}
+section.box p.sub{margin:0 0 12px;color:var(--grigio);font-size:14px}
+.lista{list-style:none;margin:0;padding:0}
+.lista li{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--linea)}
+.lista li:first-child{border-top:0}
+.lista .x{margin-left:auto;flex:0 0 auto}
+.small{font-size:13px;color:var(--grigio)}
+
+.btn{border:0;border-radius:12px;padding:12px 14px;font-weight:700;font-size:15px;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}
+.btn.primario{background:var(--rosso);color:#fff}
+.btn.verde{background:var(--verde);color:#fff}
+.btn.chiaro{background:#f2ece2;color:var(--inchiostro)}
+.btn.link{background:transparent;color:var(--verde);padding:8px 4px;font-weight:600}
+.btn.mini{padding:7px 10px;font-size:13px;border-radius:10px}
+.btn[disabled]{opacity:.55;cursor:default}
+.btn.full{width:100%}
+.stack{display:flex;flex-direction:column;gap:8px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+label.f{display:block;font-size:13px;font-weight:600;margin:10px 0 4px}
+input.i,textarea.i,select.i{width:100%;border:1px solid #d8cdb9;background:#fffdf9;border-radius:10px;padding:11px 12px;font-size:16px}
+textarea.i{min-height:76px;resize:vertical}
+.check{display:flex;gap:10px;align-items:flex-start;margin:10px 0;font-size:14px}
+.check input{width:20px;height:20px;margin-top:1px;flex:0 0 auto}
+
+dialog{border:0;padding:0;border-radius:20px 20px 0 0;width:100%;max-width:640px;max-height:92vh;margin:auto auto 0;background:#fff;color:var(--inchiostro)}
+@media (min-width:700px){dialog{border-radius:20px;margin:auto}}
+dialog::backdrop{background:rgba(20,30,25,.55)}
+.sheet{padding:16px 16px calc(18px + env(safe-area-inset-bottom));overflow:auto;max-height:92vh}
+.sheet h3{margin:4px 0 6px;font-size:20px;line-height:1.2}
+.sheet .foto{width:100%;max-height:46vh;object-fit:contain;background:#f6f1e8;border-radius:14px;display:block}
+.sheet .chiudi{position:sticky;top:0;float:right;background:#f2ece2;border:0;border-radius:999px;width:36px;height:36px;font-size:20px;line-height:36px;text-align:center;z-index:2}
+.amz{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#f8f4ec;border-radius:12px;padding:10px 12px;margin:10px 0}
+.amz .p{font-weight:800;font-size:18px;color:var(--rosso-2)}
+.amz .p.nd{font-size:14px;color:var(--grigio);font-weight:600}
+.avviso{background:#fff3d6;color:#6b4800;border-radius:12px;padding:10px 12px;font-size:14px;margin:10px 0}
+.avviso.ok{background:#e8f3ed;color:var(--verde)}
+.avviso.err{background:#fde8e8;color:var(--rosso-2)}
+
+nav.barra{position:fixed;left:0;right:0;bottom:0;z-index:8;background:#fff;border-top:1px solid var(--linea);
+  padding:6px 8px calc(6px + env(safe-area-inset-bottom));display:flex;justify-content:space-around}
+nav.barra button{background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;color:var(--grigio);padding:4px 6px;min-width:64px;position:relative}
+nav.barra button .ic{font-size:21px;line-height:1}
+nav.barra button.on{color:var(--verde);font-weight:700}
+.dot{position:absolute;top:0;right:12px;background:var(--rosso);color:#fff;border-radius:999px;font-size:10px;padding:1px 5px;font-weight:700}
+
+.toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#22302a;color:#fff;padding:10px 16px;border-radius:12px;font-size:14px;z-index:50;max-width:90vw;box-shadow:var(--ombra);opacity:0;transition:opacity .2s}
+.toast.on{opacity:1}
+
+/* genitori */
+.tabs{display:flex;gap:6px;overflow-x:auto;margin:14px 0 4px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.g-card{display:flex;gap:10px;padding:10px 0;border-top:1px solid var(--linea);align-items:flex-start}
+.g-card:first-child{border-top:0}
+.g-card img{width:64px;height:64px;object-fit:cover;border-radius:10px;background:#f1ebe0;flex:0 0 auto}
+.g-card .info{flex:1;min-width:0}
+.g-card .info > b{display:block;font-size:14px;line-height:1.25}
+.tot{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media (min-width:640px){.tot{grid-template-columns:repeat(4,1fr)}}
+.tot div{background:#f8f4ec;border-radius:12px;padding:10px}
+.tot b{display:block;font-size:20px}
+.tot span{font-size:12px;color:var(--grigio)}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 7px;border-radius:999px;background:#efe8dc;color:var(--inchiostro);margin-right:4px}
+.tag.r{background:#fde8e8;color:var(--rosso-2)}
+.tag.v{background:#e8f3ed;color:var(--verde)}
+.tag.o{background:#fff3d6;color:#7a5200}
+.hidden{display:none!important}
+.foot{text-align:center;color:var(--grigio);font-size:12px;margin:22px 0}
+</style>
+</head>
+<body>
+
+<div id="app-lista">
+  <header class="hero">
+    <div class="snow" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="kicker">🎄 Natale</div>
+      <h1 id="titolo">Lista dei desideri</h1>
+      <p id="messaggio">Caricamento della lista…</p>
+      <div class="stats" id="stats" aria-live="polite"></div>
+      <div class="hero-row">
+        <button class="pill light" id="btn-nome" type="button">👋 <span id="lbl-nome">Chi sei?</span></button>
+        <a class="pill wa" id="btn-wa" href="#" target="_blank" rel="noopener">Condividi su WhatsApp</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar">
+    <div class="wrap" role="group" aria-label="Filtri">
+      <button class="chip" data-f="tutti" aria-pressed="true" type="button">Tutti</button>
+      <button class="chip" data-f="liberi" aria-pressed="false" type="button">Ancora liberi</button>
+      <button class="chip" data-f="leo" aria-pressed="false" type="button">✏️ Segnati da Leo</button>
+      <button class="chip" data-f="miei" aria-pressed="false" type="button">🎁 I miei</button>
+      <button class="chip" data-f="prezzo" aria-pressed="false" type="button">€ Dal meno caro</button>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <div id="err" class="avviso err hidden"></div>
+    <div class="grid" id="grid" aria-live="polite"></div>
+    <div id="grid-vuota" class="vuoto hidden">Nessun regalo con questo filtro.</div>
+
+    <section class="box" id="sez-miei">
+      <h2>🎁 I tuoi regali</h2>
+      <p class="sub" id="miei-sub">Qui trovi i regali che hai prenotato.</p>
+      <ul class="lista" id="miei-lista"></ul>
+      <div id="rimborso-box" class="avviso hidden"></div>
+    </section>
+
+    <section class="box" id="sez-altro">
+      <h2>🎀 Porto un altro regalo</h2>
+      <p class="sub">Hai già un'idea che non è in lista (un libro, un vestito, un'esperienza)? Scrivilo qui così gli altri lo sanno.</p>
+      <form id="f-altro" class="stack">
+        <textarea class="i" id="altro-desc" maxlength="300" placeholder="Es. un libro di dinosauri con le alette" required></textarea>
+        <label class="check"><input type="checkbox" id="altro-priv"> <span>Fallo vedere solo a mamma e papà</span></label>
+        <button class="btn verde" type="submit">Aggiungi</button>
+      </form>
+      <ul class="lista" id="altri-lista" style="margin-top:12px"></ul>
+    </section>
+
+    <section class="box" id="sez-proponi">
+      <h2>💡 Proponi un'idea ai genitori</h2>
+      <p class="sub">La vedono solo Maurizio e Rachele: se gli va bene la aggiungono alla lista.</p>
+      <form id="f-proponi">
+        <label class="f" for="pr-titolo">Cosa vorresti regalare?</label>
+        <input class="i" id="pr-titolo" maxlength="120" required placeholder="Es. pista delle macchinine">
+        <label class="f" for="pr-link">Link (facoltativo)</label>
+        <input class="i" id="pr-link" type="url" inputmode="url" maxlength="600" placeholder="https://www.amazon.it/…">
+        <label class="f" for="pr-prezzo">Prezzo indicativo (facoltativo)</label>
+        <input class="i" id="pr-prezzo" maxlength="40" placeholder="Es. 25 €">
+        <label class="f" for="pr-nota">Note (facoltativo)</label>
+        <textarea class="i" id="pr-nota" maxlength="500"></textarea>
+        <label class="f" for="pr-foto">Foto (facoltativa)</label>
+        <input class="i" id="pr-foto" type="file" accept="image/*">
+        <label class="check"><input type="checkbox" id="pr-mio" checked> <span>Se lo approvano, lo regalo io</span></label>
+        <button class="btn verde full" type="submit">Invia ai genitori</button>
+      </form>
+      <ul class="lista" id="proposte-lista" style="margin-top:12px"></ul>
+    </section>
+
+    <p class="foot">Lista privata della famiglia · <a href="#genitori" id="link-gen">Area genitori</a></p>
+  </main>
+</div>
+
+<!-- AREA GENITORI -->
+<div id="app-gen" class="hidden">
+  <header class="hero">
+    <div class="wrap">
+      <div class="kicker">🔒 Area genitori</div>
+      <h1 id="g-titolo">Gestione lista</h1>
+      <div class="hero-row">
+        <a class="pill light" href="#">← Torna alla lista</a>
+        <button class="pill ghost" id="g-esci" type="button">Esci</button>
+      </div>
+    </div>
+  </header>
+  <main class="wrap">
+    <section class="box" id="g-login">
+      <h2>Codice dei genitori</h2>
+      <p class="sub">Inseriscilo una volta: questo telefono lo ricorderà.</p>
+      <form id="f-pin" class="stack">
+        <input class="i" id="pin" autocomplete="current-password" type="password" placeholder="Codice" required>
+        <button class="btn verde" type="submit">Entra</button>
+        <div id="pin-err" class="avviso err hidden"></div>
+      </form>
+    </section>
+    <div id="g-main" class="hidden">
+      <div class="tabs" role="tablist">
+        <button class="chip" data-t="riepilogo" aria-pressed="true" type="button">Riepilogo</button>
+        <button class="chip" data-t="comprare" aria-pressed="false" type="button">Da comprare</button>
+        <button class="chip" data-t="proposte" aria-pressed="false" type="button">Proposte <span id="g-n-prop"></span></button>
+        <button class="chip" data-t="regali" aria-pressed="false" type="button">Regali</button>
+        <button class="chip" data-t="altri" aria-pressed="false" type="button">Altri regali</button>
+        <button class="chip" data-t="imp" aria-pressed="false" type="button">Impostazioni</button>
+      </div>
+      <section class="box" data-tab="riepilogo">
+        <h2>Riepilogo</h2>
+        <div class="tot" id="g-tot"></div>
+        <h2 style="margin-top:18px">Chi regala cosa</h2>
+        <div id="g-chi"></div>
+      </section>
+      <section class="box hidden" data-tab="comprare">
+        <h2>Da comprare voi (con rimborso)</h2>
+        <p class="sub">Regali che i parenti vi hanno chiesto di comprare. Segnate quando è comprato e quando vi hanno rimborsato.</p>
+        <div id="g-comprare"></div>
+      </section>
+      <section class="box hidden" data-tab="proposte">
+        <h2>Proposte dei parenti</h2>
+        <p class="sub">Le vedete solo voi. Approvando, il regalo entra in lista (e, se richiesto, resta prenotato da chi l'ha proposto).</p>
+        <div id="g-proposte"></div>
+      </section>
+      <section class="box hidden" data-tab="regali">
+        <h2>Regali in lista</h2>
+        <div class="row" style="margin-bottom:8px">
+          <button class="btn primario" id="g-nuovo" type="button">＋ Aggiungi regalo (anche da foto)</button>
+        </div>
+        <div id="g-regali"></div>
+      </section>
+      <section class="box hidden" data-tab="altri">
+        <h2>Altri regali annunciati</h2>
+        <div id="g-altri"></div>
+      </section>
+      <section class="box hidden" data-tab="imp">
+        <h2>Impostazioni</h2>
+        <form id="f-imp">
+          <label class="f" for="i-titolo">Titolo</label>
+          <input class="i" id="i-titolo" maxlength="80">
+          <label class="f" for="i-msg">Messaggio per i parenti</label>
+          <textarea class="i" id="i-msg" maxlength="600"></textarea>
+          <label class="f" for="i-rimb">Come rimborsarvi</label>
+          <textarea class="i" id="i-rimb" maxlength="300"></textarea>
+          <label class="f" for="i-pin">Nuovo codice (facoltativo, almeno 8 caratteri)</label>
+          <input class="i" id="i-pin" autocomplete="new-password">
+          <button class="btn verde full" style="margin-top:12px" type="submit">Salva</button>
+        </form>
+      </section>
+    </div>
+  </main>
+</div>
+
+<nav class="barra" id="barra">
+  <button type="button" data-go="top" class="on"><span class="ic">🎄</span>Lista</button>
+  <button type="button" data-go="sez-miei"><span class="ic">🎁</span>I miei<span class="dot hidden" id="dot-miei"></span></button>
+  <button type="button" data-go="sez-altro"><span class="ic">🎀</span>Altro regalo</button>
+  <button type="button" data-go="sez-proponi"><span class="ic">💡</span>Proponi</button>
+</nav>
+
+<dialog id="dlg"><div class="sheet" id="dlg-body"></div></dialog>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(() => {
+'use strict';
+const API = 'https://smglmkaykgomgehfarqh.supabase.co/rest/v1/rpc/';
+const KEY = 'sb_publishable_J1RZk7DJn7hs49qGfHJ0vg_hLnXWFBV';
+const LS = {
+  get(k, d){ try { const v = localStorage.getItem('natale.'+k); return v === null ? d : v; } catch(e){ return d; } },
+  set(k, v){ try { localStorage.setItem('natale.'+k, v); } catch(e){} },
+  del(k){ try { localStorage.removeItem('natale.'+k); } catch(e){} }
+};
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const safeUrl = u => (typeof u === 'string' && /^https:\/\//i.test(u)) ? u : '';
+const euro = c => (c === null || c === undefined || c === '') ? '' : (Number(c)/100).toLocaleString('it-IT',{style:'currency',currency:'EUR'});
+
+function token(){
+  let t = LS.get('token', '');
+  if (!t || t.length < 16) {
+    const a = new Uint8Array(18); (window.crypto || window.msCrypto).getRandomValues(a);
+    t = Array.from(a, b => b.toString(16).padStart(2,'0')).join('');
+    LS.set('token', t);
+  }
+  return t;
+}
+const TOKEN = token();
+
+async function rpc(fn, body){
+  const r = await fetch(API + fn, {method:'POST', headers:{'apikey':KEY,'Content-Type':'application/json'}, body: JSON.stringify(body || {})});
+  if (!r.ok) { let m = ''; try { m = (await r.json()).message; } catch(e){} throw new Error(m || ('Errore ' + r.status)); }
+  return r.json();
+}
+
+let toastT;
+function toast(msg){ const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2600); }
+
+// ---------- foto ----------
+const fotoCache = new Map();
+async function fotoSrc(f){
+  if (!f) return '';
+  if (f.startsWith('photo:')) {
+    const id = f.slice(6);
+    if (!fotoCache.has(id)) fotoCache.set(id, rpc('natale_foto', {p_id:id}).catch(() => ''));
+    const d = await fotoCache.get(id);
+    return (typeof d === 'string' && d.startsWith('data:image/')) ? d : '';
+  }
+  return /^foto\/[\w.-]+$/.test(f) ? f : '';
+}
+function fillImg(img, f){
+  fotoSrc(f).then(src => { if (src) img.src = src; else img.removeAttribute('src'); });
+}
+async function resizeImage(file, max=1000){
+  const url = URL.createObjectURL(file);
+  try {
+    const img = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = url; });
+    let w = img.naturalWidth, h = img.naturalHeight; const s = Math.min(1, max / Math.max(w, h));
+    w = Math.round(w*s); h = Math.round(h*s);
+    const c = document.createElement('canvas'); c.width = w; c.height = h;
+    c.getContext('2d').drawImage(img, 0, 0, w, h);
+    let q = 0.78, out = c.toDataURL('image/jpeg', q);
+    while (out.length > 380000 && q > 0.35) { q -= 0.1; out = c.toDataURL('image/jpeg', q); }
+    if (out.length > 380000) { c.width = Math.round(w*.7); c.height = Math.round(h*.7); c.getContext('2d').drawImage(img,0,0,c.width,c.height); out = c.toDataURL('image/jpeg', .6); }
+    return out;
+  } finally { URL.revokeObjectURL(url); }
+}
+
+// ---------- stato ----------
+let DATA = null, filtro = 'tutti';
+let nome = LS.get('nome', '');
+
+function linkInfo(g){
+  const u = safeUrl(g.amazon_url);
+  if (g.link_stato === 'assente' || !u) return {url:'', label:'Non su Amazon', hint:`Si trova nel volantino Rocco Giocattoli${g.codice && g.codice !== '—' ? ' (cod. '+g.codice+')' : ''}.`};
+  if (g.link_stato === 'ricerca') return {url:u, label:'Cerca su Amazon', hint:'Il link apre la ricerca su Amazon: controllate che sia lo stesso modello.'};
+  if (g.link_stato === 'simile') return {url:u, label:'Vedi su Amazon', hint:'Su Amazon c\'è un modello molto simile.'};
+  return {url:u, label:'Vedi su Amazon', hint:''};
+}
+function prezzoTxt(g){
+  if (g.prezzo_nota) return g.prezzo_nota;
+  if (g.prezzo_cent !== null && g.prezzo_cent !== undefined) return euro(g.prezzo_cent);
+  return '';
+}
+
+async function carica(silenzioso){
+  try {
+    DATA = await rpc('natale_lista', {p_token: TOKEN});
+    $('#err').classList.add('hidden');
+    render();
+  } catch(e) {
+    if (!silenzioso) { const el = $('#err'); el.textContent = 'Non riesco a caricare la lista. Controlla la connessione e riprova.'; el.classList.remove('hidden'); }
+  }
+}
+
+function render(){
+  if (!DATA) return;
+  const imp = DATA.impostazioni || {};
+  $('#titolo').textContent = imp.titolo || 'Lista dei desideri';
+  document.title = (imp.titolo || 'Lista dei desideri') + ' 🎄';
+  $('#messaggio').textContent = imp.messaggio || '';
+  $('#lbl-nome').textContent = nome ? ('Sei ' + nome) : 'Chi sei?';
+  const reg = DATA.regali || [];
+  const liberi = reg.filter(g => !g.preso).length, miei = reg.filter(g => g.mio).length;
+  $('#stats').innerHTML = `<div class="stat"><b>${liberi}</b><span>ancora liberi</span></div><div class="stat"><b>${reg.length - liberi}</b><span>già presi</span></div>` +
+    (miei ? `<div class="stat"><b>${miei}</b><span>li regali tu</span></div>` : '');
+  const dot = $('#dot-miei'); dot.textContent = miei; dot.classList.toggle('hidden', !miei);
+  const share = location.href.split('#')[0];
+  $('#btn-wa').href = 'https://wa.me/?text=' + encodeURIComponent(`🎄 ${imp.titolo || 'Lista dei desideri'}: scegliete qui il regalo, così non ne compriamo due uguali 🎁\n${share}`);
+
+  let lista = reg.slice();
+  if (filtro === 'liberi') lista = lista.filter(g => !g.preso);
+  if (filtro === 'leo') lista = lista.filter(g => g.segno_leo);
+  if (filtro === 'miei') lista = lista.filter(g => g.mio);
+  if (filtro === 'prezzo') lista.sort((a,b) => (a.prezzo_cent ?? 1e9) - (b.prezzo_cent ?? 1e9));
+  const grid = $('#grid'); grid.innerHTML = '';
+  for (const g of lista) {
+    const card = document.createElement('button');
+    card.type = 'button'; card.className = 'card' + (g.preso && !g.mio ? ' preso' : '');
+    const st = g.mio ? `<div class="stato mio">${g.modo === 'genitori' ? '🛒 Lo comprano i genitori per te' : '🎁 Lo regali tu'}</div>`
+      : g.preso ? `<div class="stato preso">Già preso${g.preso_da ? ' da ' + esc(g.preso_da) : ''}</div>`
+      : `<div class="stato libero">Disponibile</div>`;
+    const pt = prezzoTxt(g);
+    card.innerHTML = `<div class="ph"><img alt="" loading="lazy" decoding="async"><div class="badges">${g.segno_leo ? '<span class="b leo">✏️ Leo</span>' : '<span></span>'}${g.eta && g.eta !== '—' ? `<span class="b eta">${esc(g.eta)}</span>` : ''}</div></div>
+      <div class="body"><div class="t">${esc(g.titolo)}</div><div class="meta">${esc(g.marca)}</div>
+      <div class="prezzo ${pt ? '' : 'nd'}">${pt ? esc(pt) : 'prezzo su Amazon'}</div>${st}</div>`;
+    fillImg($('img', card), g.foto);
+    card.addEventListener('click', () => apriRegalo(g.id));
+    grid.appendChild(card);
+  }
+  $('#grid-vuota').classList.toggle('hidden', lista.length > 0);
+  renderMiei(); renderAltri(); renderProposte();
+}
+
+function renderMiei(){
+  const ul = $('#miei-lista'); ul.innerHTML = '';
+  const miei = (DATA.regali || []).filter(g => g.mio);
+  $('#miei-sub').textContent = miei.length ? 'Ecco cosa hai scelto. Puoi annullare finché non è stato comprato.' : 'Non hai ancora prenotato niente: scegli un regalo dalla lista qui sopra.';
+  let daRimb = 0, daRimbNoto = true;
+  for (const g of miei) {
+    const li = document.createElement('li');
+    const p = Object.assign({}, g.prenotazione || {}); if (p.importo_cent == null) p.importo_cent = g.prezzo_cent;
+    let extra = g.modo === 'genitori' ? (p.comprato ? 'Comprato dai genitori' : 'Lo comprano i genitori') + (p.rimborsato ? ' · rimborsato ✔︎' : ' · da rimborsare') : 'Lo compri tu';
+    if (g.modo === 'genitori' && !p.rimborsato) { if (p.importo_cent != null) daRimb += p.importo_cent; else daRimbNoto = false; }
+    li.innerHTML = `<div><b>${esc(g.titolo)}</b><div class="small">${esc(extra)}${p.importo_cent != null && g.modo === 'genitori' ? ' · ' + esc(euro(p.importo_cent)) : ''}</div></div>`;
+    const b = document.createElement('button'); b.className = 'btn chiaro mini x'; b.type = 'button'; b.textContent = 'Apri';
+    b.onclick = () => apriRegalo(g.id); li.appendChild(b); ul.appendChild(li);
+  }
+  const rb = $('#rimborso-box');
+  const conGen = miei.filter(g => g.modo === 'genitori' && !(g.prenotazione || {}).rimborsato);
+  if (conGen.length) {
+    rb.classList.remove('hidden');
+    rb.innerHTML = `<b>Da rimborsare: ${daRimb ? esc(euro(daRimb)) : ''}${!daRimbNoto ? (daRimb ? ' + ' : '') + 'importo da confermare' : ''}</b><br>${esc((DATA.impostazioni || {}).rimborso_info || '')}`;
+  } else rb.classList.add('hidden');
+}
+
+function renderAltri(){
+  const ul = $('#altri-lista'); ul.innerHTML = '';
+  for (const a of (DATA.altri || [])) {
+    const li = document.createElement('li');
+    li.innerHTML = `<div><b>${esc(a.nome)}</b> porta: ${esc(a.descrizione)}${a.privato ? ' <span class="tag o">solo genitori</span>' : ''}</div>`;
+    if (a.mio) {
+      const b = document.createElement('button'); b.className = 'btn link x'; b.type = 'button'; b.textContent = 'Togli';
+      b.onclick = async () => { if (!confirm('Togliere questo regalo?')) return; const r = await rpc('natale_altro_rimuovi', {p_id:a.id, p_token:TOKEN}); if (r.ok) { toast('Tolto'); carica(); } };
+      li.appendChild(b);
+    }
+    ul.appendChild(li);
+  }
+}
+function renderProposte(){
+  const ul = $('#proposte-lista'); ul.innerHTML = '';
+  const st = {nuova:'in attesa', approvata:'approvata ✔︎', scartata:'non approvata'};
+  for (const p of (DATA.mie_proposte || [])) {
+    const li = document.createElement('li');
+    li.innerHTML = `<div>La tua proposta <b>${esc(p.titolo)}</b> · <span class="small">${esc(st[p.stato] || p.stato)}</span></div>`;
+    ul.appendChild(li);
+  }
+}
+
+// ---------- dialog ----------
+const dlg = $('#dlg');
+function apriDialog(html, onReady){
+  $('#dlg-body').innerHTML = `<button class="chiudi" type="button" aria-label="Chiudi">×</button>` + html;
+  $('.chiudi', dlg).onclick = () => dlg.close();
+  if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
+  $('#dlg-body').scrollTop = 0;
+  if (onReady) onReady($('#dlg-body'));
+}
+dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+
+function chiediNome(poi){
+  apriDialog(`<h3>Come ti chiami?</h3><p class="small">Così Maurizio e Rachele sanno chi regala cosa. Basta il nome (es. «Nonna Anna», «Zio Paolo»).</p>
+    <form id="f-nome" class="stack"><input class="i" id="nome-in" maxlength="40" required autocomplete="name" value="${esc(nome)}"><button class="btn verde" type="submit">Continua</button></form>`, b => {
+    const inp = $('#nome-in', b); setTimeout(() => inp.focus(), 50);
+    $('#f-nome', b).onsubmit = e => { e.preventDefault(); const v = inp.value.trim(); if (!v) return; nome = v; LS.set('nome', v); dlg.close(); render(); if (poi) poi(); };
+  });
+}
+$('#btn-nome').onclick = () => chiediNome();
+function conNome(fn){ if (nome) fn(); else chiediNome(fn); }
+
+function apriRegalo(id){
+  const g = (DATA.regali || []).find(x => x.id === id); if (!g) return;
+  const li = linkInfo(g), pt = prezzoTxt(g);
+  let azioni = '';
+  if (g.mio) {
+    const p = Object.assign({}, g.prenotazione || {}); if (p.importo_cent == null) p.importo_cent = g.prezzo_cent;
+    azioni = `<div class="avviso ok">${g.modo === 'genitori' ? '🛒 Hai chiesto ai genitori di comprarlo: poi li rimborsi' + (p.importo_cent != null ? ' (' + esc(euro(p.importo_cent)) + ')' : '') + '.' : '🎁 Questo regalo lo porti tu.'}</div>
+      ${p.comprato ? '<p class="small">È già stato comprato: per cambiare scrivete ai genitori.</p>' : '<button class="btn chiaro full" id="a-annulla" type="button">Annulla la prenotazione</button>'}`;
+  } else if (g.preso) {
+    azioni = `<div class="avviso">Questo regalo è già stato preso${g.preso_da ? ' da <b>' + esc(g.preso_da) + '</b>' : ''}. Guarda gli altri in lista!</div>`;
+  } else {
+    azioni = `<div class="stack">
+      <button class="btn primario full" id="a-io" type="button">🎁 Lo regalo io</button>
+      <button class="btn verde full" id="a-gen" type="button">🛒 Compratelo voi, poi vi rimborso</button>
+      <label class="check"><input type="checkbox" id="a-anon"> <span>Non mostrare il mio nome agli altri parenti (i genitori lo vedono comunque)</span></label>
+      <input class="i" id="a-nota" maxlength="300" placeholder="Nota per i genitori (facoltativa)">
+    </div>`;
+  }
+  apriDialog(`<img class="foto" alt="${esc(g.titolo)}">
+    <h3>${esc(g.titolo)}</h3>
+    <div class="small">${esc([g.marca, g.codice && g.codice !== '—' ? 'cod. ' + g.codice : '', g.eta && g.eta !== '—' ? 'età ' + g.eta : ''].filter(Boolean).join(' · '))}</div>
+    ${g.segno_leo ? '<p class="small">✏️ Leo l\'ha segnato sul volantino</p>' : ''}
+    <p>${esc(g.descrizione)}</p>
+    <div class="amz"><div><div class="p ${pt ? '' : 'nd'}">${pt ? esc(pt) : 'Prezzo: vedi su Amazon'}</div>${li.hint ? `<div class="small">${esc(li.hint)}</div>` : ''}</div>
+      ${li.url ? `<a class="btn chiaro mini" href="${esc(li.url)}" target="_blank" rel="noopener">${esc(li.label)} ↗</a>` : `<span class="small">${esc(li.label)}</span>`}</div>
+    ${azioni}`, b => {
+    fillImg($('.foto', b), g.foto);
+    const io = $('#a-io', b), gen = $('#a-gen', b), ann = $('#a-annulla', b);
+    const prenota = modo => conNome(async () => {
+      [io, gen].forEach(x => x && (x.disabled = true));
+      try {
+        const r = await rpc('natale_prenota', {p_regalo:g.id, p_nome:nome, p_token:TOKEN, p_modo:modo, p_nota:($('#a-nota', b) || {}).value || '', p_anonimo:!!($('#a-anon', b) || {}).checked});
+        if (r.ok) { dlg.close(); toast(modo === 'io' ? 'Fatto! Il regalo è tuo 🎁' : 'Fatto! Lo comprano i genitori 🛒'); }
+        else if (r.errore === 'preso') { dlg.close(); toast('Peccato: qualcuno l\'ha appena preso'); }
+        else toast('Qualcosa non va, riprova');
+      } catch(e) { toast('Errore di connessione, riprova'); }
+      carica();
+    });
+    if (io) io.onclick = () => prenota('io');
+    if (gen) gen.onclick = () => {
+      if (!confirm(`I genitori compreranno «${g.titolo}» e tu li rimborserai${pt ? ' (' + pt + ')' : ''}. Confermi?`)) return;
+      prenota('genitori');
+    };
+    if (ann) ann.onclick = async () => {
+      if (!confirm('Annullare la prenotazione? Il regalo torna disponibile per gli altri.')) return;
+      const r = await rpc('natale_annulla', {p_regalo:g.id, p_token:TOKEN}).catch(() => ({}));
+      dlg.close(); toast(r.ok ? 'Prenotazione annullata' : 'Non è stato possibile annullare'); carica();
+    };
+  });
+}
+
+// ---------- filtri e barra ----------
+$$('#toolbar .chip').forEach(c => c.onclick = () => {
+  filtro = c.dataset.f; $$('#toolbar .chip').forEach(x => x.setAttribute('aria-pressed', x === c ? 'true' : 'false')); render();
+});
+$$('#barra button').forEach(b => b.onclick = () => {
+  const t = b.dataset.go;
+  if (t === 'top') window.scrollTo({top:0, behavior:'smooth'}); else document.getElementById(t).scrollIntoView({behavior:'smooth', block:'start'});
+  $$('#barra button').forEach(x => x.classList.toggle('on', x === b));
+});
+
+// ---------- form altro / proponi ----------
+$('#f-altro').onsubmit = e => { e.preventDefault(); conNome(async () => {
+  const d = $('#altro-desc').value.trim(); if (!d) return;
+  const r = await rpc('natale_altro', {p_nome:nome, p_token:TOKEN, p_descrizione:d, p_privato:$('#altro-priv').checked}).catch(() => ({}));
+  if (r.ok) { $('#altro-desc').value = ''; $('#altro-priv').checked = false; toast('Aggiunto, grazie!'); carica(); } else toast('Non sono riuscito a salvarlo, riprova');
+}); };
+$('#f-proponi').onsubmit = e => { e.preventDefault(); conNome(async () => {
+  const btn = $('#f-proponi button[type=submit]'); btn.disabled = true; btn.textContent = 'Invio…';
+  try {
+    let foto = '';
+    const f = $('#pr-foto').files[0]; if (f) foto = await resizeImage(f);
+    const link = $('#pr-link').value.trim();
+    const r = await rpc('natale_proponi', {p_nome:nome, p_token:TOKEN, p_titolo:$('#pr-titolo').value.trim(), p_link: safeUrl(link) || link,
+      p_prezzo:$('#pr-prezzo').value.trim(), p_nota:$('#pr-nota').value.trim(), p_foto:foto, p_lo_regalo_io:$('#pr-mio').checked});
+    if (r.ok) { $('#f-proponi').reset(); $('#pr-mio').checked = true; toast('Proposta inviata ai genitori 💡'); carica(); }
+    else toast('Non sono riuscito a inviarla, riprova');
+  } catch(err) { toast('Errore: riprova (magari con una foto più piccola)'); }
+  btn.disabled = false; btn.textContent = 'Invia ai genitori';
+}); };
+
+// =================== AREA GENITORI ===================
+let PIN = LS.get('pin', ''), G = null, gTab = 'riepilogo';
+async function gCarica(){
+  if (!PIN) { mostraLogin(); return; }
+  try {
+    const r = await rpc('natale_genitori', {p_pin: PIN});
+    if (!r.ok) { LS.del('pin'); PIN = ''; mostraLogin(r.errore === 'codice' ? 'Codice non valido (o troppi tentativi: riprova tra qualche minuto).' : ''); return; }
+    G = r; $('#g-login').classList.add('hidden'); $('#g-main').classList.remove('hidden'); gRender();
+  } catch(e) { mostraLogin('Errore di connessione.'); }
+}
+function mostraLogin(msg){
+  $('#g-login').classList.remove('hidden'); $('#g-main').classList.add('hidden');
+  const el = $('#pin-err'); el.textContent = msg || ''; el.classList.toggle('hidden', !msg);
+}
+$('#f-pin').onsubmit = e => { e.preventDefault(); PIN = $('#pin').value.trim(); LS.set('pin', PIN); gCarica(); };
+$('#g-esci').onclick = () => { LS.del('pin'); PIN = ''; G = null; mostraLogin(); };
+$$('.tabs .chip').forEach(c => c.onclick = () => { gTab = c.dataset.t; $$('.tabs .chip').forEach(x => x.setAttribute('aria-pressed', x === c ? 'true' : 'false')); gShowTab(); });
+function gShowTab(){ $$('#g-main [data-tab]').forEach(s => s.classList.toggle('hidden', s.dataset.tab !== gTab)); }
+
+async function gAct(fn, body, okMsg){
+  try { const r = await rpc(fn, Object.assign({p_pin: PIN}, body)); if (r.ok) { if (okMsg) toast(okMsg); await gCarica(); return r; } toast(r.errore === 'codice' ? 'Codice non valido' : 'Operazione non riuscita'); }
+  catch(e) { toast('Errore di connessione'); }
+  return null;
+}
+function gImg(f){ const i = document.createElement('img'); i.alt = ''; i.loading = 'lazy'; fillImg(i, f); return i; }
+
+function gRender(){
+  const reg = G.regali || [], imp = G.impostazioni || {};
+  $('#g-titolo').textContent = imp.titolo || 'Gestione lista';
+  reg.forEach(g => { if (g.prenotazione && g.prenotazione.importo_cent == null) g.prenotazione.importo_cent = g.prezzo_cent; });
+  const presi = reg.filter(g => g.prenotazione), perGen = presi.filter(g => g.prenotazione.modo === 'genitori');
+  const daRic = perGen.filter(g => !g.prenotazione.rimborsato).reduce((s, g) => s + (g.prenotazione.importo_cent || 0), 0);
+  const nuove = (G.proposte || []).filter(p => p.stato === 'nuova').length;
+  $('#g-n-prop').textContent = nuove ? `(${nuove})` : '';
+  $('#g-tot').innerHTML = `<div><b>${presi.length}/${reg.filter(g => g.visibile).length}</b><span>regali prenotati</span></div>
+    <div><b>${perGen.filter(g => !g.prenotazione.comprato).length}</b><span>da comprare voi</span></div>
+    <div><b>${esc(euro(daRic) || '0 €')}</b><span>rimborsi da ricevere</span></div>
+    <div><b>${nuove}</b><span>proposte da vedere</span></div>`;
+  // chi regala cosa
+  const chi = {}; presi.forEach(g => { const n = g.prenotazione.nome; (chi[n] = chi[n] || []).push(g); });
+  (G.altri || []).forEach(a => { (chi[a.nome] = chi[a.nome] || []).push({titolo: a.descrizione, altro: true}); });
+  const boxChi = $('#g-chi'); boxChi.innerHTML = Object.keys(chi).length ? '' : '<p class="small">Ancora nessuno ha scelto un regalo.</p>';
+  Object.keys(chi).sort().forEach(n => {
+    const d = document.createElement('div'); d.className = 'g-card';
+    d.innerHTML = `<div class="info"><b>${esc(n)}</b><div class="small">${chi[n].map(g => esc(g.titolo) + (g.altro ? ' <span class="tag">altro regalo</span>' : g.prenotazione.modo === 'genitori' ? ' <span class="tag o">lo comprate voi</span>' : '')).join('<br>')}</div></div>`;
+    boxChi.appendChild(d);
+  });
+  // da comprare
+  const bc = $('#g-comprare'); bc.innerHTML = perGen.length ? '' : '<p class="small">Nessuna richiesta per ora.</p>';
+  perGen.forEach(g => {
+    const p = g.prenotazione, d = document.createElement('div'); d.className = 'g-card';
+    d.appendChild(gImg(g.foto));
+    const info = document.createElement('div'); info.className = 'info';
+    const li = linkInfo(g);
+    info.innerHTML = `<b>${esc(g.titolo)}</b><div class="small">Per conto di <b>${esc(p.nome)}</b>${p.importo_cent != null ? ' · ' + esc(euro(p.importo_cent)) : ' · prezzo da definire'}${p.nota ? '<br>«' + esc(p.nota) + '»' : ''}</div>
+      <div class="row" style="margin-top:6px">${li.url ? `<a class="btn chiaro mini" href="${esc(li.url)}" target="_blank" rel="noopener">${esc(li.label)} ↗</a>` : ''}
+      <label class="check" style="margin:0"><input type="checkbox" data-k="comprato" ${p.comprato ? 'checked' : ''}> Comprato</label>
+      <label class="check" style="margin:0"><input type="checkbox" data-k="rimborsato" ${p.rimborsato ? 'checked' : ''}> Rimborsato</label></div>`;
+    $$('input[data-k]', info).forEach(cb => cb.onchange = () => gAct('natale_g_prenotazione', {p_id:p.id, ['p_' + cb.dataset.k]: cb.checked}, 'Salvato'));
+    d.appendChild(info); bc.appendChild(d);
+  });
+  // proposte
+  const bp = $('#g-proposte'); bp.innerHTML = (G.proposte || []).length ? '' : '<p class="small">Nessuna proposta per ora.</p>';
+  (G.proposte || []).forEach(p => {
+    const d = document.createElement('div'); d.className = 'g-card';
+    if (p.foto_id) d.appendChild(gImg('photo:' + p.foto_id));
+    const info = document.createElement('div'); info.className = 'info';
+    const lk = safeUrl(p.link);
+    info.innerHTML = `<b>${esc(p.titolo)}</b><div class="small">da <b>${esc(p.nome)}</b>${p.prezzo ? ' · ' + esc(p.prezzo) : ''}${p.lo_regalo_io ? ' · <span class="tag v">lo regala lui/lei</span>' : ''}
+      <span class="tag ${p.stato === 'nuova' ? 'o' : p.stato === 'approvata' ? 'v' : 'r'}">${esc(p.stato)}</span>${p.nota ? '<br>«' + esc(p.nota) + '»' : ''}</div>
+      <div class="row" style="margin-top:6px">${lk ? `<a class="btn chiaro mini" href="${esc(lk)}" target="_blank" rel="noopener">Apri link ↗</a>` : (p.link ? `<span class="small">${esc(p.link)}</span>` : '')}</div>`;
+    const row = $('.row', info);
+    const mk = (t, cls, az) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'btn mini ' + cls; b.textContent = t; b.onclick = () => gAct('natale_g_proposta', {p_id:p.id, p_azione:az}, 'Fatto'); row.appendChild(b); };
+    if (p.stato === 'nuova') { mk('Approva', 'verde', 'approva'); mk('Scarta', 'chiaro', 'scarta'); }
+    if (p.stato === 'scartata') mk('Riconsidera', 'chiaro', 'riapri');
+    d.appendChild(info); bp.appendChild(d);
+  });
+  // regali
+  const br = $('#g-regali'); br.innerHTML = '';
+  reg.forEach(g => {
+    const d = document.createElement('div'); d.className = 'g-card';
+    d.appendChild(gImg(g.foto));
+    const info = document.createElement('div'); info.className = 'info';
+    const p = g.prenotazione;
+    info.innerHTML = `<b>${esc(g.titolo)}</b><div class="small">${esc(prezzoTxt(g) || 'senza prezzo')}${g.visibile ? '' : ' · <span class="tag r">nascosto</span>'}${g.segno_leo ? ' <span class="tag o">✏️ Leo</span>' : ''}
+      ${p ? '<br>Preso da <b>' + esc(p.nome) + '</b>' + (p.modo === 'genitori' ? ' (lo comprate voi)' : '') : ''}</div>`;
+    const row = document.createElement('div'); row.className = 'row'; row.style.marginTop = '6px';
+    const bt = (t, cls, fn) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'btn mini ' + cls; b.textContent = t; b.onclick = fn; row.appendChild(b); };
+    bt('Modifica', 'chiaro', () => editRegalo(g));
+    bt(g.visibile ? 'Nascondi' : 'Mostra', 'chiaro', () => gAct('natale_g_regalo_salva', {p_dati:{id:g.id, visibile:!g.visibile}}, g.visibile ? 'Nascosto' : 'Visibile'));
+    if (p) bt('Libera', 'chiaro', () => { if (confirm(`Togliere la prenotazione di ${p.nome}?`)) gAct('natale_g_prenotazione', {p_id:p.id, p_libera:true}, 'Prenotazione tolta'); });
+    info.appendChild(row); d.appendChild(info); br.appendChild(d);
+  });
+  // altri
+  const ba = $('#g-altri'); ba.innerHTML = (G.altri || []).length ? '' : '<p class="small">Nessuno per ora.</p>';
+  (G.altri || []).forEach(a => {
+    const d = document.createElement('div'); d.className = 'g-card';
+    d.innerHTML = `<div class="info"><b>${esc(a.nome)}</b><div class="small">${esc(a.descrizione)}${a.privato ? ' <span class="tag o">solo per voi</span>' : ''}</div></div>`;
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'btn link'; b.textContent = 'Elimina';
+    b.onclick = () => { if (confirm('Eliminare questa voce?')) gAct('natale_g_altro_elimina', {p_id:a.id}, 'Eliminato'); };
+    d.appendChild(b); ba.appendChild(d);
+  });
+  // impostazioni
+  if (document.activeElement && !document.activeElement.closest('#f-imp')) {
+    $('#i-titolo').value = imp.titolo || ''; $('#i-msg').value = imp.messaggio || ''; $('#i-rimb').value = imp.rimborso_info || '';
+  }
+  gShowTab();
+}
+$('#f-imp').onsubmit = async e => {
+  e.preventDefault();
+  const nuovo = $('#i-pin').value.trim();
+  if (nuovo && nuovo.length < 8) { toast('Il codice deve avere almeno 8 caratteri'); return; }
+  const r = await gAct('natale_g_impostazioni', {p_dati:{titolo:$('#i-titolo').value, messaggio:$('#i-msg').value, rimborso_info:$('#i-rimb').value, nuovo_codice:nuovo}}, 'Impostazioni salvate');
+  if (r && nuovo) { PIN = nuovo; LS.set('pin', nuovo); $('#i-pin').value = ''; }
+};
+$('#g-nuovo').onclick = () => editRegalo(null);
+
+function editRegalo(g){
+  const v = g || {titolo:'', marca:'', codice:'', eta:'', descrizione:'', amazon_url:'', prezzo_cent:null, prezzo_nota:'', segno_leo:true, visibile:true};
+  apriDialog(`<h3>${g ? 'Modifica regalo' : 'Nuovo regalo'}</h3>
+    <form id="f-reg">
+      <label class="f" for="r-foto">Foto ${g ? '(per cambiarla)' : '(es. il gioco indicato da Leo)'}</label>
+      <input class="i" id="r-foto" type="file" accept="image/*">
+      <label class="f" for="r-titolo">Nome</label><input class="i" id="r-titolo" maxlength="120" required value="${esc(v.titolo)}">
+      <label class="f" for="r-url">Link Amazon (o altro negozio)</label><input class="i" id="r-url" type="url" inputmode="url" value="${esc(v.amazon_url)}" placeholder="https://www.amazon.it/dp/…">
+      <div class="row"><div style="flex:1"><label class="f" for="r-prezzo">Prezzo €</label><input class="i" id="r-prezzo" inputmode="decimal" value="${v.prezzo_cent != null ? (v.prezzo_cent/100).toFixed(2).replace('.', ',') : ''}"></div>
+      <div style="flex:1"><label class="f" for="r-eta">Età</label><input class="i" id="r-eta" maxlength="10" value="${esc(v.eta)}"></div></div>
+      <label class="f" for="r-nota">Nota sul prezzo (facoltativa)</label><input class="i" id="r-nota" maxlength="60" value="${esc(v.prezzo_nota)}" placeholder="Es. da circa 30 €">
+      <label class="f" for="r-marca">Marca</label><input class="i" id="r-marca" maxlength="60" value="${esc(v.marca)}">
+      <label class="f" for="r-desc">Descrizione</label><textarea class="i" id="r-desc" maxlength="300">${esc(v.descrizione)}</textarea>
+      <label class="check"><input type="checkbox" id="r-leo" ${v.segno_leo ? 'checked' : ''}> Segnato da Leo</label>
+      <label class="check"><input type="checkbox" id="r-vis" ${v.visibile ? 'checked' : ''}> Visibile ai parenti</label>
+      <button class="btn verde full" type="submit">Salva</button>
+      ${g && !g.prenotazione ? '<button class="btn link full" id="r-del" type="button">Elimina definitivamente</button>' : ''}
+    </form>`, b => {
+    $('#f-reg', b).onsubmit = async e => {
+      e.preventDefault();
+      const btn = $('button[type=submit]', b); btn.disabled = true; btn.textContent = 'Salvataggio…';
+      try {
+        const pr = $('#r-prezzo', b).value.trim().replace(/[€\s]/g, '').replace(',', '.');
+        const dati = {titolo:$('#r-titolo', b).value.trim(), amazon_url:safeUrl($('#r-url', b).value.trim()), eta:$('#r-eta', b).value.trim(),
+          prezzo_nota:$('#r-nota', b).value.trim(), marca:$('#r-marca', b).value.trim(), descrizione:$('#r-desc', b).value.trim(),
+          segno_leo:$('#r-leo', b).checked, visibile:$('#r-vis', b).checked, prezzo_cent: pr && !isNaN(+pr) ? String(Math.round(+pr*100)) : ''};
+        if (g) dati.id = g.id;
+        const f = $('#r-foto', b).files[0]; if (f) dati.foto_dati = await resizeImage(f, 900);
+        const r = await gAct('natale_g_regalo_salva', {p_dati:dati}, 'Regalo salvato');
+        if (r) { dlg.close(); carica(true); }
+      } catch(err) { toast('Errore nel salvataggio'); }
+      btn.disabled = false; btn.textContent = 'Salva';
+    };
+    const del = $('#r-del', b);
+    if (del) del.onclick = async () => { if (!confirm('Eliminare definitivamente questo regalo?')) return; const r = await gAct('natale_g_regalo_elimina', {p_id:g.id}, 'Eliminato'); if (r) { dlg.close(); carica(true); } };
+  });
+}
+
+// ---------- router ----------
+function route(){
+  const gen = location.hash === '#genitori';
+  $('#app-lista').classList.toggle('hidden', gen); $('#app-gen').classList.toggle('hidden', !gen); $('#barra').classList.toggle('hidden', gen);
+  document.body.style.paddingBottom = gen ? '20px' : '';
+  if (gen) gCarica(); else carica();
+  window.scrollTo(0, 0);
+}
+window.addEventListener('hashchange', route);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) { if (location.hash === '#genitori') { if (PIN) gCarica(); } else carica(true); } });
+setInterval(() => { if (!document.hidden && location.hash !== '#genitori') carica(true); }, 30000);
+route();
+if (!nome && location.hash !== '#genitori') setTimeout(() => { if (!nome && !dlg.open) chiediNome(); }, 900);
+})();
+</script>
+</body>
+</html>
